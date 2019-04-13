@@ -1,0 +1,28 @@
+<md-dialog aria-label="">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools button-save-winsm">
+        <h2 style="color:white;">Informaci&oacute;n Contraparte</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">            
+            <i class="icon-close2" style="color: white; font-size: 20pt;"></i>            
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            <font style="color:black; font-weight: bolder; font-size: 12pt;">Email:</font>&nbsp;{{negocioCpart.t_user_cpart.MAIL}}<br> 
+            <font style="color:black; font-weight: bolder; font-size: 12pt;">Nombre:</font>&nbsp;{{negocioCpart.t_user_cpart.NAME}}&nbsp;{{negocioCpart.t_user_cpart.SURNAME}}<br> 
+            <font style="color:black; font-weight: bolder; font-size: 12pt;">Telefono:</font>&nbsp;<a href="" ng-click="callNumber($event)">{{negocioCpart.t_user_cpart.PHONE_MOBILE_COUNTRY}}-{{negocioCpart.t_user_cpart.PHONE_MOBILE_NUM}}</a><br>
+            <font style="color:black; font-weight: bolder; font-size: 12pt;">Lugar:</font>&nbsp;{{negocioCpart.PLACE_CPART}}<br>       <font style="color:black; font-weight: bolder; font-size: 12pt;">Chat:</font>&nbsp;<i class=" icon-bubble-lines4" style="color: black; font-size: 20pt;" ng-click="initChat($event)"></i> <br>     
+        </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <md-button ng-click="cancel()">
+        Cerrar
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

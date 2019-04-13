@@ -1,0 +1,73 @@
+<!-- <script type="text/javascript" src="../assets/js/plugins/tables/footable/footable.min.js"></script> -->
+<script type="text/javascript" src="../assets/js/plugins/tables/datatables/datatables.min.js"></script>
+<script type="text/javascript" src="../assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+
+<script type="text/javascript" src="../js/jsRequestList.js"></script>
+
+<!-- Table with togglable columns -->
+<div class="panel panel-flat">
+	<div class="panel-heading">
+		<h5 class="panel-title"></h5>
+		<div class="media-left">
+			<a id="linkAddRequest" href="#" class="btn border-info text-info btn-flat btn-rounded btn-icon btn-xs"><i class="icon-add"></i>&nbsp;Crear Solicitud</a>
+		</div>
+		<div class="media-left">
+			<div class="col-xs-12">&nbsp;
+			</div>
+		</div>		
+		<div class="heading-elements">
+    	</div>
+	</div>
+
+	<div class="panel-body">
+	</div>
+
+	<table id="tableListRequests" class="table table-togglable table-hover" >
+		<thead>
+			<tr>
+				<th >Producto</th>
+				<th >Tipo Operacion</th>
+				<th >Cantidad</th>
+				<th >Unidad de Medida</th>
+				<th >Precio</th>
+				<th >Moneda</th>
+				<th ></th>				
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+		<tfoot>
+		</tfoot>
+	</table>
+</div>
+<!-- /table with togglable columns -->
+
+<!-- ********************************************** Modal Edit Request ************************************* -->
+<div id="modalEditRequest" class="modal modalEditRequest" data-keyboard="false" data-backdrop="static">
+	<form id="formEditRequest" action="#" method="post" enctype="multipart/form-data">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+				<div class="modal-header">
+					<!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+					<h5 class="modal-title"><i class="icon-menu7"></i> Editar Solicitud</h5>
+				</div>
+
+				<div class="modal-body">
+					<div id="divEditRequest" class="panel panel-danger panel-bordered">
+						
+					</div>			
+				</div>
+
+				<div class="row">
+					<div class="">
+						<div class="modal-footer">
+							<button type="button" class="btn btn-link btnCloseModalEditRequest"><i class="icon-cross"></i> Cancelar</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</form>
+</div>
+<!-- /modal -->

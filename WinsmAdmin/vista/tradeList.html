@@ -1,0 +1,79 @@
+<script type="text/javascript" src="../assets/js/plugins/tables/datatables/datatables.min.js"></script>
+<script type="text/javascript" src="../assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+<script type="text/javascript" src="../js/jsTradeList.js"></script>
+
+<!-- Table with togglable columns -->
+<div class="panel panel-flat">
+	<div class="panel-heading">
+		<h5 class="panel-title"></h5>
+		<div class="media-left">
+			<!-- <a id="linkAddRequest" href="#" class="btn border-info text-info btn-flat btn-rounded btn-icon btn-xs"><i class="icon-add"></i>&nbsp;Crear Solicitud</a> -->
+		</div>
+		<div class="media-left">
+			<div class="col-xs-12">&nbsp;
+				<!--<div class="form-group has-feedback">
+					<input class="form-control input-rounded" placeholder="Buscar Solicitud" type="text" id="findWord" data-popup="tooltip" data-original-title="Presione Enter para Buscar">
+					<div class="form-control-feedback">
+						<i class="icon-search4 text-size-base"></i>
+					</div>
+				</div>				-->
+			</div>
+		</div>		
+		<div class="heading-elements">
+    	</div>
+	</div>
+
+	<div class="panel-body">
+	</div>
+
+    <table id="tableListTrades" class="table text-nowrap">
+        <thead>
+            <tr>
+                <th data-toggle="true" style="width: 17px;"></th>
+                <th class="col-md-2 text-bold" style="width: 12%;">Operacion</th>
+                <th class="col-md-2 text-bold" style="width: 12%;">Cantidad</th>
+                <th class="col-md-2 text-bold" style="width: 12%;">Unidad de Medida</th>
+                <th class="col-md-2 text-bold" style="width: 12%;">Precio</th>
+                <th class="col-md-2 text-bold" style="width: 12%;">Moneda</th>
+                <th class="col-md-2 text-bold" style="width: 12%;">Fecha Entrega</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot></tfoot>
+    </table>
+
+</div>
+<!-- /table with togglable columns -->
+
+<!-- ********************************************** Modal Ver Negocio ************************************* -->
+<div id="modal_ViewTrade" class="modal modalViewTrade" data-keyboard="false" data-backdrop="static">
+	<form id="formEditTrade" action="#" method="post" enctype="multipart/form-data">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+					<h5 class="modal-title"><i class="icon-menu7"></i> Detalle</h5>
+				</div>
+
+				<div class="modal-body">
+					<div id="divViewTrade" class="panel border-left-lg border-left-success">
+
+
+                        
+					</div>			
+				</div>
+
+				<div class="row">
+					<div class="">
+						<div class="modal-footer">
+							<button type="button" class="btn btn-link btnCloseModalViewTrade"><i class="icon-cross"></i> Cerrar</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</form>
+</div>
+<!-- /modal -->

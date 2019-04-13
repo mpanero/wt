@@ -1,0 +1,126 @@
+<ion-view view-title="Mis Negocios">
+    <ion-content>
+        <div class="list-actions" style="top: -6pt !important;  right: auto !important ; bottom: initial; left: -11pt !important;  position: absolute;  border-color: black; z-index: 99999 !important; display:block; width: 5%;">
+            <button class="button button-clear" ng-click="back()"><i class=" icon-arrow-left16" style="font-size: 18pt; color:#fff;"></i></button>
+        </div> 
+        <div class="list-title" style="top: 0pt !important;  right: auto !important ; bottom: initial; left: auto !important;  position: absolute;  border-color: #072142; z-index: 9999 !important; display:block; width: 100%; min-width: 100%; text-align: -webkit-center; font-size: 14pt; background-color: #072142; color: white; height: 4.5vh; font-weight: bold; line-height: 26pt;">&nbsp;
+            Mis Negocios
+        </div>         
+        <section class="requestList animate-fade-slide-in-right">
+            <ul class="content has-header">
+                <ion-scroll class="myScroll" zooming="false" direction="y" >
+                <li ng-repeat="negocio in negocios track by $index" class="animate-fade-slide-in-right">
+                    <a class="item list" ng-click="showProfile($event, $index)">
+                        <div class="imageWrapperTrade">
+                            <!-- <img src="img/appicon.png" /> -->
+                            <i class="icon-briefcase iconWinsm" style="font-size: 28pt !important; color:#04204a;"></i>
+                        </div>   
+                        <div class="info">
+                            <h3>#{{negocio.COD_REF}} {{negocio.t_product.PRODUCT_NAME}} - {{negocio.QT}} {{negocio.t_um.UM_NAME}}</h3>
+                            <p>{{negocio.PRICE}} {{negocio.t_currency.CURRENCY_NAME}} - {{negocio.t_request.DT_FROM |split:'T':0}} a {{negocio.t_request.DT_TO |split:'T':0}}</p> 
+                            <p>{{user === negocio.ID_USER_OWNER ? 'Operación' : 'Tipo Negocio'}}: {{user === negocio.ID_USER_OWNER ? negocio.OPERATION : negocio.BUSINESS}} </p>
+                            <p>Estado: {{user === negocio.ID_USER_OWNER ? negocio.t_type.INFO : negocio.INFO1}}</p>                 <h5><hr/></h5>        
+                        </div> 
+                        <div class="list-status">
+                            <i class="icon-circle2" style="font-size: 10pt; color:{{negocio.COLOR}};"></i>
+                        </div>
+                    </a>
+                </li>
+                </ion-scroll>
+            </ul>         
+            <div class="profile scroll-content">
+                <header style="background-color: #04204a !important;">
+                    <h3>{{negocio.t_product.PRODUCT_NAME}}</h3>
+                    <small>{{negocio.MARKET_NAME}}</small>
+                    <!--<div style="top: 17% !important;  right: 9pt !important; bottom: initial; left: auto;  position: absolute;  border-color: black;">            
+                        <md-button class="md-fab md-mini button-positive-winsm" aria-label="Use Android" ng-click="userCpart($event)">
+                            <i class="icon-vcard" style="color: white; font-size: 20pt;"></i>
+                        </md-button>
+                    </div>-->                     
+                </header>
+                <ion-scroll zooming="false" direction="y">
+                <ul class="details ionic-scroll">
+                    
+                    <li>
+                        <h4>C&oacute;digo Referencia:</h4>
+                        <p>#{{negocio.COD_REF}}</p>
+                    </li>                     
+                    <li>
+                        <h4>Fecha Creacion:</h4>
+                        <p>{{negocio.DH_CREATION |split:'T':0}}</p>
+                    </li>                     
+                    <li>
+                        <h4>Precio:</h4>
+                        <p>${{negocio.PRICE}}</p>
+                    </li>
+                    <li>
+                        <h4>Moneda:</h4>
+                        <p>{{negocio.t_currency.CURRENCY_NAME}}</p>
+                    </li>
+                    <li>
+                        <h4>Cantidad:</h4>
+                        <p>{{negocio.QT}}</p>
+                    </li>
+                    <li>
+                        <h4>Unidad Medida:</h4>
+                        <p>{{negocio.t_um.UM_NAME}}</p>
+                    </li>
+                    <li>
+                        <h4>Fecha Entrega:</h4>
+                        <p>{{negocio.t_request.DT_FROM |split:'T':0}} a {{negocio.t_request.DT_TO |split:'T':0}}</p>
+                    </li>
+                    <li>
+                        <h4>Estatus:</h4>
+                        <p>{{user === negocio.ID_USER_OWNER ? negocio.t_type.INFO : negocio.INFO1}}</p>                       
+                    </li> 
+                    <li ng-click="userCpart($event)" style="color:#666; font-size: 14pt;">
+                        <p></p>
+                        <i class="icon-vcard" style="font-size: 20pt;"></i>&nbsp;Contactar Contraparte        
+                    </li>                     
+                   
+                <div class="row responsive-sm" style="padding-top: 6pt;">
+                    <div class="col" ng-show="user == negocio.ID_USER_CPART && 100 == negocio.ID_TP_STATUS_TRADE ? true : false" >            
+                        <div class="button-bar">
+                            <a class="button button-small button-save-winsm" ng-click="deleteTrade($event)">Ya no me interesa</a>
+                        </div>  
+                    </div>  
+                  
+                    <div class="col" ng-show="user == negocio.ID_USER_OWNER && 100 == negocio.ID_TP_STATUS_TRADE ? true : false" >            
+                        <div class="button-bar">
+                            <a class="button button-small button-save-winsm edit-button" ng-click="initTrade($event)">Iniciar Negociaci&oacute;n</a>
+                        </div>  
+                    </div>
+                    <div class="col" ng-show="user == negocio.ID_USER_CPART && 101 == negocio.ID_TP_STATUS_TRADE ? true : false" >            
+                        <div class="button-bar">
+                            <a class="button button-small button-save-winsm edit-button" ng-click="confirmCPartTrade($event)">Confirmar Negocio</a>
+                        </div>  
+                    </div> 
+                    <div class="col" ng-show="user == negocio.ID_USER_OWNER && 102 == negocio.ID_TP_STATUS_TRADE ? true : false" >            
+                        <div class="button-bar">
+                            <a class="button button-small button-save-winsm edit-button" ng-click="confirmOwnerTrade($event)">Confirmar Negocio</a>
+                        </div>  
+                    </div>  
+                    <div class="col" ng-show="user == negocio.ID_USER_OWNER && 103 == negocio.ID_TP_STATUS_TRADE ? true : false" >            
+                        <div class="button-bar">
+                            <a class="button button-small button-save-winsm edit-button" ng-click="finishTrade($event)">Terminar Negocio</a>
+                        </div>  
+                    </div>    
+                    <div class="col" ng-show="negocio.ID_TP_STATUS_TRADE >= 101 && negocio.ID_TP_STATUS_TRADE <= 103 ? true : false" >            
+                        <div class="button-bar">
+                            <a class="button button-small button-save-winsm" ng-click="cancelTrade($event)">Cancelar Negocio</a>
+                        </div>  
+                    </div>                      
+                    <div class="col">            
+                        <div class="button-bar">
+                            <a class="button button-small button-cancel-winsm" ng-click="closeProfile($event)" ng-disabled="newRequest.$invalid || newRequest.$pristine ">Cerrar Detalle</a>
+                        </div>  
+                    </div>                               
+                </div>                    
+                </ul>
+                </ion-scroll>
+                
+            </div>             
+        </section>         
+    </ion-content>
+</ion-view>            
+

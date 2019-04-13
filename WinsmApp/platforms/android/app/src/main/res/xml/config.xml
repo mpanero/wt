@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget android-versionCode="006" id="com.devru.smartrade" version="0.24" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="CallNumber">
+        <param name="android-package" value="mx.ferreyra.callnumber.CFCallNumber" />
+    </feature>
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+    <feature name="NetworkStatus">
+        <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager" />
+    </feature>
+    <feature name="CDVOrientation">
+        <param name="android-package" value="cordova.plugins.screenorientation.CDVOrientation" />
+    </feature>
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="Keyboard">
+        <param name="android-package" value="io.ionic.keyboard.IonicKeyboard" />
+        <param name="onload" value="true" />
+    </feature>
+    <name>Smartrade</name>
+    <description>
+        Solicitudes
+    </description>
+    <author email="devru@developer.ru.com" href="http://ru.com">
+        DevRu
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <allow-intent href="market:*" />
+    <splash density="port-ldpi" platform="android" src="package-assets/SPLASH SCREENS/320X426.png" />
+    <splash density="port-mdpi" platform="android" src="package-assets/SPLASH SCREENS/320X470.png" />
+    <splash density="port-hdpi" platform="android" src="package-assets/SPLASH SCREENS/480X640.png" />
+    <splash density="port-xhdpi" platform="android" src="package-assets/SPLASH SCREENS/720X960.png" />
+    <splash density="land-ldpi" platform="android" src="package-assets/SPLASH SCREENS/426x320.png" />
+    <splash density="land-mdpi" platform="android" src="package-assets/SPLASH SCREENS/470x320.png" />
+    <splash density="land-hdpi" platform="android" src="package-assets/SPLASH SCREENS/640x480.png" />
+    <splash density="land-xhdpi" platform="android" src="package-assets/SPLASH SCREENS/960X720.png" />
+    <icon density="ldpi" src="package-assets/ICONS/icon_36.png" width="36" />
+    <icon density="mdpi" src="package-assets/ICONS/icon_48.png" width="48" />
+    <icon density="hdpi" src="package-assets/ICONS/icon_72.png" width="72" />
+    <icon density="xhdpi" src="package-assets/ICONS/icon_96.png" width="96" />
+    <preference name="loglevel" value="DEBUG" />
+    <preference name="StatusBarOverlaysWebView" value="false" />
+    <preference name="KeyboardResize" value="false" />
+    <preference name="ScrollEnabled" value="false" />
+    <preference name="SplashScreenDelay" value="10000" />
+    <preference name="SplashScreen" value="screen" />
+    <preference name="android-build-tool" value="gradle" />
+    <preference name="android-minSdkVersion" value="16" />
+    <preference name="android-targetSdkVersion" value="25" />
+    <preference name="android-installLocation" value="auto" />
+    <preference name="Fullscreen" value="false" />
+    <preference name="Orientation" value="portrait" />
+    <preference name="android-signed" value="true" />
+    <preference name="AndroidLaunchMode" value="singleTop" />
+    <preference name="SplashMaintainAspectRatio" value="false" />
+    <preference name="debuggable" value="true" />
+</widget>

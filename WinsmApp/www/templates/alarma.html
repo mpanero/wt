@@ -1,0 +1,140 @@
+<ion-view view-title="Nueva Alarma">
+    <ion-content class="animate-fade-slide-in" >
+        <div class="list-actions" style="top: -25.5pt !important;  right: auto !important ; bottom: initial; left: -11pt !important;  position: absolute;  border-color: black; z-index: 999999 !important; display:block;">
+            <button class="button button-clear" ng-click="cancelar()"><i class=" icon-arrow-left16" style="font-size: 18pt; color:#fff;"></i></button>
+        </div>  
+        <div class="list-title" style="top: -20pt !important;  right: auto !important ; bottom: initial; left: auto !important;  position: absolute;  border-color: #072142; z-index: 9999 !important; display:block; width: 100%; min-width: 100%; text-align: -webkit-center; font-size: 14pt; background-color: #072142; color: white; height: 4.7vh; font-weight: bold; line-height: 26pt;">&nbsp;
+           Nueva Alarma
+        </div>        
+        
+        <form name="newAlarm" novalidate style="margin-top: 20pt;">
+      
+            <div class="row">   
+                <div class="col col-50">
+                     <div class="list item">
+                        <md-input-container style="margin-right: 10px;" class="">
+                            <label>Tipo Producto</label>
+                            <md-select ng-model="formAlarm.tipoProducto" ng-change="getProduct()" select-req>
+                              <md-option ng-repeat="tp in tproductos" value="{{tp.ID_CATEGORY_PROD}}">{{tp.CATEGORY_PROD_NAME}}</md-option>
+                            </md-select>
+                        </md-input-container>                         
+                     </div>            
+                </div>  
+                <div class="col col-50">           
+                     <div class="list item">
+                        <md-input-container style="margin-right: 10px;" class="">
+                            <label>Producto</label>
+                            <md-select ng-model="formAlarm.ID_PRODUCT" select-req>
+                              <md-option ng-repeat="p in productos" value="{{p.ID_PRODUCT_PRICE}}">{{p.PRODUCT_NAME}}</md-option>
+                            </md-select>
+                        </md-input-container>                         
+                     </div>            
+                </div>                 
+                
+            </div>  
+
+             
+            <div class="row">  
+                <div class="col col-50">
+                     <div class="list item">
+                        <md-input-container style="margin-right: 10px;" class="">
+                            <label>Tipo Precio</label>
+                            <md-select name="ID_TYPE_PRICE" ng-model="formAlarm.ID_TYPE_PRICE" ng-change="validCombo(formAlarm.ID_TYPE_PRICE)" combo-req>
+                              <md-option ng-repeat="pt in toperaciones" value="{{pt.ID_TYPE}}">{{pt.INFO}}</md-option>
+                            </md-select>
+                        </md-input-container>                         
+                     </div>            
+                </div>                
+                <div class="col col-50" ng-show="formAlarm.ID_TYPE_PRICE == 301">
+                     <div class="list item">
+                        <md-input-container style="margin-right: 10px;" class="">
+                            <label>Lugar precio</label>
+                            <md-select name="ID_PLACE_PRICE" ng-model="formAlarm.ID_PLACE_PRICE" pri-req>
+                              <md-option ng-repeat="lp in lugares" value="{{lp.t_places_price.ID_PLACE_PRICE}}">{{lp.t_places_price.PLACE_NAME}}</md-option>
+                            </md-select>
+                        </md-input-container>                         
+                     </div>            
+                </div>
+            </div>
+            <div class="row" ng-show="formAlarm.ID_TYPE_PRICE == 300">  
+                <div class="col col-50">           
+                     <div class="list item">
+                        <md-input-container style="margin-right: 10px;" class="">
+                            <label>Posici&oacute;n</label>
+                            <md-select name="ID_POSITION" ng-model="formAlarm.ID_POSITION" pos-req >
+                              <md-option ng-repeat="p in posicion" value="{{p.ID_POSITION}}">{{p.POSITION}}</md-option>
+                            </md-select>
+                        </md-input-container>                         
+                     </div>            
+                </div>                 
+                
+            </div>             
+            <div class="row">
+                <div class="col col-50">
+                     <div class="list item">
+                        <md-input-container class="md-block">
+                            <label style="font-size: 13pt;">Precio Desde</label>
+                            <input type="text" name="PRICE_FROM" ng-model="formAlarm.PRICE_FROM" autocomplete="off" price-from/>
+                        </md-input-container>
+                     </div>            
+                </div> 
+                <div class="col col-50">
+                     <div class="list item">
+                        <md-input-container class="md-block">
+                            <label style="font-size: 13pt;">Precio Hasta</label>
+                            <input type="text" name="PRICE_TO" ng-model="formAlarm.PRICE_TO" autocomplete="off" price-to/>
+                        </md-input-container>
+                     </div>            
+                </div>                 
+            </div>
+            <div class="row">
+                <div class="col col-50">
+                     <div class="list item">
+                        <md-input-container style="margin-right: 10px;" class="">
+                            <label>Moneda</label>
+                            <md-select ng-model="formAlarm.ID_CURRENCY" select-req>
+                              <md-option ng-repeat="mo in monedas" value="{{mo.ID_CURRENCY}}">{{mo.CURRENCY_NAME}}</md-option>
+                            </md-select>
+                        </md-input-container>                                                  
+                     </div>            
+                </div> 
+                <div class="col col-50">
+                                
+                </div>                 
+            </div>
+            <div class="item item-divider" style="background-color: beige;">Generar solicitud automaticamente?</div>  
+            <div class="resetROW"> 
+                <!-- Tipo Entrega -->
+                <md-radio-group name="AUT_GENERATION" ng-model="formAlarm.AUT_GENERATION" ng-change="changeValue(formAlarm.AUT_GENERATION)" radio-req>
+                    <div class="row item">
+                        <div class="col col-50 responsive-md" style="margin-left: 6pt;"> 
+                            <md-radio-button ng-value="1" class="md-primary" >SI</md-radio-button>
+                        </div>
+                        <div class="col col-50 responsive-md" style="margin-left: 6pt;">
+                            <md-radio-button ng-value="0" class="md-primary" >NO</md-radio-button>
+                        </div>                        
+                    </div>
+                </md-radio-group>                
+            </div>            
+            <div class="item item-divider" ng-show="formAlarm.AUT_GENERATION == 1">Tipo operación </div>        
+            <div class="resetROW" ng-show="formAlarm.AUT_GENERATION == 1">  
+                <md-radio-group name="ID_TP_OPERATION" ng-model="formAlarm.ID_TP_OPERATION" >
+                    <div class="row item">
+                        <div class="col col-50 responsive-md" ng-repeat="op in operaciones" style="margin-left: 12pt;">             
+                            <md-radio-button ng-value="op.ID_TYPE" class="md-primary" >{{op.INFO}}</md-radio-button>                    
+                        </div>
+                    </div>
+                </md-radio-group>                
+            </div>            
+            <br>
+            <div class="padding">
+                <button type="button" ng-disabled="newAlarm.$invalid" ng-click="submitForm(newAlarm.$valid)" class="button button-full button-small button-save-winsm ink">Guardar</button>
+                <button type="button" ng-click="cancelar()" class="button button-full button-small button-cancel-winsm ink">Cancelar</button>                    
+            </div>            
+
+            <input type="hidden" ng-model="formAlarm.ID_USER" name="ID_USER" ng-value="" />
+            <input type="hidden" ng-model="formAlarm.ID_MARKET" name="ID_MARKET" ng-value="1" value="1"/>
+        </form> 
+        
+    </ion-content>
+</ion-view>

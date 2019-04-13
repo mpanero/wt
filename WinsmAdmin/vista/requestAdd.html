@@ -1,0 +1,249 @@
+<div class="col-md-12">
+
+    <!-- Advanced legend -->
+    <form id="newRequest" action="#" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">Nueva Solicitud</h5>
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li><a data-action="collapse"></a></li>
+                                <li><a data-action="reload"></a></li>
+                                <li><a data-action="close"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">                        
+                                <fieldset>
+                                    <legend class="text-semibold">
+                                        <i class="icon-file-text2 position-left"></i>
+                                        Producto
+                                        <a class="control-arrow" data-toggle="collapse" data-target="#demo1">
+                                            <i class="icon-circle-down2"></i>
+                                        </a>
+                                    </legend>
+
+                                    <div class="collapse in" id="demo1">
+                                        <div class="form-group">
+                                            <label>Tipo Producto:</label>
+                                            <select id="tipoProducto" name="tipoProducto" placeholder="Tipo Producto" class="select selected">
+                                            </select>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6"> 
+                                                <div id="divProd" class="form-group" style="display:none;">
+                                                    <label>Producto:</label>
+                                                    <select id="ID_PRODUCT" name="ID_PRODUCT" placeholder="Producto" class="select selected">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6"> 
+                                                <div id="divCose" class="form-group" style="display:none;">
+                                                    <label>Cosecha:</label>
+                                                    <select id="ID_CROP" name="ID_CROP" placeholder="Cosecha" class="select">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="divOperacion" ></div>            
+                                        
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>     
+                        <!-- Precio Cantidad -->
+                        <div class="row">
+                            <div class="col-md-12">                           
+                                <fieldset>
+                                    <legend class="text-semibold">
+                                        <i class="icon-coins position-left"></i>
+                                        Precio y cantidad
+                                        <a class="control-arrow" data-toggle="collapse" data-target="#demo2">
+                                            <i class="icon-circle-down2"></i>
+                                        </a>
+                                    </legend>
+
+                                    <div class="collapse in" id="demo2">
+										<div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group" id="divPFr" style="display:none;">
+                                                    <label>Precio Desde:</label>
+                                                    <input id="PRICE_FROM" name="PRICE_FROM" type="text" placeholder="Precio Desde" class="form-control only-number">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group" id="divPTo" style="display:none;">
+                                                    <label>Precio Hasta:</label>
+                                                    <input id="PRICE_TO" name="PRICE_TO" type="text" placeholder="Precio Hasta" class="form-control only-number">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group" id="divMone" style="display:none;">
+                                                <label>Moneda:</label>
+                                                <select id="ID_TP_CURRENCY" name="ID_TP_CURRENCY"  placeholder="Moneda" class="select selected">
+                                                </select>
+                                            </div> 
+                                            <div class="form-group" id="divTPri" style="display:none;">
+                                                <label>Tipo Precio:</label>
+                                                <select id="ID_TYPE_PRICE" name="ID_TYPE_PRICE"  placeholder="Tipo precio" class="select">
+                                                </select>
+                                            </div>                                    
+                                            <div class="row" id="divPrePos" >
+                                                <div class="col-md-6">
+                                                    <div class="form-group"  id="divPreRef" >
+                                                        <label>Precio referencia:</label>
+                                                        <select id="ID_PRICE_REF" name="ID_PRICE_REF"  placeholder="Precio referencia" class="select">
+                                                        </select>                                            
+                                                    </div>
+                                                </div>
+        
+                                                <div class="col-md-6" id="divPos">
+                                                    <div class="form-group" >
+                                                        <label>Posicion:</label>
+                                                        <select id="ID_POSITION" name="ID_POSITION"  placeholder="Posicion" class="select">
+                                                        </select>                                            
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                        <div class="row" id="divfech">
+                                            <div class="col-md-6">
+                                                <div class="form-group" id="divfechFijD">
+                                                    <label>Fecha Fijación Desde:</label>
+                                                    <input id="DT_PRICE_FIX_FROM" name="DT_PRICE_FIX_FROM" type="text" placeholder="Fecha Fijación Desde" class="form-control pickadateLoad " />
+                                                </div>
+                                         
+                                            </div>
+    
+                                            <div class="col-md-6">
+                                                <div class="form-group" id="divfechFijH">
+                                                    <label>Fecha Fijación Hasta:</label>
+                                                    <input id="DT_PRICE_FIX_TO" name="DT_PRICE_FIX_TO" type="text" placeholder="Fecha Fijación Hasta" class="form-control pickadateLoad " />
+                                                </div>
+                                            </div>
+                                        </div>  
+                                        <div class="row" id="divCant" >
+                                            <div class="col-md-6">
+                                                <div class="form-group" >
+                                                    <label>Cantidad Desde:</label>
+                                                    <input id="QT_FROM" name="QT_FROM" type="text" placeholder="Cantidad Desde" class="form-control only-number">
+                                                </div>
+                                            </div>
+    
+                                            <div class="col-md-6">
+                                                <div class="form-group" >
+                                                    <label>Cantidad Hasta:</label>
+                                                    <input id="QT_TO" name="QT_TO" type="text" placeholder="Cantidad Hasta" class="form-control only-number">
+                                                </div>
+                                            </div>
+                                        </div>  
+                                        <div class="form-group" id="divUM">
+                                            <label>UM:</label>
+                                            <select id="ID_UM" name="ID_UM" placeholder="UM" class="select selected">
+                                            </select>
+                                        </div>    
+                                    </div>
+                                                                                                                                                                           
+                                </fieldset>
+                            </div>
+                        </div>
+                        <!-- Condiciones -->
+                        <div class="row">
+                            <div class="col-md-12">                        
+                                <fieldset>
+                                    <legend class="text-semibold">
+                                        <i class="icon-file-text2 position-left"></i>
+                                        Condiciones
+                                        <a class="control-arrow" data-toggle="collapse" data-target="#demo3">
+                                            <i class="icon-circle-down2"></i>
+                                        </a>
+                                    </legend>
+
+                                    <div class="collapse in" id="demo3">
+                                        <div class="row">
+                                            <div class="col-md-6" id="divTpay"> 
+                                                <div class="form-group">
+                                                    <label>Tipo Pago:</label>
+                                                    <select id="ID_TYPE_PAYMENT" name="ID_TYPE_PAYMENT" placeholder="Tipo Pago" class="select">
+                                                    </select>
+                                                </div>
+                                            </div>    
+                                            <div class="col-md-6"> 
+                                                <div id="divOrg" class="form-group" id="divOrig">
+                                                    <label>Origen:</label>
+                                                    <select id="ID_PLACE_ORIGIN" name="ID_PLACE_ORIGIN" placeholder="Origen" class="select">
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group" id="divTEntrega" >
+
+                                        </div>  
+                                        <div class="row" id="divLEntrega">
+                                            <div class="col-md-6"> 
+                                                <div class="form-group">
+                                                    <label>Lugar Entrega:</label>
+                                                    <select id="ID_PLACE_DELIVERY" name="ID_PLACE_DELIVERY" placeholder="Lugar Entrega" class="select">
+                                                    </select>
+                                                </div>
+                                            </div>    
+                                            <div class="col-md-6"> 
+                                                <div class="form-group">
+                                                    <label>KM a la redonda:</label>
+                                                    <input id="LOC_DISTANCE" name="LOC_DISTANCE" type="text" placeholder="KM a la redonda" class="form-control number">
+                                                </div>
+                                            </div>
+
+                                        </div>                                                                              
+                                        <div class="row" id="divDT">
+                                            <div class="col-md-6"> 
+                                                <div class="form-group">
+                                                    <label>Fecha Entrega Desde:</label>
+                                                    <input id="DT_FROM" name="DT_FROM" type="text" placeholder="Fecha Entrega Desde" class="form-control pickadateLoad ">
+                                                </div>
+                                            </div>    
+                                            <div class="col-md-6"> 
+                                                <div class="form-group">
+                                                    <label>Fecha Entrega Hasta:</label>
+                                                    <input id="DT_TO" name="DT_TO" type="text" placeholder="Fecha Entrega Hasta" class="form-control pickadateLoad ">
+                                                </div>
+                                            </div>
+
+                                        </div>    
+                                        <div class="form-group" id="divQa">
+                                            <label>Tipo de calidad:</label>
+                                            <select id="TYPE_QUALITY" name="TYPE_QUALITY"  placeholder="Tipo de calidad" class="select">
+                                            </select>
+                                        </div>  
+                                        <div class="form-group" id="divQaInf">
+                                            <label>Info calidad:</label>
+                                            <textarea id="QUALITY_INFO" name="QUALITY_INFO" rows="5" cols="5" placeholder="Info calidad..." class="form-control"></textarea>
+                                        </div> 
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>                         
+                        <div class="text-right">
+                            <button type="button" class="btn btn-primary btnAddNew">Crear&nbsp;<i class=" icon-pencil sideToSide position-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="ID_USER_OWNER" name="ID_USER_OWNER" value="" />
+        <input type="hidden" id="ID_MARKET" name="ID_MARKET" value="1" />        
+    </form>
+    <!-- /a legend -->
+
+</div>
+<!-- JS page -->
+<script type="text/javascript" src="../js/jsRequestAdd.js?x="+Math.random()></script>
+<!-- JS page -->

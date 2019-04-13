@@ -1,0 +1,81 @@
+<ion-view view-title="Login" align-title="left">
+    <ion-content>
+
+        <div class="list-actions" style="top: 3pt !important;  right: 1pt !important; bottom: initial; left: auto;  position: absolute;  border-color: black; z-index: 9999;">
+            <md-menu>
+              <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="openMenu($mdMenu, $event)">
+                <i class="icon-more2" style="font-size: 19pt; color:#000;"></i>
+              </md-button>
+              <md-menu-content width="2">                  
+                <md-menu-item>
+                  <md-button ng-click="exitApp($event)">
+                    <i class="icon-exit3 dark"></i>&nbsp;Salir
+                  </md-button>
+                </md-menu-item>
+                  
+              </md-menu-content>
+            </md-menu>
+        </div>         
+        <form name="loginForm" autocomplete="off" novalidate style="height: 100vh !important;">
+            <div class="hero no-header flat">
+                <div class="content">
+                    <div class="app-icon"></div>
+                    <h2>Wintrade</h2>
+                </div>
+            </div>
+            <div class="row resetROW">
+                 <div class="col">
+                     <div class="list">
+                        <md-input-container class="md-block">
+                            <label style="font-size: 13pt;">Correo</label>
+                            <input type="email" name="username" ng-model="formData.username" autocomplete="off" only-email />
+                        </md-input-container>                       
+                     </div>
+                </div>
+
+            </div>        
+
+            <div class="row resetROW">
+                 <div class="col">
+                     <div class="list">
+                        <md-input-container class="md-block">
+                            <label style="font-size: 13pt;">Contraseña</label>
+                            <input type="password" name="password" ng-model="formData.password" autocomplete="off" no-vacio />
+                        </md-input-container>
+                     </div>
+                </div>
+            </div>   
+            <div class="row resetROW">
+                <div class="col">
+                    <div class="list">
+                        <div flex-gt-sm="50">
+                          <md-checkbox name="cb1" ng-model="formData.cb1"  ng-true-value="'true'" ng-false-value="'false'" ng-click="validRemember(this)" aria-label="Recordar Datos">
+                            Recordar Datos
+                          </md-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="padding" style="text-align:center;">
+                <button type="button" ng-disabled="loginForm.$invalid" ng-click="validData(loginForm.$valid,$event)" class="button button-full button-save-winsm ink">Iniciar Sesion</button>
+                <button type="button" ng-click="userAdd($event)" class="button button-full button-positive-winsm ink">Registrarse</button>                
+                
+                <div style="display: flex; -webkit-box-flex: 1; -webkit-flex: 1; -moz-box-flex: 1; -moz-flex: 1; -ms-flex: 1; flex: 1; width: 100%;">
+                    <md-button type="button" flex="100" ng-click="newPass($event)" style="color: #04204a !important; font-weight: 300;">Olvido Contraseña ?</md-button>
+                </div> 
+
+            </div>
+            
+                     
+        </form>
+                 
+    </ion-content>
+     <ion-footer-bar style="text-align:center;" class="hide-on-keyboard-open">
+        <div class="row hide-on-keyboard-open" style="text-align:center;" >
+            <span style="text-align:center; width: 100% !important;">
+                <h6 style="color: #04204a !important; font-weight: 800;">Wintrade agro &reg;- Todos los derechos reservados</h6>
+            </span>
+         
+        </div>
+     </ion-footer-bar>    
+</ion-view>

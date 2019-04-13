@@ -1,0 +1,85 @@
+<script type="text/javascript" src="../assets/js/plugins/tables/footable/footable.min.js"></script>
+<script type="text/javascript" src="../js/jsUserList.js"></script>
+
+<!-- Table with togglable columns -->
+<div class="panel panel-flat">
+	<div class="panel-heading">
+		<h5 class="panel-title"></h5>
+		<div class="media-left">
+			<a id="linkAddUser" href="#" class="btn border-info text-info btn-flat btn-rounded btn-icon btn-xs"><i class="icon-add"></i>&nbsp;Registrar Usuario</a>
+		</div>
+		<div class="media-left">
+			<div class="col-xs-12">&nbsp;
+				<!--<div class="form-group has-feedback">
+					<input class="form-control input-rounded" placeholder="Buscar Solicitud" type="text" id="findWord" data-popup="tooltip" data-original-title="Presione Enter para Buscar">
+					<div class="form-control-feedback">
+						<i class="icon-search4 text-size-base"></i>
+					</div>
+				</div>				-->
+			</div>
+		</div>		
+		<div class="heading-elements">
+
+			<ul class="icons-list ">
+                <li ><a id="btnbacwardInit" style="font-size: 18px; margin-top: 10px;" class="icon-backward"></a></li>
+                <li ><a id="btnbacward" style="font-size: 18px; margin-top: 10px;" class="icon-circle-left2"></a></li>
+                <li ><span role="button" id="linkPag" href="#" style="font-size: 10px; padding: 8px 9px;" class="btn border-danger text-danger btn-flat btn-rounded btn-icon btn-sm"><span style="font-size: 11px;" id="numPag">1</span>/<span style="font-size: 12px;" id="maxPag">1</span></span></li>
+                <li ><a id="btnforward" style="font-size: 18px; margin-top: 10px;" class="icon-circle-right2"></a></li>
+	            <li ><a id="btnforwardEnd" style="font-size: 18px; margin-top: 10px;" class="icon-forward2"></a></li>
+	            
+            </ul>
+    	</div>
+	</div>
+
+	<div class="panel-body">
+        <div class="heading-elements" style="margin-top: 3px; margin-right: 31px;">
+            <span>Paginaci&oacute;n</span>
+        </div> 	
+	</div>
+
+	<table id="tableListUsers" class="table table-togglable table-hover">
+		<thead>
+			<tr>
+				<th data-hide="phone,tablet" >Nombre</th>
+				<th data-hide="phone,tablet" style="width: 15%;">Apellido</th>
+				<th data-hide="phone,tablet" style="width: 15%;">Correo</th>
+				<th data-hide="phone,tablet" style="width: 15%;">N&deg; movil</th>
+                <th data-hide="phone,tablet" style="width: 15%;">Lugar</th>  
+                <th data-hide="phone,tablet"></th>                                
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+</div>
+<!-- /table with togglable columns -->
+
+<!-- ********************************************** Modal Edit User ************************************* -->
+<div id="modalEditUser" class="modal modalEditUser" data-keyboard="false" data-backdrop="static">
+	<form id="formEditUser" action="#" method="post" enctype="multipart/form-data">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+				<div class="modal-header">
+					<!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+					<h5 class="modal-title"><i class="icon-menu7"></i> Editar Usuario</h5>
+				</div>
+
+				<div class="modal-body">
+					<div id="divEditUser" class="panel panel-danger panel-bordered">
+						
+					</div>			
+				</div>
+
+				<div class="row">
+					<div class="">
+						<div class="modal-footer">
+							<button type="button" class="btn btn-link btnCloseModalEditUser"><i class="icon-cross"></i> Cancelar</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</form>
+</div>
+<!-- /modal -->

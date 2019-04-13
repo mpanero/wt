@@ -1,0 +1,64 @@
+<ion-view view-title="Nueva Contraseña">
+    <ion-content class="animate-fade-slide-in" >
+        <div class="list-actions" style="top: -21.5pt !important;  right: auto !important ; bottom: initial; left: -13pt !important;  position: absolute;  border-color: black; z-index: 99999 !important; display:block;">
+            <button class="button button-clear" ng-click="cancelar()"><i class=" icon-arrow-left16" style="font-size: 18pt; color:#fff;"></i></button>
+        </div>  
+        <div class="list-title" style="top: -17pt !important;  right: auto !important ; bottom: initial; left: auto !important;  position: absolute;  border-color: #072142; z-index: 9999 !important; display:block; width: 100%; min-width: 100%; text-align: -webkit-center; font-size: 14pt; background-color: #072142; color: white; height: 4.5vh; font-weight: bold; line-height: 26pt;">&nbsp;
+           Nueva Contraseña
+        </div>        
+        
+        <form name="newUser" novalidate style="margin-top: 18pt;">
+            <!-- <div class="hero no-header flat">-->
+                <div class="content" style="padding-top: 4%; padding-bottom: 7pt;">
+                    <div class="pass-icon"></div>
+                </div>
+            <!-- </div>  -->          
+            <div class="item item-divider">Generar Nueva Contraseña</div>
+            <div class="row">            
+                <div class="col">
+                     <div class="list">
+                        <md-input-container class="md-block">
+                            <label style="font-size: 13pt;">Email</label>
+                            <input type="email" name="MAIL" ng-model="formUser.MAIL" autocomplete="off" only-email />
+                        </md-input-container>
+                     </div>            
+                </div>          
+            </div>            
+            <div class="row">            
+                <div class="col col-50">
+                     <div class="list">
+                        <md-input-container class="md-block">
+                            <label style="font-size: 13pt;">Contase&ntilde;a</label>
+                            <input type="password" name="PASSWORD" ng-model="formUser.PASSWORD" autocomplete="off" no-vacio password-verify="{{reformUser.rePASSWORD}}"/>
+                        </md-input-container>
+                     </div>            
+                </div> 
+                <div class="col col-50">
+                     <div class="list">
+                        <md-input-container class="md-block">
+                            <label style="font-size: 13pt;">Repetir Contase&ntilde;a</label>
+                            <input type="password" name="rePASSWORD" ng-model="reformUser.rePASSWORD" autocomplete="off" no-vacio password-verify="{{formUser.PASSWORD}}"/>
+                        </md-input-container>
+                     </div>            
+                </div>                 
+            </div>
+            
+            <br>
+            <div class="row responsive-sm">
+                <div class="col ">            
+                    <div class="button-bar">
+                        <a class="button button-small button-save-winsm" ng-click="submitForm(newUser.$valid)" ng-disabled="newUser.$invalid">Guardar</a>
+                        <!-- <input type="submit" class="button button-small button-positive" disabled="true" ng-value="Guardar" /> -->
+                    </div>  
+                </div>            
+                <div class="col ">            
+                    <div class="button-bar">
+                        <a class="button button-small button-cancel-winsm" ng-click="cancelar()">Cancelar</a>
+                    </div>  
+                </div>            
+            </div>
+            <input type="hidden" ng-model="formUser.COMPANY" name="COMPANY" ng-value="" />
+        </form> 
+        
+    </ion-content>
+</ion-view>

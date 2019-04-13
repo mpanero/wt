@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Wintrade Agro</title>
+
+	<!-- Global stylesheets -->
+	<link href="../assets/css/fontRoboto.css" rel="stylesheet" type="text/css">
+	<link href="../assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+	<link href="../assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="../assets/css/core.css" rel="stylesheet" type="text/css">
+	<link href="../assets/css/components.css" rel="stylesheet" type="text/css">
+	<link href="../assets/css/colors.css" rel="stylesheet" type="text/css">
+	<link href="../assets/js/plugins/notifications/sweet_alert.css" rel="stylesheet" type="text/css">
+	<link href="../assets/js/plugins/dockmodal/dockmodal.css" rel="stylesheet" type="text/css" >
+	<!-- /global stylesheets -->
+
+	<!-- Core JS files -->
+	<script type="text/javascript" src="../assets/js/plugins/loaders/pace.min.js"></script>
+	<script type="text/javascript" src="../assets/js/core/libraries/jquery.min.js"></script>
+	<script type="text/javascript" src="../assets/js/core/libraries/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../assets/js/plugins/loaders/blockui.min.js"></script>
+	<script type="text/javascript" src="../assets/js/plugins/ui/nicescroll.min.js"></script>
+	<script type="text/javascript" src="../assets/js/plugins/ui/drilldown.js"></script>
+	<!-- /core JS files -->
+
+	<!-- Theme JS files -->
+	<script type="text/javascript" src="../assets/js/plugins/forms/selects/select2.min.js"></script>
+	<script type="text/javascript" src="../assets/js/plugins/forms/styling/switchery.min.js"></script>
+	<script type="text/javascript" src="../assets/js/plugins/forms/styling/uniform.min.js"></script>
+	<script type="text/javascript" src="../assets/js/plugins/pickers/pickadate/picker.js"></script>
+	<script type="text/javascript" src="../assets/js/plugins/pickers/pickadate/picker.date.js"></script> 
+	<script type="text/javascript" src="../assets/js/plugins/pickers/anytime.min.js"></script> 	
+	<script type="text/javascript" src="../lib/mask/src/jquery.mask.js"></script>
+	<script type="text/javascript" src="../lib/maskmoney/src/jquery.maskMoney.js"></script>	
+    <script type="text/javascript" src="../assets/js/plugins/bootstrap-datetimepicker/build/moment/min/moment-with-locales.js"></script>   
+    <script type="text/javascript" src="../assets/js/plugins/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.js"></script>	
+	<script type="text/javascript" src="../assets/js/plugins/notifications/sweet_alert.min.js"></script>
+    <script type="text/javascript" src="../assets/js/plugins/dockmodal/dockmodal.js"></script>
+	
+	<!-- /theme JS files -->
+
+	<!-- JS page -->
+	<script type="text/javascript" src="../js/jsInitPlugins.js"></script>
+	<script type="text/javascript" src="../js/jsValidatorMaster.js"></script>
+	<script type="text/javascript" src="../js/jsFunctionsMaster.js"></script>
+	<script type="text/javascript" src="../js/jsHome.js"></script>
+	<!-- JS page -->	
+
+</head>
+
+<body class="backgroundDiv">
+
+	<!-- Main navbar -->
+	<div class="navbar navbar-inverse">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="home.html"><img src="../assets/images/logo_small.png" alt=""></a>
+
+			<ul class="nav navbar-nav pull-right visible-xs-block">
+				<li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+			</ul>
+		</div>
+
+		<div class="navbar-collapse collapse" id="navbar-mobile">
+			<ul class="nav navbar-nav navbar-right">
+				<li id="liNotify" class="dropdown" style="display:none;">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<i class="icon-bubbles4"></i>
+						<span class="visible-xs-inline-block position-right">Notificaciones</span>
+						<span class="badge bg-warning-400">2</span>
+					</a>
+					
+					<div class="dropdown-menu dropdown-content width-350">
+						<div class="dropdown-content-heading">
+							Notificaciones
+						</div>
+
+						<ul class="media-list dropdown-content-body">
+							<!--<li class="media">
+								<div class="media-left">
+									<img src="../assets/images/placeholder.jpg" class="img-circle img-sm" alt="">
+									<span class="badge bg-danger-400 media-badge">5</span>
+								</div>
+
+								<div class="media-body">
+									<a href="#" class="media-heading">
+										<span class="text-semibold">James Alexander</span>
+										<span class="media-annotation pull-right">04:58</span>
+									</a>
+
+									<span class="text-muted">who knows, maybe that would be the best thing for me...</span>
+								</div>
+							</li>-->
+
+							<li class="media">
+								<div class="media-left"><img src="../assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></div>
+								<div class="media-body">
+									<a href="#" class="media-heading">
+										<span class="text-semibold">Richard Vango</span>
+										<span class="media-annotation pull-right">Mon</span>
+									</a>
+									
+									<span class="text-muted">Other travelling salesmen live a life of luxury...</span>
+								</div>
+							</li>
+						</ul>
+
+						<div class="dropdown-content-footer">
+							<a href="#" data-popup="tooltip" title="All messages"><i class="icon-menu display-block"></i></a>
+						</div>
+					</div>
+				</li>
+
+				<li class="dropdown dropdown-user">
+					<a class="dropdown-toggle" data-toggle="dropdown">
+						<img src="../assets/images/placeholder.jpg" alt="">
+						<span class="userWell"></span>
+						<i class="caret"></i>
+					</a>
+
+					<ul class="dropdown-menu dropdown-menu-right">
+						<li><a id="linkLogout"  href="#" ><i class="icon-switch2"></i> Salir</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!-- /main navbar -->
+
+
+	<!-- Second navbar -->
+	<div class="navbar navbar-default" id="navbar-second">
+		<ul class="nav navbar-nav no-border visible-xs-block">
+			<li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-second-toggle"><i class="icon-menu7"></i></a></li>
+		</ul>
+
+		<div class="navbar-collapse collapse" id="navbar-second-toggle">
+			<ul id="ulMenu" class="nav navbar-nav">
+				<li id="liHome" class="active"><a href="home.html"><i class="icon-home position-left"></i> Inicio</a></li>
+
+				<li id="liRequest" class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<i class="icon-grid2 position-left"></i> Solicitudes <span class="caret"></span>
+					</a>
+
+					<ul class="dropdown-menu width-200">
+						<li class="dropdown-header">Opciones</li>
+						<li><a id="linkRequestAdd"><i class="icon-plus-circle2"></i>&nbsp;Crear Solicitud</a></li>
+						<li><a id="linkRequestList"><i class="icon-clipboard3"></i>&nbsp;Mis Solicitudes</a></li>						
+					</ul>
+				</li>
+
+				<li id="liTrade" class=""><a id="linkTradesList"><i class="icon-briefcase"></i> Mis Negocios</a></li>
+				
+				<li id="liMarket" class=""><a id="linkMarketsList"><i class="icon-stats-growth"></i> Consultar Mercados</a></li>
+				
+				<li id="liAlarm" class=""><a id="linkAlarmList"><i class="icon-bell3"></i> Mis Alarmas</a></li>
+
+				<li id="liPrice" class=""><a id="linkPrecios"><i class="icon-coins"></i> Precios</a></li>
+
+				<li id="liUser" class="hide"><a id="linkUsers"><i class="icon-users4"></i> Usuarios</a></li>
+	
+			</ul>
+
+			<!--<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a href="changelog.html">
+						<i class="icon-history position-left"></i>
+						Changelog
+						<span class="label label-inline position-right bg-success-400">1.4</span>
+					</a>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<i class="icon-cog3"></i>
+						<span class="visible-xs-inline-block position-right">Share</span>
+						<span class="caret"></span>
+					</a>
+
+					<ul class="dropdown-menu dropdown-menu-right">
+						<li><a href="#"><i class="icon-user-lock"></i> Account security</a></li>
+						<li><a href="#"><i class="icon-statistics"></i> Analytics</a></li>
+						<li><a href="#"><i class="icon-accessibility"></i> Accessibility</a></li>
+						<li class="divider"></li>
+						<li><a href="#"><i class="icon-gear"></i> All settings</a></li>
+					</ul>
+				</li>
+			</ul>-->
+		</div>
+	</div>
+	<!-- /second navbar -->
+
+
+	<!-- Page header -->
+	<div class="page-header">
+		<div class="page-header-content">
+			<div class="page-title">
+				<h4>
+					<!--<i class="icon-arrow-left52 position-left"></i>-->
+					<span class="text-semibold" style="color:white">Inicio</span> - <font id="pagActual" color="#fff"></font>
+					<small class="display-block"><font id="smsTxt" color="#fff" >Saludos</font>, <font class="userWell" color="#fff"></font>!</small>
+				</h4>
+			</div>
+
+		</div>
+	</div>
+	<!-- /page header -->
+
+	<!-- Page container -->
+	<div class="page-container">
+
+		<!-- Page content -->
+		<div class="page-content">
+			<!-- Main content -->
+			<div id="blokedBlurred_Inmodal"></div>
+			<div id="divRootContent" style="height:auto;" class="panel-group panel-group-control panel-group-control-right content-group-lg" >
+			<!--<div class="content-wrapper">-->
+
+				<!-- Dashboard content -->
+				<div class="row">
+
+				</div>
+				<!-- /dashboard content -->
+
+			</div>
+			<!-- /main content -->
+
+		</div>
+		<!-- /page content -->
+
+	</div>
+	<!-- /page container -->
+
+
+	<!-- Footer -->
+	<div class="navbar navbar-default navbar-sm navbar-fixed-bottom" style="botton: 10px !important;">
+		<ul class="nav navbar-nav no-border visible-xs-block">
+			<li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-second"><i class="icon-circle-up2"></i></a></li>
+		</ul>
+
+		<div class="navbar-collapse collapse" id="navbar-second">
+			<div class="navbar-text">
+				&reg; <font id="anioTxt"></font>. <a href="#">&iexcl;Wintrade agro - Todos los derechos reservados!</a> by <a href="#">DevRU</a>
+			</div>
+
+			<div class="navbar-right">
+				<ul class="nav navbar-nav">
+					<li><a href="#">Centro de Ayuda</a></li>
+					<li><a href="#">Pol&iacute;tica</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- /footer -->	
+
+</body>
+</html>

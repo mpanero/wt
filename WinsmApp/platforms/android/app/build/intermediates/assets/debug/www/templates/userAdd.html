@@ -1,0 +1,168 @@
+<ion-view view-title="Registro Usuario">
+    <ion-content class="animate-fade-slide-in">
+        <div class="list-actions" style="top: -21.5pt !important;  right: auto !important ; bottom: initial; left: -11pt !important;  position: absolute;  border-color: black; z-index: 99999 !important; display:block;">
+            <button class="button button-clear" ng-click="cancelar()"><i class=" icon-arrow-left16" style="font-size: 18pt; color:#fff;"></i></button>
+        </div>  
+        <div class="list-title" style="top: -17pt !important;  right: auto !important ; bottom: initial; left: auto !important;  position: absolute;  border-color: #072142; z-index: 9999 !important; display:block; width: 100%; min-width: 100%; text-align: -webkit-center; font-size: 14pt; background-color: #072142; color: white; height: 4.5vh; font-weight: bold; line-height: 26pt;">&nbsp;
+           Registro de Usuario
+        </div>        
+        
+        <form name="newUser" novalidate style="margin-top: 18pt;">
+            <div class="item item-divider">Información Personal</div>
+            <div class="row resetROW">
+                <div class="col col-50">
+                     <div class="list">
+                        <md-input-container class="md-block">
+                            <label>Nombre</label>
+                            <input type="text" name="NAME" ng-model="formUser.NAME" autocomplete="off" no-vacio />
+                        </md-input-container>
+                     </div>         
+                </div>
+                <div class="col col-50">
+                     <div class="list">
+                        <md-input-container class="md-block">
+                            <label>Apellido</label>
+                            <input type="text" name="SURNAME" ng-model="formUser.SURNAME" autocomplete="off" no-vacio />
+                        </md-input-container>
+                     </div>            
+                </div> 
+            </div>   
+            <div class="row resetROW">
+                <div class="col col-50">
+                    <div class="list">
+                        <md-input-container class="md-block">
+                            <label>Fecha Nacimiento</label>
+                            <input type="text" name="BIRTHDATE" ng-model="formUser.BIRTHDATE" autocomplete="off" birht-date />
+                        </md-input-container>
+                    </div>           
+                </div>  
+                <div class="col col-50">
+                     <div class="list">
+                        <md-input-container style="margin-right: 10px;"  class="md-block" flex="100"> 
+                            <label>Sexo</label>
+                            <md-select name="GENDER" ng-model="formUser.GENDER" select-req>
+                                <md-option ng-repeat="g in generos" value="{{g.GENDER_INI}}">{{g.GENDER_NAME}}</md-option>
+                            </md-select>
+                        </md-input-container> 
+                     </div>            
+                </div>                
+            </div>
+            <div class="row resetROW">            
+                <div class="col col-50">
+                     <div class="list">
+                        <md-input-container class="md-block">
+                            <label>Email</label>
+                            <input type="email" name="MAIL" ng-model="formUser.MAIL" autocomplete="off" only-email />
+                        </md-input-container>
+                     </div>            
+                </div>
+                
+                <div class="col col-50">
+                    <div class="list">
+                        <md-input-container style="margin-right: 10px;"  class="md-block" flex="100"> 
+                            <label>Localidad</label>
+                            <md-select name="ID_PLACE" ng-model="formUser.ID_PLACE" select-req>
+                                <md-option ng-repeat="l in lugares" value="{{l.ID_PLACE}}">{{l.PLACE_NAME}}</md-option>
+                            </md-select>
+                        </md-input-container>                          
+                    </div>            
+                </div>           
+            </div>
+            
+            <div class="row resetROW">            
+
+                <div class="col col-50">
+                     <div class="list">
+                        <md-input-container class="md-block">
+                            <label>C&oacute;digo Pa&iacute;s</label>
+                            <input type="text" name="PHONE_MOBILE_COUNTRY" ng-model="formUser.PHONE_MOBILE_COUNTRY" maxlength="4" autocomplete="off" no-vacio only-number/>
+                        </md-input-container>
+                     </div>           
+                </div>
+
+                <div class="col col-50">
+                     <div class="list">
+                        <md-input-container class="md-block">
+                            <label>Telefono Celular</label>
+                            <input type="text" name="PHONE_MOBILE_NUM" ng-model="formUser.PHONE_MOBILE_NUM" maxlength="10" autocomplete="off" no-vacio only-number/>
+                        </md-input-container>
+                     </div>           
+                </div>                
+            </div> 
+            
+            <div class="row resetROW">            
+
+                <div class="col col-50">
+                     <div class="list">
+                        <md-input-container class="md-block">
+                            <label>C&oacute;digo Pa&iacute;s</label>
+                            <input type="text" name="PHONE_OTHER_COUNTRY" ng-model="formUser.PHONE_OTHER_COUNTRY" maxlength="4" autocomplete="off" number/>
+                        </md-input-container>
+                     </div>           
+                </div>
+
+                <div class="col col-50">
+                     <div class="list">
+                        <md-input-container class="md-block">
+                            <label>Telefono (Otro)</label>
+                            <input type="text" name="PHONE_OTHER_NUM" ng-model="formUser.PHONE_OTHER_NUM" maxlength="10" autocomplete="off" number />
+                        </md-input-container>
+                     </div>           
+                </div>                
+            </div>             
+            
+            <div class="item item-divider">Información de Acceso</div>
+            <div class="row">            
+                <div class="col col-50">
+                     <div class="list">
+                        <md-input-container class="md-block">
+                            <label>Contase&ntilde;a</label>
+                            <input type="password" name="PASSWORD" ng-model="formUser.PASSWORD" autocomplete="off" no-vacio password-verify="{{reformUser.rePASSWORD}}"/>
+                        </md-input-container>
+                     </div>            
+                </div> 
+                <div class="col col-50">
+                     <div class="list">
+                        <md-input-container class="md-block">
+                            <label>Repetir Contase&ntilde;a</label>
+                            <input type="password" name="rePASSWORD" ng-model="reformUser.rePASSWORD" autocomplete="off" no-vacio password-verify="{{formUser.PASSWORD}}"/>
+                        </md-input-container>
+                     </div>            
+                </div>                 
+            </div>
+            
+            <div class="item item-divider">Información de Actividad</div>            
+            <div class="row resetROW"> 
+                <div class="col">
+                    <div class="list">
+                      <div layout="row" layout-wrap flex>
+                        <div flex="50" ng-repeat="act in actividades track by $index">
+                          <md-checkbox ng-checked="exists(act.ID_ACTIVITY, selects)" ng-click="toggle(act.ID_ACTIVITY, selects)" >
+                            {{act.ACTIVITY_NAME}}
+                          </md-checkbox>
+                        </div>
+                      </div>
+
+                    </div>            
+                </div>                
+            </div>
+            
+            <br>
+            <div class="row responsive-sm">
+                <div class="col ">            
+                    <div class="button-bar">
+                        <a class="button button-small button-save-winsm" ng-click="submitForm(newUser.$valid)" ng-disabled="newUser.$invalid">Guardar</a>
+                        <!-- <input type="submit" class="button button-small button-positive" disabled="true" ng-value="Guardar" /> -->
+                    </div>  
+                </div>            
+                <div class="col ">            
+                    <div class="button-bar">
+                        <a class="button button-small button-cancel-winsm" ng-click="cancelar()">Cancelar</a>
+                    </div>  
+                </div>            
+            </div>
+            <input type="hidden" ng-model="formUser.COMPANY" name="COMPANY" ng-value="" />
+        </form> 
+        
+    </ion-content>
+</ion-view>

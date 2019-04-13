@@ -1,0 +1,59 @@
+<script type="text/javascript" src="../assets/js/plugins/tables/datatables/datatables.min.js"></script>
+<script type="text/javascript" src="../assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+<script type="text/javascript" src="../js/jsNotifyList.js"></script>
+
+<!-- Table with togglable columns -->
+<div class="panel panel-flat">
+	<div class="panel-heading">
+		<h5 class="panel-title"></h5>
+		<div class="media-left">
+			<!-- <a id="linkAddRequest" href="#" class="btn border-info text-info btn-flat btn-rounded btn-icon btn-xs"><i class="icon-add"></i>&nbsp;Crear Alarma</a> -->
+		</div>
+		<div class="media-left">
+			<div class="col-xs-12">&nbsp;
+			</div>
+		</div>		
+		<div class="heading-elements">
+    	</div>
+	</div>
+
+	<div class="panel-body">
+	</div>
+
+    <table id="tableListNotifys" class="table">
+        <thead>
+            <tr>
+                <th >Descripcion</th>
+                <th >Fecha</th>
+                <th >Estatus</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot></tfoot>
+    </table>
+
+</div>
+<!-- /table with togglable columns -->
+
+<!-- ********************************************** Modal Ver Alarma ************************************* -->
+<div id="modal_ViewNotify" class="modal modalViewNotify" data-keyboard="false" data-backdrop="static">
+	<form id="formEditNotify" action="#" method="post" enctype="multipart/form-data">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div id="divViewNotify" class="panel border-left-lg border-left-success">
+					</div>			
+				</div>
+				<div class="row">
+					<div class="">
+						<div class="modal-footer">
+							<button type="button" class="btn btn-link btnCloseModalViewNotify"><i class="icon-cross"></i> Cerrar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- /modal -->

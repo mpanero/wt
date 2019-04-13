@@ -1,0 +1,314 @@
+<ion-view view-title="Solicitud">
+    <ion-content class="animate-fade-slide-in">
+        <div class="list-title" style="top: -15pt !important;  right: auto !important ; bottom: initial; left: auto !important;  position: absolute;  border-color: #072142; z-index: 9999 !important; display:block; width: 100%; min-width: 100%; text-align: -webkit-center; font-size: 14pt; background-color: #072142; color: white; height: 4.5vh; font-weight: bold; line-height: 26pt;">&nbsp;
+            Editar Solicitud
+        </div>         
+        
+        <form id="editRequest" name="editRequest" ng-submit="editRequest.$valid && editRequest.submitForm(editRequest)" novalidate="novalidate"  style="margin-top: 15pt;">
+            <div class="item item-divider" style="background-color: beige;">
+                Producto
+            </div>            
+            <div class="row resetROW">
+                <div class="col col-50" >
+                    <div class="list">
+                        <md-input-container style="margin-right: 10px;" class="md-block" flex="100">
+                            <label>Tipo Producto</label>
+                            <md-select name="tipoProducto" ng-model="formData.tipoProducto" ng-change="getProduct()" select-req>
+                                <md-option ng-repeat="tp in tproductos" value="{{tp.ID_CATEGORY_PROD}}">{{tp.CATEGORY_PROD_NAME}}</md-option>
+                            </md-select>
+                        </md-input-container>                       
+
+                    </div>            
+                </div> 
+                <div class="col col-50">
+            
+                </div>
+
+            </div>   
+            <div class="row resetROW">
+                <div class="col col-50" ng-show="formData.tipoProducto == 1 || formData.tipoProducto == 2 || formData.tipoProducto == 3 || formData.tipoProducto == 4">
+                     <div class="list">
+                        <md-input-container style="margin-right: 10px;" class="md-block" flex="100"> 
+                            <label>Producto</label>
+                            <md-select name="ID_PRODUCT" ng-model="formData.ID_PRODUCT" select-req>
+                                <md-option ng-repeat="p in productos" value="{{p.ID_PRODUCT}}">{{p.PRODUCT_NAME}}</md-option>
+                            </md-select>
+                        </md-input-container> 
+                     </div>            
+                </div> 
+                <!-- Cosecha -->
+                <div class="col col-50" ng-show="formData.tipoProducto == 1">
+                     <div class="list">
+                        <md-input-container style="margin-right: 10px;" class="md-block" flex="100"> 
+                            <label>Cosecha</label>
+                            <md-select name="ID_CROP" ng-model="formData.ID_CROP" >
+                                <md-option ng-repeat="cos in cosecha" value="{{cos.ID_TYPE}}">{{cos.INFO}}</md-option>
+                            </md-select>
+                        </md-input-container> 
+                     </div>            
+                </div>                
+            </div>
+            <div class="item item-divider" style="background-color: beige;">
+                Precio y cantidad
+            </div>    
+            <div class="row resetROW">
+                <!-- Tipo precio -->
+                <div class="col col-50" ng-show="formData.tipoProducto == 1 || formData.tipoProducto == 2 || formData.tipoProducto == 3 || formData.tipoProducto == 4">
+                     <div class="list">
+                        <md-input-container style="margin-right: 10px;" class="md-block" flex="100"> 
+                            <label>Tipo precio</label>
+                            <md-select name="ID_TYPE_PRICE" ng-model="formData.ID_TYPE_PRICE" disabled="isDisabled" ng-disabled="isDisabled" >
+                                <md-option ng-repeat="prc in tprecios" value="{{prc.ID_TYPE}}" >{{prc.INFO}}</md-option>
+                            </md-select>
+                        </md-input-container> 
+                     </div>            
+                </div>
+            </div>
+            <div class="row resetROW">            
+
+                <div class="col col-50" ng-show="formData.tipoProducto == 1 || formData.tipoProducto == 2 || formData.tipoProducto == 3 || formData.tipoProducto == 4">
+                    <div class="list">
+                        <label class="item item-input item-floating-label">
+                            <input placeholder="Precio Desde" type="text" name="PRICE_FROM" ng-model="formData.PRICE_FROM" only-number>
+                        </label>
+                    </div>            
+                </div>
+                <div class="col col-50" ng-show="formData.tipoProducto == 1 || formData.tipoProducto == 2 || formData.tipoProducto == 3 || formData.tipoProducto == 4">
+                    <div class="list">
+                        <label class="item item-input item-floating-label">
+                            <input placeholder="Precio Hasta" type="text" name="PRICE_TO" ng-model="formData.PRICE_TO" only-number>
+                        </label>
+                    </div>            
+                </div>            
+            </div>  
+            <div class="row resetROW"> 
+                <div class="col col-50" ng-show="formData.tipoProducto == 1 || formData.tipoProducto == 2 || formData.tipoProducto == 3 || formData.tipoProducto == 4">
+                    <div class="list">
+                        <md-input-container style="margin-right: 10px;" class="md-block" flex="100">
+                            <label>Moneda</label>
+                            <md-select name="ID_TP_CURRENCY" ng-model="formData.ID_TP_CURRENCY" select-req>
+                                <md-option ng-repeat="mo in monedas" value="{{mo.ID_CURRENCY}}">{{mo.CURRENCY_NAME}}</md-option>
+                            </md-select>
+                        </md-input-container>                        
+
+                    </div>            
+                </div>     
+            </div>
+            <div class="row resetROW" ng-show="formData.ID_TYPE_PRICE != 210">
+                <!--Precio referencia -->
+                <div class="col col-50" ng-show="formData.tipoProducto == 1">
+                     <div class="list">
+                        <md-input-container style="margin-right: 10px;" class="md-block" flex="100"> 
+                            <label>Precio referencia</label>
+                            <md-select name="ID_PRICE_REF" ng-model="formData.ID_PRICE_REF" >
+                                <md-option ng-repeat="prf in precref" value="{{prf.ID_TYPE}}">{{prf.INFO}}</md-option>
+                            </md-select>
+                        </md-input-container> 
+                     </div>            
+                </div>
+                <!--Posición -->
+                <div class="col col-50" ng-show="formData.tipoProducto == 1">
+                     <div class="list">
+                        <md-input-container style="margin-right: 10px;"  class="md-block" flex="100"> 
+                            <label>Posicion</label>
+                            <md-select name="ID_POSITION" ng-model="formData.ID_POSITION" >
+                                <md-option ng-repeat="pos in posicion" value="{{pos.ID_POSITION}}">{{pos.POSITION}}</md-option>
+                            </md-select>
+                        </md-input-container> 
+                     </div>            
+                </div>                
+            </div>            
+            
+            <div class="row resetROW" ng-show="formData.ID_TYPE_PRICE != 210">
+                <!--Fecha fijación desde -->
+                <div class="col col-50" ng-show="formData.tipoProducto == 1">
+                    <div class="list">
+                        <label class="item item-input item-floating-label">
+                            <input placeholder="Fecha Fijación Desde" type="text" name="DT_PRICE_FIX_FROM" ng-model="formData.DT_PRICE_FIX_FROM" date>
+                        </label>
+                    </div>            
+                </div>
+                <!--Fecha fijación hasta -->
+                <div class="col col-50" ng-show="formData.tipoProducto == 1">
+                    <div class="list">
+                        <label class="item item-input item-floating-label">
+                            <input placeholder="Fecha Fijación Hasta" type="text" name="DT_PRICE_FIX_TO" ng-model="formData.DT_PRICE_FIX_TO" date>
+                        </label>
+                    </div>            
+                </div>                 
+                            
+            </div>
+
+           
+            <div class="row">            
+                <div class="col col-50" ng-show="formData.tipoProducto == 1 || formData.tipoProducto == 2 || formData.tipoProducto == 3">
+                    <div class="list">
+                        <label class="item item-input item-floating-label">
+                            <input placeholder="Cantidad Desde" type="text" name="QT_FROM" ng-model="formData.QT_FROM" only-number>
+                        </label>
+                    </div>            
+                </div>
+                <div class="col col-50" ng-show="formData.tipoProducto == 1 || formData.tipoProducto == 2 || formData.tipoProducto == 3">
+                    <div class="list">
+                        <label class="item item-input item-floating-label">
+                            <input placeholder="Cantidad Hasta" type="text" name="QT_TO" ng-model="formData.QT_TO" only-number>
+                        </label>
+                    </div>            
+                </div>             
+            </div>
+            
+            <div class="row resetROW"> 
+                
+                <div class="col col-50" ng-show="formData.tipoProducto == 1 || formData.tipoProducto == 2 || formData.tipoProducto == 3 || formData.tipoProducto == 4">
+                    <div class="list">
+                        <md-input-container style="margin-right: 10px;" class="md-block" flex="100">
+                            <label>UM</label>
+                            <md-select name="ID_UM" ng-model="formData.ID_UM" select-req>
+                                <md-option ng-repeat="u in ums" value="{{u.ID_UM}}">{{u.UM_NAME}}</md-option>
+                            </md-select>
+                        </md-input-container>                           
+
+                    </div>            
+                </div>
+                
+            </div>             
+            
+            <div class="item item-divider" style="background-color: beige;">
+               Condiciones
+            </div>    
+            <div class="row resetROW" ng-show="formData.tipoProducto == 1 || formData.tipoProducto == 2 || formData.tipoProducto == 3">
+                <!-- Tipo Pago -->
+                <div class="col col-50" >
+                     <div class="list">
+                        <md-input-container style="margin-right: 10px;" class="md-block" flex="100"> 
+                            <label>Tipo Pago</label>
+                            <md-select name="ID_TYPE_PAYMENT" ng-model="formData.ID_TYPE_PAYMENT" >
+                                <md-option ng-repeat="tpag in tpago" value="{{tpag.ID_TYPE}}">{{tpag.INFO}}</md-option>
+                            </md-select>
+                        </md-input-container> 
+                     </div>            
+                </div>                
+                <!-- Cosecha -->
+                <div class="col col-50">
+           
+                </div>
+                
+            </div>             
+            <div class="row resetROW" ng-show="formData.tipoProducto == 1">
+                <!-- Origen -->
+                <div class="col col-50">
+                     <div class="list">
+                        <md-input-container style="margin-right: 10px;" class="md-block" flex="100"> 
+                            <label>Origen</label>
+                            <md-select name="ID_PLACE_ORIGIN" ng-model="formData.ID_PLACE_ORIGIN" >
+                                <md-option ng-repeat="l in lugares" value="{{l.ID_PLACE}}">{{l.PLACE_NAME}}</md-option>
+                            </md-select>
+                        </md-input-container> 
+                     </div>            
+                </div>
+            </div>
+            
+            <div class="item item-divider" ng-show="formData.tipoProducto == 1">Tipo Entrega</div>  
+            <div class="resetROW" ng-show="formData.tipoProducto == 1"> 
+                <!-- Tipo Entrega -->
+                <md-radio-group name="ID_TYPE_DELIVERY" ng-model="formData.ID_TYPE_DELIVERY" >
+                    <div class="row item">
+                        <div class="col col-50 responsive-md" ng-repeat="entrega in tentrega" style="margin-left: 12pt;">               <md-radio-button ng-value="entrega.ID_TYPE" class="md-primary" >{{entrega.INFO}}</md-radio-button>       </div>
+                    </div>
+                </md-radio-group>                
+            </div>            
+            
+            <div class="row resetROW" ng-show="formData.tipoProducto == 1 || formData.tipoProducto == 2 || formData.tipoProducto == 3"> 
+                <div class="col col-50">
+                    <div class="list">
+                        <md-input-container style="margin-right: 10px;" class="md-block" flex="100">
+                            <label>Lugar Entrega</label>
+                            <md-select name="ID_PLACE_DELIVERY" ng-model="formData.ID_PLACE_DELIVERY" >
+                                <md-option ng-repeat="l in lugares" value="{{l.ID_PLACE}}">{{l.PLACE_NAME}}</md-option>
+                            </md-select>
+                        </md-input-container>                          
+
+                    </div>            
+                </div> 
+                <div class="col col-50">
+                    <div class="list">
+                        <label class="item item-input item-floating-label">
+                            <input placeholder="KM a la redonda" type="text" name="LOC_DISTANCE" ng-model="formData.LOC_DISTANCE" number>
+                        </label>
+                    </div>            
+                </div>                
+            </div>
+
+            <div class="row resetROW" ng-show="formData.tipoProducto == 1 || formData.tipoProducto == 2 || formData.tipoProducto == 3">            
+                <div class="col col-50">
+                    <div class="list">
+                        <label class="item item-input item-floating-label">
+                            <input placeholder="Fecha Entrega Desde" type="text" name="DT_FROM" ng-model="formData.DT_FROM" date >
+                        </label>
+                    </div>            
+                </div>
+                <div class="col col-50">
+                    <div class="list">
+                        <label class="item item-input item-floating-label">
+                            <input placeholder="Fecha Entrega Hasta" type="text" name="DT_TO" ng-model="formData.DT_TO" date >
+                        </label>
+                    </div>            
+                </div>             
+            </div>  
+            <div class="row resetROW" ng-show="formData.tipoProducto == 1">
+                <!-- Tipo de calidad -->
+                <div class="col col-50">
+                     <div class="list">
+                        <md-input-container style="margin-right: 10px;" class="md-block" flex="100"> 
+                            <label>Tipo de calidad</label>
+                            <md-select name="TYPE_QUALITY" ng-model="formData.TYPE_QUALITY" >
+                                <md-option ng-repeat="cal in calidad" value="{{cal.ID_TYPE}}">{{cal.INFO}}</md-option>
+                            </md-select>
+                        </md-input-container> 
+                     </div>            
+                </div>
+            </div>
+            <div class="row resetROW" ng-show="formData.tipoProducto == 1">
+                <!-- Mas info calidad -->
+                <div class="col">
+                     <div class="list">
+                        <md-input-container class="md-block">
+                            <label>Info calidad</label>
+                            <!-- <input type="text" name="QUALITY_INFO" ng-model="formData.QUALITY_INFO" autocomplete="off" /> -->
+                            <textarea name="QUALITY_INFO" ng-model="formData.QUALITY_INFO" autocomplete="off"></textarea>
+                        </md-input-container>
+                     </div>         
+                </div>              
+            </div>            
+
+            <div class="item item-divider">Que operación desea realizar?</div>        
+            <div class="resetROW">  
+                <md-radio-group name="ID_TP_OPERATION" ng-model="formData.ID_TP_OPERATION" radio-req>
+                    <div class="row item">
+                        <div class="col col-50 responsive-md" ng-repeat="op in operaciones" style="margin-left: 12pt;">             
+                            <md-radio-button ng-value="op.ID_TYPE" class="md-primary" >{{op.INFO}}</md-radio-button>                    
+                        </div>
+                    </div>
+                </md-radio-group>                
+            </div>
+            <br>
+            <div class="row resetROW">
+                <div class="col col-50 responsive-md">            
+                    <div class="button-bar">
+                        <a class="button button-small button-save-winsm" ng-click="submitForm(editRequest.$valid)" ng-disabled="editRequest.$invalid">Actualizar</a>
+                        <!--<input type="submit" class="button button-small button-save-winsm" ng-disabled="editRequest.$invalid" ng-value="Actualizar" />-->
+                    </div>  
+                </div>            
+                <div class="col col-50 responsive-md">            
+                    <div class="button-bar">
+                        <a class="button button-small button-cancel-winsm" ng-click="cancelar()">Cancelar</a>
+                    </div>  
+                </div>            
+            </div>
+            <input type="hidden" ng-model="formData.ID_USER_OWNER" name="ID_USER_OWNER" ng-value="" />
+            <input type="hidden" ng-model="formData.ID_REQUEST" name="ID_REQUEST" ng-value="" />
+            <input type="hidden" ng-model="formData.ID_MARKET" name="ID_MARKET" ng-value="1" value="1" />
+        </form>
+        
+    </ion-content>
+</ion-view>

@@ -1,0 +1,139 @@
+<ion-view view-title="Home" align-title="center">
+    <ion-content scroll="false">
+      <div class="splash-bg"></div>
+      <div class="splash-info">
+        <div class="splash-logo"></div>
+        <div class="splash-intro">
+          Wintrade Agro
+        </div>
+      </div>
+        <div class="list-actions" style="top: 3pt !important;  right: 1pt !important; bottom: initial; left: auto;  position: absolute;  border-color: black; z-index: 9999;">
+            <md-menu md-position-mode="target-right target">
+              <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="openMenu($mdMenu, $event)">
+                <i class="icon-more2" style="font-size: 19pt; color:#fff;"></i>
+              </md-button>
+              <md-menu-content width="2">
+                <md-menu-item>
+                  <md-button ng-click="logoutApp($event)">
+                    <i class="icon-switch2 dark"></i>&nbsp;Cerrar Sesion
+                  </md-button>
+                </md-menu-item>
+              </md-menu-content>
+            </md-menu>            
+        </div>             
+      <div padding>
+        <ion-scroll class="myScroll" zooming="false" direction="y" >  
+            <ion-grid class="grid">
+              <ion-row class="row resetROW">
+                <ion-col class="col elementCenter">
+                  <div>
+                    <md-button color="danger" icon-only="" ion-button="" outline="" class="button rootBtn" data-ink-color="#CD3385" data-ink-opacity=".8" ng-click="newSolicitud()">
+                      <!-- <span class="button-inner icon ion-star"></span> -->
+                      <i class="icon-plus-circle2" style="font-size: 25pt !important; color: #04204a !important;"></i>
+                      <div class="button-effect" ></div>
+                    </md-button> 
+                    <div style="margin-top: -7pt; font-size: 12pt; color: #04204a; font-weight: 700;">Crear Solicitud</div>
+                  </div>
+                </ion-col>              
+                <ion-col class="col elementCenter">
+                  <div>
+                    <md-button color="#04204a" icon-only="" ion-button="" outline="" class="button rootBtn" data-ink-color="#CD3385" data-ink-opacity=".8" ng-click="listSolicitud()">
+                      <!-- <span class="button-inner icon ion-star"></span> -->
+                      <i class="icon-clipboard3" style="font-size: 25pt !important; color: #04204a !important;"></i>
+                      <div class="button-effect"></div>
+                    </md-button> 
+                    <div style="margin-top: -7pt; font-size: 12pt; color: #04204a; font-weight: 700; ">Mis Solicitudes</div>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+            <ion-grid class="grid">
+              <ion-row class="row resetROW">
+                <ion-col class="col elementCenter">
+                  <div>
+                    <md-button color="danger" icon-only="" ion-button="" outline="" class="button rootBtn" data-ink-color="#CD3385" data-ink-opacity=".8" ng-click="listMercado()">
+                      <!-- <span class="button-inner icon ion-star"></span> -->
+                      <i class="icon-stats-growth" style="font-size: 25pt !important; color: #04204a !important;"></i>
+                      <div class="button-effect"></div>
+                    </md-button> 
+                    <div style="margin-top: -7pt; font-size: 12pt; color: #04204a; font-weight: 700;">Consultar en el mercado</div>
+                  </div>
+                </ion-col>
+                <ion-col class="col elementCenter">
+                  <div>
+                    <md-button color="danger" icon-only="" ion-button="" outline="" class="button ink-dark rootBtn" data-ink-color="#CD3385" data-ink-opacity=".8" ng-click="listNegocio()">
+                      <!-- <span class="button-inner icon ion-star"></span> -->
+                      <i class="icon-briefcase" style="font-size: 25pt !important; color: #04204a !important;"></i>
+                      <div class="button-effect"></div>
+                    </md-button> 
+                    <div style="margin-top: -7pt; font-size: 12pt; color: #04204a; font-weight: 700;">Mis Negocios</div>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+            <ion-grid class="grid">
+              <ion-row class="row resetROW">
+                <ion-col class="col elementCenter">
+                  <div>
+                    <md-button color="danger" icon-only="" ion-button="" outline="" class="button rootBtn" data-ink-color="#CD3385" data-ink-opacity=".8" ng-click="listAlarm()">
+                      <!-- <span class="button-inner icon ion-star"></span> -->
+                      <i class="icon-feed" style="font-size: 25pt !important; color: #04204a !important;"></i>
+                      <div class="button-effect"></div>
+                    </md-button> 
+                    <div style="margin-top: -7pt; font-size: 12pt; color: #04204a; font-weight: 700;">Mis Alarma</div>
+                  </div>                    
+                </ion-col>
+                <ion-col class="col elementCenter">
+                  <div>
+                    <md-button color="danger" icon-only="" ion-button="" outline="" class="button rootBtn" data-ink-color="#CD3385" data-ink-opacity=".8" ng-click="listNotification()">
+                      <!-- <span class="button-inner icon ion-star"></span> -->
+                        <i class="icon-bubble-notification" style="font-size: 25pt !important; color: #04204a !important;"></i>
+                        <span ng-class="{badgeNone: notifyCount < 1, badgeTen: notifyCount > 9, badge: notifyCount < 10}" class="bg-danger-400 media-badge animation spandNotif" data-animation="bounce">{{notifyCount}}</span>
+                        <div class="button-effect"></div>                        
+                    </md-button> 
+                    <div style="margin-top: -7pt; font-size: 12pt; color: #04204a; font-weight: 700;">Notificaciones</div>
+                  </div>                   
+                </ion-col>                  
+              </ion-row>
+            </ion-grid>
+
+            <ion-grid class="grid">
+              <ion-row class="row resetROW">
+                <ion-col class="col elementCenter">
+                  <div>
+                    <md-button color="danger" icon-only="" ion-button="" outline="" class="button rootBtn" data-ink-color="#CD3385" data-ink-opacity=".8" ng-click="listPrecios()">
+                      <!-- <span class="button-inner icon ion-star"></span> -->
+                      <i class="icon-stats-bars" style="font-size: 25pt !important; color: #04204a !important;"></i>
+                      <div class="button-effect" ></div>
+                    </md-button> 
+                    <div style="margin-top: -7pt; font-size: 12pt; color: #04204a; font-weight: 700;">Precios de Mercado</div>
+                  </div>                    
+                </ion-col>
+                <ion-col class="col elementCenter">
+                  <div>
+                    <md-button color="danger" icon-only="" ion-button="" outline="" class="button rootBtn" data-ink-color="#CD3385" data-ink-opacity=".8" ng-click="chatList()">
+                      <!-- <span class="button-inner icon ion-star"></span> -->
+                      <i class="icon-bubble-lines3" style="font-size: 25pt !important; color: #04204a !important;"></i>
+                      <div class="button-effect" ></div>
+                    </md-button> 
+                    <div style="margin-top: -7pt; font-size: 12pt; color: #04204a; font-weight: 700;">Chat</div>
+                  </div>                   
+                </ion-col>                  
+              </ion-row>
+            </ion-grid>  
+           
+            </ion-scroll>                                
+        </div>
+            
+    </ion-content>
+     <ion-footer-bar style="text-align:center;" class="hide-on-keyboard-open button-close-winsm">
+        <div class="row hide-on-keyboard-open" style="text-align:center;" >
+            <span style="text-align:center; width: 100% !important;" class="button-close-winsm">
+                <h5 style="color: #ffffff !important; font-weight: 700;">Wintrade agro &reg;- Todos los derechos reservados</h5>
+            </span>
+         
+        </div>
+     </ion-footer-bar>     
+</ion-view>

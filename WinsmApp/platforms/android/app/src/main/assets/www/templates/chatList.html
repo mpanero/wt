@@ -1,0 +1,35 @@
+<ion-view view-title="Mis Chat">
+    <ion-content>
+        <div class="list-actions" style="top: -6pt !important;  right: auto !important ; bottom: initial; left: -11pt !important;  position: absolute;  border-color: black; z-index: 99999 !important; display:block; width: 5%;">
+            <button class="button button-clear" ng-click="back()"><i class=" icon-arrow-left16" style="font-size: 18pt; color:#fff;"></i></button>
+        </div> 
+        <div class="list-title" style="top: 0pt !important;  right: auto !important ; bottom: initial; left: auto !important;  position: absolute;  border-color: #072142; z-index: 9999 !important; display:block; width: 100%; min-width: 100%; text-align: -webkit-center; font-size: 14pt; background-color: #072142; color: white; height: 4.5vh; font-weight: bold; line-height: 26pt;">&nbsp;
+            Mis Chat
+        </div>         
+        <section class="requestList animate-fade-slide-in-right">
+            <ul class="content has-header">
+                <ion-scroll class="myScroll" zooming="false" direction="y" >
+                <li ng-repeat="chat in chats track by $index" class="animate-fade-slide-in-right" ng-click="viewChat($event, $index)">
+                    <a class="item list" >
+                        <div class="imageWrapperTrade">
+                            <!-- <img src="img/appicon.png" /> -->
+                            <i class="icon-bubble-lines3 iconWinsm" style="font-size: 20pt !important; color:#04204a;"></i>
+                        </div>   
+                        <div class="info">
+                            <h3>#{{chat.COD_REF}}</h3>
+                            <p>{{chat.SMS}}</p>
+                            <p>{{chat.DT_CREATED | split:'T':0}}</p>                  
+                            <h5><hr/></h5>        
+                        </div> 
+                        <div class="list-status">
+                            <i class="icon-circle2" style="font-size: 10pt; color:{{chat.READ_CHAT == 0 ? 'GREEN':'GRAY' }};"></i>
+                        </div>                        
+                    </a>
+                </li>
+                </ion-scroll>
+            </ul>         
+ 
+        </section>         
+    </ion-content>
+</ion-view>            
+

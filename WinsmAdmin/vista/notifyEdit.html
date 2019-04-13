@@ -1,0 +1,53 @@
+<!-- Advanced legend -->
+
+<div class="row">
+    <div class="col-md-12 ">
+        <div class="panel panel-flat">
+            <div class="panel-heading">
+                Detalle Notificacion
+            </div>    
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-15" style="min-width:100%;">
+                        <div class="panel panel-flat border-bottom-lg border-bottom-warning border-right-lg border-right-danger">
+                            <div class="panel-body">
+                                <span class="status-mark border-danger position-left text-semibold"></span>Descripcion:<br>
+                                <span class="text-muted" id="DESCRIPTION"></span><br>
+                                <span class="status-mark border-danger position-left text-semibold"></span>Fecha:<br>
+                                <span class="text-muted" id="DT_CREATED"></span><br>
+                                <span class="status-mark border-danger position-left text-semibold"></span>Estado:<br>
+                                <span class="text-muted">Leido</span><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel-footer panel-footer-condensed"><a class="heading-elements-toggle"><i class="icon-more"></i></a>
+    <div class="heading-elements" style="position:inherit !important;">
+        <span class="heading-text">
+            &nbsp;
+        </span>
+        <ul class="list-inline list-inline-condensed heading-text pull-right">
+            <li class="dropdown">
+                <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i> <span class="caret"></span></a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a id="btnDeleteNotify"><i class=" icon-bin text-danger-700"></i> Borrar</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>  
+<input type="hidden" id="ID_USER" name="ID_USER" value="" />
+<input type="hidden" id="ID_NOTIF" name="ID_NOTIF" value="" />      
+<input type="hidden" id="READ_NOTIF" name="READ_NOTIF" value="1" />      
+
+<!-- /a legend -->
+
+<!-- JS page -->
+<script type="text/javascript" src="../js/jsNotifyEdit.js?x="+Math.random()></script>
+<!-- JS page -->                    

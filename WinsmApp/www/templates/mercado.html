@@ -1,0 +1,78 @@
+<ion-view view-title="Mercado">
+    <ion-content>
+        <div class="list-actions" style="top: -6.5pt !important;  right: auto !important ; bottom: initial; left: -11pt !important;  position: absolute;  border-color: black; z-index: 99999 !important; display:block;">
+            <button class="button button-clear" ng-click="back($event)"><i class=" icon-arrow-left16" style="font-size: 18pt; color:#fff;"></i></button>            
+        </div> 
+        <div class="list-title" style="top: 0pt !important;  right: auto !important ; bottom: initial; left: auto !important;  position: absolute;  border-color: #072142; z-index: 9999 !important; display:block; width: 100%; min-width: 100%; text-align: -webkit-center; font-size: 14pt; background-color: #072142; color: white; height: 4.5vh; font-weight: bold; line-height: 26pt;">&nbsp;
+            Consulta de Mercado
+        </div>         
+        <section class="requestList animate-fade-slide-in-right">
+            <ul class="content has-header">
+                <ion-scroll class="myScroll" zooming="false" direction="y">
+                <li ng-repeat="mercado in requests track by $index" class="animate-fade-slide-in-right">
+                    <a class="item list" ng-click="showProfile($event, $index)">
+                        <div class="imageWrapper">
+                            <!-- <img src="img/appicon.png" /> -->
+                            <i class="icon-stats-growth iconWinsm" style="font-size: 28pt !important; color:#04204a;"></i>
+                        </div>   
+                        <div class="info">
+                            <h3>{{mercado.t_product.PRODUCT_NAME}} - {{mercado.QT_FROM == mercado.QT_TO ? mercado.QT_FROM : mercado.QT_FROM +' a '+ mercado.QT_TO}} {{mercado.t_um.UM_NAME}}</h3>
+                            <p>{{mercado.PRICE_FROM == mercado.PRICE_TO ? mercado.PRICE_FROM : mercado.PRICE_FROM +' a '+ mercado.PRICE_TO}} {{mercado.t_currency.CURRENCY_NAME}}</p> 
+                            <p>Operación: {{mercado.TP_OPERATION}}</p>   
+                            <h5><hr/></h5>
+                        </div> 
+                    </a>
+                </li>
+                </ion-scroll>
+            </ul>         
+            <div class="profile">
+                <header style="background-color: #04204a !important;">
+                    <h3>{{mercado.t_product.PRODUCT_NAME}}</h3>
+                    <small>{{mercado.t_market.MARKET_NAME}}</small>
+                </header>
+                <ion-scroll zooming="false" direction="y">
+                <ul>                   
+                    <li>
+                        <h4>Precio:</h4>
+                        <p>{{mercado.PRICE_FROM == mercado.PRICE_TO ? mercado.PRICE_FROM : mercado.PRICE_FROM +' a '+ mercado.PRICE_TO}}</p>
+                    </li>
+                    <li>
+                        <h4>Moneda:</h4>
+                        <p>{{mercado.t_currency.CURRENCY_NAME}}</p>
+                    </li>
+                    <li>
+                        <h4>Cantidad:</h4>
+                        <p>{{mercado.QT_FROM == mercado.QT_TO ? mercado.QT_FROM : mercado.QT_FROM +' a '+ mercado.QT_TO}}</p>
+                    </li>
+                    <li>
+                        <h4>Unidad Medida:</h4>
+                        <p>{{mercado.t_um.UM_NAME}}</p>
+                    </li>
+                    <li>
+                        <h4>Fecha de Entrega:</h4>
+                        <p>{{mercado.DT_FROM |split:'T':0}} a {{mercado.DT_TO |split:'T':0}}</p>
+                    </li>  
+                    <li>
+                        <h4>Lugar de Entrega:</h4>
+                        <p>{{mercado.t_place.PLACE_NAME }}</p>
+                    </li>                    
+                    <div class="row responsive-sm">
+                        <div class="col">            
+                            <div class="button-bar">
+                                <a class="button button-small button-positive-winsm edit-button" ng-Click="confirmNegocio($event)">Me interesa</a>
+                            </div>  
+                        </div>                  
+                        <div class="col">            
+                            <div class="button-bar">
+                                <a class="button button-small button-update-winsm" style="background-color: #116262 !important;" ng-Click="closeProfile($event)" ng-disabled="newRequest.$invalid || newRequest.$pristine ">Cerrar Detalle</a>
+                            </div>  
+                        </div>            
+                    </div>                    
+                </ul>
+
+                </ion-scroll>
+                
+            </div>             
+        </section>         
+    </ion-content>
+</ion-view>

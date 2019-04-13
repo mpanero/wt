@@ -1,0 +1,194 @@
+<ion-view view-title="Filtros de Busqueda">
+    <ion-content class="animate-fade-slide-in">
+        <div class="list-actions" style="top: -26.5pt !important;  right: auto !important ; bottom: initial; left: -11pt !important;  position: absolute;  border-color: black; z-index: 99999 !important; display:block;">
+            <button class="button button-clear" ng-click="cancelar()"><i class=" icon-arrow-left16" style="font-size: 18pt; color:#fff;"></i></button>
+        </div> 
+        <div class="list-title" style="top: -20pt !important;  right: auto !important ; bottom: initial; left: auto !important;  position: absolute;  border-color: #072142; z-index: 9999 !important; display:block; width: 100%; min-width: 100%; text-align: -webkit-center; font-size: 14pt; background-color: #072142; color: white; height: 4.5vh; font-weight: bold; line-height: 26pt;">&nbsp;
+            Filtros de Busqueda
+        </div>     
+        <section>
+        <form name="findRequest" novalidate style="margin-top: 20pt;">
+        
+            <ion-scroll class="myScroll" zooming="false" direction="y" >            
+            <div class="item item-divider" style="background-color: beige;">
+                Filtros Obligatorios
+            </div>            
+            <div class="row resetROW">
+                <div class="col col-50">
+                    <div class="list">
+                        <md-input-container style="margin-right: 10px;"  class="item">
+                            <label>Mercado</label>
+                            <md-select name="ID_MARKET" ng-model="formData.ID_MARKET" ng-change="getProduct()" >
+                                <md-option ng-repeat="m in mercados" value="{{m.ID_MARKET}}">{{m.MARKET_NAME}}</md-option>
+                            </md-select>
+                        </md-input-container>                        
+
+                    </div>            
+                </div>
+                <div class="col col-50">
+                    <div class="list">
+                        <md-input-container style="margin-right: 10px;"  class="item">
+                            <label>Tipo Producto</label>
+                            <md-select name="tipoProducto" ng-model="formData.tipoProducto"  ng-change="getProduct()" select-req>
+                                <md-option ng-repeat="tp in tproductos" value="{{tp.ID_CATEGORY_PROD}}">{{tp.CATEGORY_PROD_NAME}}</md-option>
+                            </md-select>
+                        </md-input-container>                         
+
+                    </div>            
+                </div> 
+            </div>
+            <div class="row resetROW">
+                <div class="col col-50">
+                    <div class="list">
+                        <md-input-container style="margin-right: 10px;"  class="item">
+                            <label>Producto</label>
+                            <md-select name="ID_PRODUCT" ng-model="formData.ID_PRODUCT" select-req>
+                                <md-option ng-repeat="p in productos" value="{{p.ID_PRODUCT}}">{{p.PRODUCT_NAME}}</md-option>
+                            </md-select>
+                        </md-input-container>                         
+                        
+
+                    </div>            
+                </div>                
+            </div>
+
+            <div class="item item-divider">Que operación desea realizar ?</div>        
+            <div class="resetROW"> 
+                <md-radio-group name="ID_TP_OPERATION" ng-model="formData.ID_TP_OPERATION" radio-req>
+                    <div class="row item">
+                        <div class="col col-50 responsive-md" ng-repeat="op in operaciones" style="margin-left: 12pt;"><md-radio-button ng-value="op.ID_TYPE" class="md-primary">{{op.INFO}}</md-radio-button>                    
+                        </div>
+                    </div>
+                </md-radio-group>                
+
+            </div>
+            <div class="item item-divider" style="background-color: beige;">
+                Otros Filtros
+            </div>  
+            <div class="row resetROW">            
+
+                <div class="col col-50">
+                    <div class="list">
+                        <label class="item item-input item-floating-label">
+                            <input placeholder="Precio Desde" type="text" name="PRICE_FROM" ng-model="formData.PRICE_FROM" number>
+                        </label>
+                    </div>            
+                </div>
+                <div class="col col-50">
+                    <div class="list">
+                        <label class="item item-input item-floating-label">
+                            <input placeholder="Precio Hasta" type="text" name="PRICE_TO" ng-model="formData.PRICE_TO" number>
+                        </label>
+                    </div>            
+                </div>            
+            </div>            
+            <div class="row resetROW">            
+                <div class="col col-50">
+                    <div class="list">
+                        <label class="item item-input item-floating-label">
+                            <input placeholder="Cantidad Desde" type="text" name="QT_FROM" ng-model="formData.QT_FROM" number>
+                        </label>
+                    </div>            
+                </div>
+                <div class="col col-50">
+                    <div class="list">
+                        <label class="item item-input item-floating-label">
+                            <input placeholder="Cantidad Hasta" type="text" name="QT_TO" ng-model="formData.QT_TO" number>
+                        </label>
+                    </div>            
+                </div>             
+            </div>
+            <div class="row resetROW"> 
+                <div class="col col-50">
+                    <div class="list">
+
+                        <md-input-container style="margin-right: 10px;"  class="item">
+                            <label>Moneda</label>
+                            <md-select name="ID_TP_CURRENCY" ng-model="formData.ID_TP_CURRENCY" >
+                                <md-option ng-repeat="mo in monedas" value="{{mo.ID_CURRENCY}}">{{mo.CURRENCY_NAME}}</md-option>
+                            </md-select>
+                        </md-input-container>                          
+                    </div>            
+                </div>                
+                <div class="col col-50">
+                    <div class="list">
+
+                        <md-input-container style="margin-right: 10px;"  class="item">
+                            <label>UM</label>
+                            <md-select name="ID_UM" ng-model="formData.ID_UM" >
+                                <md-option ng-repeat="u in ums" value="{{u.ID_UM}}">{{u.UM_NAME}}</md-option>
+                            </md-select>
+                        </md-input-container>                        
+                    </div>            
+                </div>
+               
+            </div>
+            <div class="row resetROW">            
+                <div class="col col-50">
+                    <div class="list">
+                        <label class="item item-input item-floating-label">
+                            <input placeholder="Fecha Entrega Desde" type="text" name="DT_FROM" ng-model="formData.DT_FROM" date>
+                        </label>
+                    </div>            
+                </div>
+                <div class="col col-50">
+                    <div class="list">
+                        <label class="item item-input item-floating-label">
+                            <input placeholder="Fecha Entrega Hasta" type="text" name="DT_TO" ng-model="formData.DT_TO" date>
+                        </label>
+                    </div>            
+                </div>             
+            </div>
+            <div class="row resetROW">            
+                <div class="col col-50 ">
+                    <div class="list">
+
+                        <md-input-container style="margin-right: 10px;"  class="item">
+                            <label>Lugar Entrega</label>
+                            <md-select name="ID_PLACE_DELIVERY" ng-model="formData.ID_PLACE_DELIVERY" >
+                                <md-option ng-repeat="l in lugares" value="{{l.ID_PLACE}}">{{l.PLACE_NAME}}</md-option>
+                            </md-select>
+                        </md-input-container>                         
+                    </div>            
+                </div>
+                <div class="col col-50 ">
+                    <div class="list">
+                        <md-input-container style="margin-right: 10px;" class="md-block" flex="100"> 
+                            <label>Origen</label>
+                            <md-select name="ID_PLACE_ORIGIN" ng-model="formData.ID_PLACE_ORIGIN" >
+                                <md-option ng-repeat="l in lugares" value="{{l.ID_PLACE}}">{{l.PLACE_NAME}}</md-option>
+                            </md-select>
+                        </md-input-container>                         
+                    </div>            
+                </div>                
+            </div>
+            <div class="row resetROW">            
+                <div class="col col-50 ">
+                    <div class="list">
+                        <label class="item item-input item-floating-label">
+                            <input placeholder="KM a la redonda" type="text" name="LOC_DISTANCE" ng-model="formData.LOC_DISTANCE" number>
+                        </label>                      
+                    </div>            
+                </div>              
+            </div>            
+            <br>
+            <div class="row responsive-sm">
+                <div class="col ">            
+                    <div class="button-bar">
+                        <a class="button button-small button-save-winsm" ng-click="submitForm(findRequest.$valid)" ng-disabled="findRequest.$invalid">Consultar</a>
+                        <!-- <input type="submit" class="button button-small button-positive" disabled="true" ng-value="Guardar" /> -->
+                    </div>  
+                </div>            
+                <div class="col">            
+                    <div class="button-bar">
+                        <a class="button button-small button-cancel-winsm" ng-click="cancelar()">Cancelar</a>
+                    </div>  
+                </div>            
+            </div>
+            <input type="hidden" ng-model="formData.ID_USER_OWNER" name="ID_USER_OWNER" ng-value="" />
+         </ion-scroll>
+                   
+        </form>  
+        </section> 
+    </ion-content>
+</ion-view>

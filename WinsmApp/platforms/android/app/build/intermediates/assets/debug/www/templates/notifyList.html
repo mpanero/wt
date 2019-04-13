@@ -1,0 +1,73 @@
+<ion-view view-title="Notificaciones">
+    <ion-content>
+        <div class="list-actions" style="top: -6.5pt !important;  right: auto !important ; bottom: initial; left: -11pt !important;  position: absolute;  border-color: black; z-index: 99999 !important; display:block; width: auto;">
+            <button class="button button-clear" ng-click="back()"><i class=" icon-arrow-left16" style="font-size: 18pt; color:#fff;"></i></button>            
+        </div>
+        <div class="list-title" style="top: 0pt !important;  right: auto !important ; bottom: initial; left: auto !important;  position: absolute;  border-color: #072142; z-index: 9999 !important; display:block; width: 100%; min-width: 100%; text-align: -webkit-center; font-size: 14pt; background-color: #072142; color: white; height: 4.5vh; font-weight: bold; line-height: 26pt;">&nbsp;
+            Notificaciones
+        </div>        
+        <section class="requestList animate-fade-slide-in-right" >
+            
+            <ul class="content has-header">
+                <ion-scroll class="myScroll" zooming="false" direction="y" >
+                <li ng-repeat="notify in notifys track by $index" class="animate-fade-slide-in-right">
+                    <a class="item list" ng-click="showProfile($event, $index)">
+                        <div class="imageWrapper">
+                            <!-- <img src="img/appicon.png" />-->
+                            <i class="icon-bubble-notification iconWinsm" style="font-size: 28pt !important; color:#04204a;"></i>
+                        </div>   
+                        <div class="info">
+                            <h3>{{notify.DESCRIPTION}} REF: #{{notify.COD_REF}}</h3>
+                            <p>{{notify.DT_CREATED |split:' ':0}}</p>
+                            <p>{{notify.READ_NOTIF == 1 ? 'Leida' : 'No leida'}}</p>
+                            <h5><hr/></h5> 
+                        </div> 
+                    </a>
+                </li>                   
+                </ion-scroll>
+            </ul>     
+            <div class="profile scroll-content ionic-scroll">
+                <header style="background-color: #04204a !important;">
+                    <h3>NOTIFICACI&Oacute;N</h3>
+                </header>
+                <ion-scroll zooming="false" direction="y">
+                <ul class="details">  
+                    <li>
+                        <h4>Referecnia:</h4>
+                        <p>{{notify.COD_REF}}</p>
+                    </li>                    
+                    <li>
+                        <h4>Descripcion:</h4>
+                        <p>{{notify.DESCRIPTION}}</p>
+                    </li>
+                    <li>
+                        <h4>Fecha:</h4>
+                        <p>{{notify.DT_CREATED |split:' ':0}}</p>
+                    </li>                    
+                    <li>
+                        <h4>Estatus:</h4>
+                        <p>{{notify.READ_NOTIF == 1 ? 'Leida' : 'No leida'}}</p>
+                    </li>
+          
+                    <div class="row responsive-sm">
+                        <div class="col">            
+                            <div class="button-bar">
+                                <a class="button button-small button-assertive" ng-click="deleteNotify($event)">Borrar Notificaci&oacute;n</a>
+                            </div>  
+                        </div>
+                        <div class="col">            
+                            <div class="button-bar">
+                                <a class="button button-small button-cancel-winsm" ng-click="closeProfile($event)">Cerrar Detalle</a>
+                                <!-- <input type="submit" class="button button-small button-positive" disabled="true" ng-value="Guardar" /> -->
+                            </div>  
+                        </div>            
+                    </div>                    
+                </ul>
+                </ion-scroll>
+    
+            </div>   
+            
+        </section>         
+    </ion-content>
+</ion-view>            
+

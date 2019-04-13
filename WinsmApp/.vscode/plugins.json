@@ -1,0 +1,1 @@
+{"plugins":["cordova-plugin-whitelist","cordova-plugin-console","cordova-plugin-device","cordova-plugin-network-information","cordova-plugin-splashscreen","cordova-plugin-screen-orientation","es6-promise-plugin","cordova-plugin-call-number","ionic-plugin-keyboard"]}

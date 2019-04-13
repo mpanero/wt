@@ -1,0 +1,32 @@
+<form name="confirmForm" novalidate style="man-height: 94vh !important;">
+    <fieldset>
+        <div class="row responsive-sm resetROW">
+            <div class="col well white">
+                <div class="form-group filled-static">
+                  <label for="inputEmail" class="control-label">Confirme la cantidad que necesita: {{requestData.PRICE_FROM}} - {{requestData.PRICE_TO}} {{requestData.t_um.UM_NAME}}</label>
+                  <input type="text" class="form-control" ng-model="confirm.PRICE" placeholder="Precio" ng-min={{requestData.PRICE_FROM}} ng-max={{requestData.PRICE_TO}} range>
+                </div>            
+                <div class="form-group filled-static">
+                    <label for="inputEmail" class="control-label">Precio de inter&eacute;s: {{requestData.QT_FROM}} - {{requestData.QT_TO}} {{requestData.t_currency.CURRENCY_NAME}}</label>
+                    <input type="text" class="form-control" ng-model="confirm.QT" placeholder="Cantidad" ng-min={{requestData.QT_FROM}} ng-max={{requestData.QT_TO}}  range>
+                </div> 
+
+                <div class="form-group errorForm">
+                    {{confirmExt.error}}
+                </div>
+            </div>     
+        </div>
+        <div class="row resetROW">
+            <div class="col col-50">            
+                <div class="button-bar">
+                    <a class="button button-small button-save-winsm" ng-click="addNegocio(confirmForm.$valid,$event)" ng-disabled="confirmForm.$invalid">Aceptar</a>
+                </div>  
+            </div> 
+            <div class="col col-50">            
+                <div class="button-bar">
+                    <a class="button button-small button-assertive" ng-click="closeConfirm($event)">Cancelar</a>
+                </div>  
+            </div>         
+        </div>   
+    </fieldset>
+</form>

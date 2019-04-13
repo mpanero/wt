@@ -1,0 +1,157 @@
+<div class="col-md-12">
+
+    <!-- Advanced legend -->
+    <form id="filterMarket" action="#" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">Filtros de Busqueda</h5>
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li><a data-action="collapse"></a></li>
+                                <li><a data-action="reload"></a></li>
+                                <li><a data-action="close"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">                        
+                                <fieldset>
+                                    <legend class="text-semibold">
+                                        <i class="icon-file-text2 position-left"></i>
+                                        Filtros Obligatorios
+                                        <a class="control-arrow" data-toggle="collapse" data-target="#demo1">
+                                            <i class="icon-circle-down2"></i>
+                                        </a>
+                                    </legend>
+
+                                    <div class="collapse in" id="demo1">
+                                        <div class="row">
+                                            <div class="col-md-6">                                         
+                                                <div class="form-group">
+                                                    <label>Tipo Producto:</label>
+                                                    <select id="tipoProducto" name="tipoProducto" placeholder="Tipo Producto" class="select selected">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6"> 
+                                                <div id="divProd" class="form-group">
+                                                    <label>Producto:</label>
+                                                    <select id="ID_PRODUCT" name="ID_PRODUCT" placeholder="Producto" class="select selected">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="divOperacion" ></div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>     
+                        <!-- Precio Cantidad -->
+                        <div class="row">
+                            <div class="col-md-12">                           
+                                <fieldset>
+                                    <legend class="text-semibold">
+                                        <i class="icon-reading position-left"></i>
+                                        Otros Filtros
+                                        <a class="control-arrow" data-toggle="collapse" data-target="#demo2">
+                                            <i class="icon-circle-down2"></i>
+                                        </a>
+                                    </legend>
+
+                                    <div class="collapse in" id="demo2">
+										<div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group" id="divPFr" >
+                                                    <label>Precio Desde:</label>
+                                                    <input id="PRICE_FROM" name="PRICE_FROM" type="text" placeholder="Precio Desde" class="form-control number">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group" id="divPTo" >
+                                                    <label>Precio Hasta:</label>
+                                                    <input id="PRICE_TO" name="PRICE_TO" type="text" placeholder="Precio Hasta" class="form-control number">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" >
+                                            <div class="col-md-6">
+                                                <div class="form-group" >
+                                                    <label>Cantidad Desde:</label>
+                                                    <input id="QT_FROM" name="QT_FROM" type="text" placeholder="Cantidad Desde" class="form-control number">
+                                                </div>
+                                            </div>
+    
+                                            <div class="col-md-6">
+                                                <div class="form-group" >
+                                                    <label>Cantidad Hasta:</label>
+                                                    <input id="QT_TO" name="QT_TO" type="text" placeholder="Cantidad Hasta" class="form-control number">
+                                                </div>
+                                            </div>
+                                        </div>    
+                                        <div class="row" >
+                                            <div class="col-md-6">                                        
+                                                <div class="form-group" id="divMone" >
+                                                    <label>Moneda:</label>
+                                                    <select id="ID_TP_CURRENCY" name="ID_TP_CURRENCY"  placeholder="Moneda" class="select ">
+                                                    </select>
+                                                </div>   
+                                            </div>    
+                                            <div class="col-md-6"> 
+                                                <div class="form-group">
+                                                    <label>UM:</label>
+                                                    <select id="ID_UM" name="ID_UM" placeholder="UM" class="select">
+                                                    </select>
+                                                </div>    
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6"> 
+                                                <div class="form-group">
+                                                    <label>Fecha Entrega Desde:</label>
+                                                    <input id="DT_FROM" name="DT_FROM" type="text" placeholder="Fecha Entrega Desde" class="form-control pickadateClear ">
+                                                </div>
+                                            </div>    
+                                            <div class="col-md-6"> 
+                                                <div class="form-group">
+                                                    <label>Fecha Entrega Hasta:</label>
+                                                    <input id="DT_TO" name="DT_TO" type="text" placeholder="Fecha Entrega Hasta" class="form-control pickadateClear ">
+                                                </div>
+                                            </div>
+
+                                        </div>  
+                                        <div class="row" id="divLEntrega">
+                                            <div class="col-md-6"> 
+                                                <div class="form-group">
+                                                    <label>Lugar Entrega:</label>
+                                                    <select id="ID_PLACE_DELIVERY" name="ID_PLACE_DELIVERY" placeholder="Lugar Entrega" class="select">
+                                                    </select>
+                                                </div>
+                                            </div>    
+                                        </div>                                                                                                                                                                                                
+                                    </div>
+                                                                                                                                                                             
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <button type="button" class="btn btn-primary-winsm btnFilterMarket">Filtrar&nbsp;<i class=" icon-search4 sideToSide position-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="ID_USER_OWNER" name="ID_USER_OWNER" value="" /> 
+        <input type="hidden" id="ID_MARKET" name="ID_MARKET" value="1" />    
+          
+    </form>
+    <!-- /a legend -->
+
+</div>
+<!-- JS page -->
+<script type="text/javascript" src="../js/jsMarketFilter.js?x="+Math.random()></script>
+<!-- JS page -->

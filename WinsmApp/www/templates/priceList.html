@@ -1,0 +1,75 @@
+<ion-view view-title="Precios de Mercado">
+    <ion-content>
+        <div class="list-actions" style="top: -6.5pt !important;  right: auto !important ; bottom: initial; left: -11pt !important;  position: absolute;  border-color: black; z-index: 99999 !important; display:block; width: auto;">
+            <button class="button button-clear" ng-click="back()"><i class=" icon-arrow-left16" style="font-size: 18pt; color:#fff;"></i></button>            
+        </div>
+        <div class="list-title" style="top: 0pt !important;  right: auto !important ; bottom: initial; left: auto !important;  position: absolute;  border-color: #072142; z-index: 9999 !important; display:block; width: 100%; min-width: 100%; text-align: -webkit-center; font-size: 14pt; background-color: #072142; color: white; height: 4.5vh; font-weight: bold; line-height: 26pt;">&nbsp;
+            Precios de Mercado
+        </div>        
+        <section class="requestList animate-fade-slide-in-right" >
+            <ion-scroll class="myScroll" zooming="false" direction="y" >
+                <div class="md-accordion items" ng-repeat="product in products track by $index">
+                    <md-toolbar ng-init="product.expanded = false" ng-click="collapseAll(product)" style="background-color:#006B3F !important; color:#fff;">
+                        <div class="md-toolbar-tools" >
+                            <h5>
+                                <span>{{product.PRODUCT_NAME}}</span>
+                            </h5>
+                            
+                            <span flex=""></span>
+                            <span ng-class="{expandCollapse:true, active:product.expanded}"></span> 
+                        </div>
+                    </md-toolbar>
+                    <div ng-class="{dataContent:true, activeContent:product.expanded}" ng-show='product.t_prices.ID_PRODUCT != null'>
+                        <span >Fecha de Cotización: {{toDate(dateCotiza) | date : 'dd-MM-yyyy'}}</span>
+                        <h5><b>Precio Pizarra</b></h5>
+                        <table border="3" cellpadding="1" cellspacing="1" style="width: 100%;">
+                            <thead>
+                                <th>&nbsp;</th>
+                                <th style="background-color:#60BC3F; color:#000; font-weight: bolder;">Cotizaci&oacute;n</th>
+                                <th style="background-color:#60BC3F; color:#000; font-weight: bolder;">Moneda</th>
+                                <th style="background-color:#60BC3F; color:#000; font-weight: bolder;">Var</th>
+                            </thead>                            
+                            <tbody>
+                                <tr ng-repeat="place in places" data-ng-if="product.ID_PRODUCT_PRICE == place.t_prices.ID_PRODUCT">
+                                    <td><strong>{{place.t_places_price.PLACE_NAME}}</strong></td>
+                                    <td><strong>{{place.t_prices.PRICE_VALUE}}</strong></td>
+                                    <td><strong>{{place.t_currency.CURRENCY_NAME}}</strong></td>
+                                    <td><strong>{{place.t_prices.VAR}}<i ng-show="cambioUp({{place.t_prices.VAR}})" class="icon-arrow-up16" style="font-size: 10pt; color:#04204a;"></i><i ng-show="cambioDown({{place.t_prices.VAR}})" class="icon-arrow-down16" style="font-size: 10pt; color:#ff0000;"></i></strong></td>
+                                </tr>
+                            </tbody>
+                        </table>  
+                        <span >&nbsp;</span>
+                        <span ><h6>Última Actualización: {{toDate(dateUpdate) | date : 'dd-MM-yyyy'}}</h6></span>
+                        <span >&nbsp;</span>
+                        <h5><b>Precio Chicago</b></h5>
+                        <table border="3" cellpadding="1" cellspacing="1" style="width: 100%;">
+                            <thead>
+                                <th>&nbsp;</th>
+                                <th style="background-color:#60BC3F; color:#000; font-weight: bolder;">Cotizaci&oacute;n</th>
+                                <th style="background-color:#60BC3F; color:#000; font-weight: bolder;">Moneda</th>
+                                <th style="background-color:#60BC3F; color:#000; font-weight: bolder;">Var</th>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="position in positions" data-ng-if="product.ID_PRODUCT_PRICE == position.t_prices.ID_PRODUCT">
+                                    <td><strong>{{position.t_position.POSITION}}</strong></td>
+                                    <td><strong>{{position.t_prices.PRICE_VALUE}}</strong></td>
+                                    <td><strong>{{position.t_currency.CURRENCY_NAME}}</strong></td>
+                                    <td>
+                                        <strong>{{position.t_prices.VAR}}<i ng-show="cambioUp({{position.t_prices.VAR}})" class="icon-arrow-up16" style="font-size: 10pt; color:#04204a;"></i><i ng-show="cambioDown({{position.t_prices.VAR}})" class="icon-arrow-down16" style="font-size: 10pt; color:#ff0000;"></i>
+                                        </strong>
+                                    </td>
+                                </tr>                               
+                            </tbody>
+                        </table>   
+                        <span >&nbsp;</span>
+                        <span ><h6>Última Actualización: {{toDate(dateUpdate) | date : 'dd-MM-yyyy hh:mm:ss'}}</h6></span>
+                    </div>
+                    <div ng-class="{dataContent:true, activeContent:product.expanded}" ng-show='product.t_prices.ID_PRODUCT == null'>
+                        Sin Informaci&oacute;n
+                    </div>
+                </div>           
+            </ion-scroll>
+        </section>          
+    </ion-content>
+</ion-view>            
+
