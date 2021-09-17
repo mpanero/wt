@@ -68,7 +68,7 @@
     "gulp-umd": "^0.2.0",
     "gulp-useref": "~1.1.0",
     "gulp-util": "~3.0.2",
-    "http-proxy": "~1.8.0",
+    "http-proxy": "~1.18.1",
     "jshint-stylish": "^1.0.2",
     "karma": "~0.12.31",
     "karma-chai": "0.1.0",
