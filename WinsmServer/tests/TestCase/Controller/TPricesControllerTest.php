@@ -2,13 +2,17 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\TPricesController;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\TPricesController Test Case
+ *
+ * @uses \App\Controller\TPricesController
  */
-class TPricesControllerTest extends IntegrationTestCase
+class TPricesControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
 
     /**
      * Fixtures
@@ -16,7 +20,7 @@ class TPricesControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_prices'
+        'app.TPrices'
     ];
 
     /**

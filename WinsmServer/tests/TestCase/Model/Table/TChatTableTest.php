@@ -10,7 +10,6 @@ use Cake\TestSuite\TestCase;
  */
 class TChatTableTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -24,7 +23,7 @@ class TChatTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_chat'
+        'app.TChat'
     ];
 
     /**
@@ -35,8 +34,8 @@ class TChatTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('TChat') ? [] : ['className' => TChatTable::class];
-        $this->TChat = TableRegistry::get('TChat', $config);
+        $config = TableRegistry::getTableLocator()->exists('TChat') ? [] : ['className' => TChatTable::class];
+        $this->TChat = TableRegistry::getTableLocator()->get('TChat', $config);
     }
 
     /**

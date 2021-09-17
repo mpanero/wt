@@ -21,11 +21,22 @@
                 <th scope="col"><?= $this->Paginator->sort('PASSWORD') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('NAME') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('SURNAME') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('GENDER') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('COMPANY') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('ID_GENDER') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('BIRTHDATE') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('PHONE_MOBILE') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('PHONE_OTHER') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('PHONE_MOBILE_COUNTRY') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('PHONE_MOBILE_NUM') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('PHONE_OTHER_COUNTRY') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('PHONE_OTHER_NUM') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('ID_ROL') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('ID_PLACE') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('ID_LEGAL') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('ACTIVITY') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('ID_TYPE_STATUS_USER') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('Q1') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('Q2') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('Q3') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('USER_ADMIN') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -38,11 +49,22 @@
                 <td><?= h($tUser->PASSWORD) ?></td>
                 <td><?= h($tUser->NAME) ?></td>
                 <td><?= h($tUser->SURNAME) ?></td>
-                <td><?= h($tUser->GENDER) ?></td>
+                <td><?= h($tUser->COMPANY) ?></td>
+                <td><?= $this->Number->format($tUser->ID_GENDER) ?></td>
                 <td><?= h($tUser->BIRTHDATE) ?></td>
-                <td><?= h($tUser->PHONE_MOBILE) ?></td>
-                <td><?= h($tUser->PHONE_OTHER) ?></td>
+                <td><?= $this->Number->format($tUser->PHONE_MOBILE_COUNTRY) ?></td>
+                <td><?= $this->Number->format($tUser->PHONE_MOBILE_NUM) ?></td>
+                <td><?= $this->Number->format($tUser->PHONE_OTHER_COUNTRY) ?></td>
+                <td><?= $this->Number->format($tUser->PHONE_OTHER_NUM) ?></td>
+                <td><?= $this->Number->format($tUser->ID_ROL) ?></td>
                 <td><?= $this->Number->format($tUser->ID_PLACE) ?></td>
+                <td><?= $this->Number->format($tUser->ID_LEGAL) ?></td>
+                <td><?= h($tUser->ACTIVITY) ?></td>
+                <td><?= $this->Number->format($tUser->ID_TYPE_STATUS_USER) ?></td>
+                <td><?= $this->Number->format($tUser->Q1) ?></td>
+                <td><?= $this->Number->format($tUser->Q2) ?></td>
+                <td><?= $this->Number->format($tUser->Q3) ?></td>
+                <td><?= $this->Number->format($tUser->USER_ADMIN) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $tUser->ID_USER]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $tUser->ID_USER]) ?>

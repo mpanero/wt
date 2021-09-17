@@ -2,13 +2,17 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\TChatController;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\TChatController Test Case
+ *
+ * @uses \App\Controller\TChatController
  */
-class TChatControllerTest extends IntegrationTestCase
+class TChatControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
 
     /**
      * Fixtures
@@ -16,7 +20,7 @@ class TChatControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_chat'
+        'app.TChat'
     ];
 
     /**

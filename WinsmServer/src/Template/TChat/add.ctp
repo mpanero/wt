@@ -16,11 +16,13 @@
         <legend><?= __('Add T Chat') ?></legend>
         <?php
             echo $this->Form->control('ID_TRADE');
-            echo $this->Form->control('ID_USER_OWNER');
-            echo $this->Form->control('ID_USER_CPART');
+            echo $this->Form->control('COD_REF');
+            echo $this->Form->control('ID_USER_ORIGEN');
+            echo $this->Form->control('ID_USER_DESTINY');
             echo $this->Form->control('SMS');
             echo $this->Form->control('READ_CHAT');
             echo $this->Form->control('DT_CREATED');
+            echo $this->Form->control('VERIFIED');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

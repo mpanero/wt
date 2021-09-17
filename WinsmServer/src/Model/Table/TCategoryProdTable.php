@@ -12,14 +12,14 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\TCategoryProd get($primaryKey, $options = [])
  * @method \App\Model\Entity\TCategoryProd newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\TCategoryProd[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TCategoryProd|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TCategoryProd|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TCategoryProd saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\TCategoryProd patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\TCategoryProd[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\TCategoryProd findOrCreate($search, callable $callback = null, $options = [])
  */
 class TCategoryProdTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -45,22 +45,21 @@ class TCategoryProdTable extends Table
     {
         $validator
             ->integer('ID_CATEGORY_PROD')
-            ->allowEmpty('ID_CATEGORY_PROD', 'create');
+            ->allowEmptyString('ID_CATEGORY_PROD', null, 'create');
 
         $validator
             ->scalar('CATEGORY_PROD_NAME')
             ->maxLength('CATEGORY_PROD_NAME', 100)
-            ->allowEmpty('CATEGORY_PROD_NAME');
+            ->allowEmptyString('CATEGORY_PROD_NAME');
 
         $validator
             ->integer('ID_MARKET')
             ->requirePresence('ID_MARKET', 'create')
-            ->notEmpty('ID_MARKET');
+            ->notEmptyString('ID_MARKET');
 
         $validator
             ->integer('ACTIVE')
-            ->requirePresence('ACTIVE', 'create')
-            ->notEmpty('ACTIVE');
+            ->notEmptyString('ACTIVE');
 
         return $validator;
     }

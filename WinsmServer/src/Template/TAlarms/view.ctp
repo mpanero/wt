@@ -25,6 +25,14 @@
             <td><?= $this->Number->format($tAlarm->ID_USER) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('ID PLACE PRICE') ?></th>
+            <td><?= $this->Number->format($tAlarm->ID_PLACE_PRICE) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('ID MARKET') ?></th>
+            <td><?= $this->Number->format($tAlarm->ID_MARKET) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('ID PRODUCT') ?></th>
             <td><?= $this->Number->format($tAlarm->ID_PRODUCT) ?></td>
         </tr>
@@ -33,16 +41,28 @@
             <td><?= $this->Number->format($tAlarm->ID_TYPE_PRICE) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('ID MARKET') ?></th>
-            <td><?= $this->Number->format($tAlarm->ID_MARKET) ?></td>
-        </tr>
-        <tr>
             <th scope="row"><?= __('PRICE FROM') ?></th>
             <td><?= $this->Number->format($tAlarm->PRICE_FROM) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('PRICE TO') ?></th>
             <td><?= $this->Number->format($tAlarm->PRICE_TO) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('ID CURRENCY') ?></th>
+            <td><?= $this->Number->format($tAlarm->ID_CURRENCY) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('AUT GENERATION') ?></th>
+            <td><?= $this->Number->format($tAlarm->AUT_GENERATION) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('ID TP OPERATION') ?></th>
+            <td><?= $this->Number->format($tAlarm->ID_TP_OPERATION) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('ID POSITION') ?></th>
+            <td><?= $this->Number->format($tAlarm->ID_POSITION) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('ACTIVE') ?></th>

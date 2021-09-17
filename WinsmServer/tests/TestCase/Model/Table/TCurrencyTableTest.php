@@ -10,7 +10,6 @@ use Cake\TestSuite\TestCase;
  */
 class TCurrencyTableTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -24,7 +23,7 @@ class TCurrencyTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_currency'
+        'app.TCurrency'
     ];
 
     /**
@@ -35,8 +34,8 @@ class TCurrencyTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('TCurrency') ? [] : ['className' => TCurrencyTable::class];
-        $this->TCurrency = TableRegistry::get('TCurrency', $config);
+        $config = TableRegistry::getTableLocator()->exists('TCurrency') ? [] : ['className' => TCurrencyTable::class];
+        $this->TCurrency = TableRegistry::getTableLocator()->get('TCurrency', $config);
     }
 
     /**

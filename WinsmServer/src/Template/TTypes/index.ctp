@@ -18,7 +18,10 @@
                 <th scope="col"><?= $this->Paginator->sort('ID_TYPE') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('TYPE') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('INFO') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('INFO1') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('ACTIVE') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('DATA_1') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('ORDER_INFO') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -28,7 +31,10 @@
                 <td><?= $this->Number->format($tType->ID_TYPE) ?></td>
                 <td><?= h($tType->TYPE) ?></td>
                 <td><?= h($tType->INFO) ?></td>
+                <td><?= h($tType->INFO1) ?></td>
                 <td><?= $this->Number->format($tType->ACTIVE) ?></td>
+                <td><?= h($tType->DATA_1) ?></td>
+                <td><?= $this->Number->format($tType->ORDER_INFO) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $tType->ID_TYPE]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $tType->ID_TYPE]) ?>

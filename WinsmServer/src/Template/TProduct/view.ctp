@@ -21,6 +21,14 @@
             <td><?= h($tProduct->PRODUCT_NAME) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('ACRONYM') ?></th>
+            <td><?= h($tProduct->ACRONYM) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('ICON PATH') ?></th>
+            <td><?= h($tProduct->ICON_PATH) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('ID PRODUCT') ?></th>
             <td><?= $this->Number->format($tProduct->ID_PRODUCT) ?></td>
         </tr>

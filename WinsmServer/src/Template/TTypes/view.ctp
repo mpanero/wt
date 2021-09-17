@@ -25,12 +25,24 @@
             <td><?= h($tType->INFO) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('INFO1') ?></th>
+            <td><?= h($tType->INFO1) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('DATA 1') ?></th>
+            <td><?= h($tType->DATA_1) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('ID TYPE') ?></th>
             <td><?= $this->Number->format($tType->ID_TYPE) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('ACTIVE') ?></th>
             <td><?= $this->Number->format($tType->ACTIVE) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('ORDER INFO') ?></th>
+            <td><?= $this->Number->format($tType->ORDER_INFO) ?></td>
         </tr>
     </table>
 </div>

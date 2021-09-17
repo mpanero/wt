@@ -7,12 +7,11 @@ use Cake\ORM\Entity;
  * TCurrency Entity
  *
  * @property int $ID_CURRENCY
- * @property string $CURRENCY_NAME
- * @property int $ID_COUNTRY
+ * @property string|null $CURRENCY_NAME
+ * @property int|null $ID_COUNTRY
  */
 class TCurrency extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *

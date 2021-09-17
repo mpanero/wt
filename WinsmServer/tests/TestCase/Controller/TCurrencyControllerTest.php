@@ -2,13 +2,17 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\TCurrencyController;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\TCurrencyController Test Case
+ *
+ * @uses \App\Controller\TCurrencyController
  */
-class TCurrencyControllerTest extends IntegrationTestCase
+class TCurrencyControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
 
     /**
      * Fixtures
@@ -16,7 +20,7 @@ class TCurrencyControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_currency'
+        'app.TCurrency'
     ];
 
     /**

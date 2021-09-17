@@ -17,6 +17,14 @@
     <h3><?= h($tTrade->ID_TRADE) ?></h3>
     <table class="vertical-table">
         <tr>
+            <th scope="row"><?= __('COD REF') ?></th>
+            <td><?= h($tTrade->COD_REF) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('QUALITY INFO') ?></th>
+            <td><?= h($tTrade->QUALITY_INFO) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('ID TRADE') ?></th>
             <td><?= $this->Number->format($tTrade->ID_TRADE) ?></td>
         </tr>
@@ -25,16 +33,12 @@
             <td><?= $this->Number->format($tTrade->ID_REQUEST) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('ID REQUEST 1') ?></th>
-            <td><?= $this->Number->format($tTrade->ID_REQUEST_1) ?></td>
+            <th scope="row"><?= __('ID USER OWNER') ?></th>
+            <td><?= $this->Number->format($tTrade->ID_USER_OWNER) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('ID USER') ?></th>
-            <td><?= $this->Number->format($tTrade->ID_USER) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('ID USER 1') ?></th>
-            <td><?= $this->Number->format($tTrade->ID_USER_1) ?></td>
+            <th scope="row"><?= __('ID USER CPART') ?></th>
+            <td><?= $this->Number->format($tTrade->ID_USER_CPART) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('PRICE') ?></th>
@@ -53,20 +57,48 @@
             <td><?= $this->Number->format($tTrade->ID_UM) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('CONFIRMED') ?></th>
-            <td><?= $this->Number->format($tTrade->CONFIRMED) ?></td>
+            <th scope="row"><?= __('CONFIRMED OWNER') ?></th>
+            <td><?= $this->Number->format($tTrade->CONFIRMED_OWNER) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('CONFIRMED 1') ?></th>
-            <td><?= $this->Number->format($tTrade->CONFIRMED_1) ?></td>
+            <th scope="row"><?= __('CONFIRMED CPART') ?></th>
+            <td><?= $this->Number->format($tTrade->CONFIRMED_CPART) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('ID TP STATUS TRADE') ?></th>
             <td><?= $this->Number->format($tTrade->ID_TP_STATUS_TRADE) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('ID TYPE PRICE') ?></th>
+            <td><?= $this->Number->format($tTrade->ID_TYPE_PRICE) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('ID PRICE REF') ?></th>
+            <td><?= $this->Number->format($tTrade->ID_PRICE_REF) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('ID CROP') ?></th>
+            <td><?= $this->Number->format($tTrade->ID_CROP) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('ID TYPE DELIVERY') ?></th>
+            <td><?= $this->Number->format($tTrade->ID_TYPE_DELIVERY) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('TYPE QUALITY') ?></th>
+            <td><?= $this->Number->format($tTrade->TYPE_QUALITY) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('DH CREATION') ?></th>
             <td><?= h($tTrade->DH_CREATION) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('DT PRICE FIX FROM') ?></th>
+            <td><?= h($tTrade->DT_PRICE_FIX_FROM) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('DT PRICE FIX TO') ?></th>
+            <td><?= h($tTrade->DT_PRICE_FIX_TO) ?></td>
         </tr>
     </table>
 </div>

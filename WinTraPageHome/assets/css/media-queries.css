@@ -1,0 +1,182 @@
+
+@media (min-width: 992px) and (max-width: 1199px) {
+	
+	.more-features-box-text { margin-top: 30px; padding-left: 0; }
+	.more-features-box-text:first-child { margin-top: 0; }
+	
+	.always-beautiful-box-text-left { padding-right: 0; }
+	.always-beautiful-box-text-left:first-child { margin-top: 0; }
+	
+	.how-it-works-box-icon .how-it-works-step { left: 75px; }
+	
+	.testimonial-list .testimonial-image { width: 20%; }
+	.testimonial-list .testimonial-text { width: 80%; }
+
+	.custom-offset{
+		    margin-left: 15%;
+	}
+
+	.logo-position{
+		top: 120px;
+		left: 181px;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 991px){
+
+	.section-description p { padding: 0; }
+	
+	.more-features-box { float: none; width: auto; }
+	.more-features-box-text { margin-top: 30px; padding-left: 0; text-align: center; }
+	.more-features-box-text:first-child { margin-top: 50px; }
+	.more-features-box-text-icon { float: none; display: inline-block; }
+	.more-features-box-text h3 { float: none; width: auto; margin-top: 20px; }
+	.more-features-box-text-description { float: none; width: auto; }
+	
+	.always-beautiful-box { float: none; width: auto; }
+	.always-beautiful-box-text { margin-top: 30px; padding-left: 0; text-align: center; }
+	.always-beautiful-box-text-left { padding-right: 0; }
+	
+	.how-it-works-box-icon .how-it-works-step { left: 40px; }
+	
+	.testimonial-list .testimonial-image { width: 25%; }
+	.testimonial-list .testimonial-text { width: 75%; }
+
+	.logo-position{
+		top: 185px;
+		left: 160px;
+	}
+
+}
+
+@media (max-width: 767px) {
+	.logo-position{
+		top: 120px;
+		left: 181px;
+	}
+	.navbar.navbar-no-bg { background: #fff; }
+	.navbar-brand { margin-left: 15px; }
+	.navbar-collapse { border: 0; }
+	ul.navbar-nav li a:hover, ul.navbar-nav li a:focus { padding-bottom: 10px; border-bottom: 1px solid transparent; }
+	ul.navbar-nav li a.btn-link-2 { margin-left: 15px; margin-right: 15px; }
+	
+	
+	.inner-bg { padding: 150px 0 70px 0; }
+	.top-content .text { padding-top: 0; padding-bottom: 60px; }
+	.subscribe input.subscribe-email, .subscribe button { width: 100%; }
+	
+	.section-description p { padding: 0; }
+    
+    .more-features-box-text { margin-top: 30px; padding-left: 0; text-align: center; }
+	.more-features-box-text:first-child { margin-top: 50px; }	
+	.more-features-box-text-icon { float: none; display: inline-block; }
+	.more-features-box-text h3 { float: none; width: auto; margin-top: 20px; }
+	.more-features-box-text-description { float: none; width: auto; }
+	
+	.always-beautiful-box-text { margin-top: 30px; padding-left: 0; text-align: center; }
+	.always-beautiful-box-text-left { padding-right: 0; }
+	
+	.how-it-works-box-icon .how-it-works-step { left: 20px; }
+    
+    .pricing-box { padding-bottom: 50px; }
+    .pricing-box:last-child { padding-bottom: 0; }
+	
+	.testimonial-list .testimonial-image { float: none; width: auto; text-align: center; }
+	.testimonial-list .testimonial-text { float: none; width: auto; margin-top: 30px; text-align: center; }
+	.testimonial-list .nav-tabs { margin-top: 20px; text-align: center; }
+	.testimonial-list .testimonial-image .testimonial-icon { display: none; }
+	.custom-offset{
+		margin-left: 0%;
+		text-align: left;
+	}
+
+	.logo-position{
+		left: 0% !important;
+		top: 25% !important;
+	}
+
+	.navbar-brand {
+		width: 150px;
+		height: 60px;
+		background: url(../custom/logo-mobile.svg) left  no-repeat;
+		text-indent: -99999px;
+	}
+
+	.container-formulario{
+		display: block;
+	}
+
+	.padding-mobile{
+		padding-top: 15px;
+	}
+
+	.container{top:0px !important}
+
+	.margin-row{
+		margin: 0px;
+	}
+
+}
+
+@media (max-width: 415px) {
+	
+	h1, h2 { font-size: 32px; }
+
+
+
+}
+
+
+/* Retina-ize images/icons */
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (   min--moz-device-pixel-ratio: 2),
+only screen and (     -o-min-device-pixel-ratio: 2/1),
+only screen and (        min-device-pixel-ratio: 2),
+only screen and (                min-resolution: 192dpi),
+only screen and (                min-resolution: 2dppx) {
+	
+	/* logo */
+   
+	.logo-principal{
+		position: relative;
+		height: auto;
+		top: 0%;
+		left: 0%;
+	}
+
+	.features-box{
+		display: inline-block;
+	}
+
+	
+	.about-us-box .about-us-photo {
+		font-size: 13px;
+	}
+	
+
+	.top-image{
+	
+		background: rgba(0, 0, 0, 0.514) url(../custom/bg-principal-mobile.png);
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
+
+	.description{
+		position: relative;
+		top: -69px;
+	}
+
+	
+
+	.logo-position{
+		left: 18%;
+		top: 165px;
+	}
+	
+
+	
+
+}

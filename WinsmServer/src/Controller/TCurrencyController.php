@@ -17,7 +17,7 @@ class TCurrencyController extends AppController
 	{
 		parent::initialize();
 		if($this->request->session()->check('Auth.TUser.token')){
-            $this->Auth->allow(['index']);
+            $this->Auth->allow(['index','findCurrency']);
 			return true;
 		}
 	}     
@@ -113,4 +113,50 @@ class TCurrencyController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    /**
+     * findCurrency method
+     *
+     * @param string|null $type.
+     * @return \Cake\Network\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function findCurrency()
+    {
+    	$category = null;
+    	if(!empty($this->request->query('category'))){
+    		$category = $this->request->query('category');
+    	}else{
+    		if(!empty($this->request->query['category'])){
+    			$category = $this->request->query['category'];
+    		}
+    	}
+    	
+    	if($category){
+            $tCurrency = $this->TCurrency->find()
+            ->join([
+                'table' => 't_rel_prod_currency',
+                'alias' => 'TRelProdCurrency',
+                'type' => 'LEFT',
+                'conditions' => ['TCurrency.ID_CURRENCY = TRelProdCurrency.ID_CURRENCY']
+            ])
+            ->where(['TRelProdCurrency.ID_CATEGORY_PROD' => $category]);  
+            debug($tRequest);
+            $count = $tCurrency->count();
+
+    		if($count > 0){// si existe tipo
+                $this->set(compact('tCurrency'));
+                $this->set('_serialize', ['tCurrency']);      
+    		}else{
+    			$this->set('tCurrency', "CurrecnyNotExist");
+    			$this->set('_serialize', ['tCurrency']);
+    		}
+    
+    	}else{
+    		$this->set('tCurrency', "CurrencyEmpty");
+    		$this->set('_serialize', ['tCurrency']);
+    	}
+    	
+    } 
+
 }

@@ -32,5 +32,9 @@
             <th scope="row"><?= __('ID COUNTRY') ?></th>
             <td><?= $this->Number->format($tProductsPrice->ID_COUNTRY) ?></td>
         </tr>
+        <tr>
+            <th scope="row"><?= __('ORDER INFO') ?></th>
+            <td><?= $this->Number->format($tProductsPrice->ORDER_INFO) ?></td>
+        </tr>
     </table>
 </div>

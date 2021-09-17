@@ -4,6 +4,45 @@ $(document).ready(function () {
     });
 });
 
+function esCUITValida(inputValor) {
+    inputString = inputValor.toString();
+    if (inputString.length == 11) {
+        var Caracters_1_2 = inputString.charAt(0) + inputString.charAt(1)
+        if (Caracters_1_2 == "20" || Caracters_1_2 == "23" || Caracters_1_2 == "24" || Caracters_1_2 == "27" || Caracters_1_2 == "30" || Caracters_1_2 == "33" || Caracters_1_2 == "34") {
+            var Count = inputString.charAt(0) * 5 + inputString.charAt(1) * 4 + inputString.charAt(2) * 3 + inputString.charAt(3) * 2 + inputString.charAt(4) * 7 + inputString.charAt(5) * 6 + inputString.charAt(6) * 5 + inputString.charAt(7) * 4 + inputString.charAt(8) * 3 + inputString.charAt(9) * 2 + inputString.charAt(10) * 1
+            Division = Count / 11;
+            if (Division == Math.floor(Division)) {
+                return true
+            }
+        }
+    }
+    return false
+}
+
+function validarCuit(cuit) {
+
+    if(cuit.length != 11) {
+        return false;
+    }
+
+    var acumulado   = 0;
+    var digitos     = cuit.split("");
+    var digito      = digitos.pop();
+
+    for(var i = 0; i < digitos.length; i++) {
+        acumulado += digitos[9 - i] * (2 + (i % 6));
+    }
+
+    var verif = 11 - (acumulado % 11);
+    if(verif == 11) {
+        verif = 0;
+    } else if(verif == 10) {
+        verif = 9;
+    }
+
+    return digito == verif;
+}
+
 function validacionMaestra(padre) {
     temp = true;
     var name = "";
@@ -30,6 +69,25 @@ function validacionMaestra(padre) {
         
     });
     
+    $(padre + ' .cuit').each(function () {
+    	
+        if (esCUITValida($(this).val())) {//cuit argentino valido
+            temp = true;
+        } else {
+        	
+            if ($(this).attr("placeholder") !== "" && $(this).attr("placeholder") !== undefined) {
+                name = $(this).attr("placeholder");
+            } else {
+                name = $(this).attr("id");
+            }
+            swal({ title: "Cancelado!", text: 'Por favor ingrese un número de CUIT válido',  type: "error", html: true });
+            $(this).focus();
+            temp = false;
+            return false;
+        }
+        
+    });
+
     if (!temp) {
         return false;
     }

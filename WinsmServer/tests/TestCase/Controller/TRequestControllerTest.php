@@ -2,13 +2,17 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\TRequestController;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\TRequestController Test Case
+ *
+ * @uses \App\Controller\TRequestController
  */
-class TRequestControllerTest extends IntegrationTestCase
+class TRequestControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
 
     /**
      * Fixtures
@@ -16,25 +20,8 @@ class TRequestControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_request',
-        'app.t_market',
-        'app.t_product',
-        'app.t_place',
-        'app.t_user',
-        'app.t_um',
-        'app.t_currency',
-        'app.t_types'
+        'app.TRequest'
     ];
-
-    /**
-     * Test initialize method
-     *
-     * @return void
-     */
-    public function testInitialize()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
 
     /**
      * Test index method
@@ -82,56 +69,6 @@ class TRequestControllerTest extends IntegrationTestCase
      * @return void
      */
     public function testDelete()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test newRequest method
-     *
-     * @return void
-     */
-    public function testNewRequest()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test find method
-     *
-     * @return void
-     */
-    public function testFind()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test editRequest method
-     *
-     * @return void
-     */
-    public function testEditRequest()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test deleteRequest method
-     *
-     * @return void
-     */
-    public function testDeleteRequest()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test filter method
-     *
-     * @return void
-     */
-    public function testFilter()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

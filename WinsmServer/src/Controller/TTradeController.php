@@ -252,8 +252,8 @@ class TTradeController extends AppController
             'TUserOwer.PHONE_OTHER_COUNTRY','TUserOwer.PHONE_OTHER_NUM',
             'TUserCpart.MAIL','TUserCpart.NAME','TUserCpart.SURNAME','TUserCpart.PHONE_MOBILE_COUNTRY','TUserCpart.PHONE_MOBILE_NUM',
             'TUserCpart.PHONE_OTHER_COUNTRY','TUserCpart.PHONE_OTHER_NUM',
-            'PLACE_CPART' => '(SELECT PLACE_NAME FROM t_place
-            WHERE t_place.ID_PLACE = TUserCpart.ID_PLACE)',            
+            'PLACE_CPART' => '(SELECT PLACE_NAME FROM t_locality
+            WHERE t_locality.ID_PLACE = TUserCpart.ID_PLACE)',            
             'TUm.UM_NAME','TCurrency.CURRENCY_NAME','TTypes.INFO', 't_product.PRODUCT_NAME'
             ])           
             ->join([
@@ -390,8 +390,8 @@ class TTradeController extends AppController
             'TUserOwer.PHONE_OTHER_COUNTRY','TUserOwer.PHONE_OTHER_NUM',
             'TUserCpart.MAIL','TUserCpart.NAME','TUserCpart.SURNAME','TUserCpart.PHONE_MOBILE_COUNTRY','TUserCpart.PHONE_MOBILE_NUM',
             'TUserCpart.PHONE_OTHER_COUNTRY','TUserCpart.PHONE_OTHER_NUM',
-            'PLACE_CPART' => '(SELECT PLACE_NAME FROM t_place
-            WHERE t_place.ID_PLACE = TUserCpart.ID_PLACE)',             
+            'PLACE_CPART' => '(SELECT PLACE_NAME FROM t_locality
+            WHERE t_locality.ID_PLACE = TUserCpart.ID_PLACE)',             
             'TUm.UM_NAME','TCurrency.CURRENCY_NAME','TTypes.INFO', 't_product.PRODUCT_NAME'
             ])            
             ->join([
@@ -499,8 +499,8 @@ class TTradeController extends AppController
                 'TUserOwer.PHONE_OTHER_COUNTRY','TUserOwer.PHONE_OTHER_NUM',
                 'TUserCpart.MAIL','TUserCpart.NAME','TUserCpart.SURNAME','TUserCpart.PHONE_MOBILE_COUNTRY','TUserCpart.PHONE_MOBILE_NUM',
                 'TUserCpart.PHONE_OTHER_COUNTRY','TUserCpart.PHONE_OTHER_NUM',
-                'PLACE_CPART' => '(SELECT PLACE_NAME FROM t_place
-                WHERE t_place.ID_PLACE = TUserCpart.ID_PLACE)',                 
+                'PLACE_CPART' => '(SELECT PLACE_NAME FROM t_locality
+                WHERE t_locality.ID_PLACE = TUserCpart.ID_PLACE)',                 
                 'TUm.UM_NAME','TCurrency.CURRENCY_NAME','TTypes.INFO', 't_product.PRODUCT_NAME'
                 ])            
                 ->join([
@@ -625,8 +625,8 @@ class TTradeController extends AppController
             'TUserOwer.PHONE_OTHER_COUNTRY','TUserOwer.PHONE_OTHER_NUM',
             'TUserCpart.MAIL','TUserCpart.NAME','TUserCpart.SURNAME','TUserCpart.PHONE_MOBILE_COUNTRY','TUserCpart.PHONE_MOBILE_NUM',
             'TUserCpart.PHONE_OTHER_COUNTRY','TUserCpart.PHONE_OTHER_NUM',
-            'PLACE_CPART' => '(SELECT PLACE_NAME FROM t_place
-            WHERE t_place.ID_PLACE = TUserCpart.ID_PLACE)',            
+            'PLACE_CPART' => '(SELECT PLACE_NAME FROM t_locality
+            WHERE t_locality.ID_PLACE = TUserCpart.ID_PLACE)',            
             'TUm.UM_NAME','TCurrency.CURRENCY_NAME','TTypes.INFO', 't_product.PRODUCT_NAME'
             ])           
             ->join([
@@ -731,7 +731,7 @@ class TTradeController extends AppController
             SUM(TTrade__QT) QT_TOTAL,
             ROUND(AVG(TTrade__PRICE),0) PRICE_AVG_TOT,    
             COUNT(*) QTR
-            FROM (select `ttrade`.`ID_TRADE` AS `TTrade__ID_TRADE`,`ttrade`.`ID_REQUEST` AS `TTrade__ID_REQUEST`,`ttrade`.`ID_USER_OWNER` AS `TTrade__ID_USER_OWNER`,`ttrade`.`ID_USER_CPART` AS `TTrade__ID_USER_CPART`,`ttrade`.`PRICE` AS `TTrade__PRICE`,`ttrade`.`ID_TP_CURRENCY` AS `TTrade__ID_TP_CURRENCY`,`ttrade`.`QT` AS `TTrade__QT`,`ttrade`.`ID_UM` AS `TTrade__ID_UM`,`ttrade`.`CONFIRMED_OWNER` AS `TTrade__CONFIRMED_OWNER`,`ttrade`.`CONFIRMED_CPART` AS `TTrade__CONFIRMED_CPART`,`ttrade`.`DH_CREATION` AS `TTrade__DH_CREATION`,`ttrade`.`ID_TP_STATUS_TRADE` AS `TTrade__ID_TP_STATUS_TRADE`,`trequest`.`DT_FROM` AS `TRequest__DT_FROM`,`trequest`.`DT_TO` AS `TRequest__DT_TO`,(select `t_types`.`INFO` from `t_types` where (`t_types`.`ID_TYPE` = `trequest`.`ID_TP_BUSINESS`)) AS `BUSINESS`,(select `t_types`.`INFO` from `t_types` where (`t_types`.`ID_TYPE` = `trequest`.`ID_TP_OPERATION`)) AS `OPERATION`,(select `t_types`.`INFO1` from `t_types` where (`t_types`.`ID_TYPE` = `ttrade`.`ID_TP_STATUS_TRADE`)) AS `INFO1`,(select `t_types`.`DATA_1` from `t_types` where (`t_types`.`ID_TYPE` = `ttrade`.`ID_TP_STATUS_TRADE`)) AS `COLOR`,(select `t_market`.`MARKET_NAME` from `t_market` where (`t_market`.`ID_MARKET` = `trequest`.`ID_MARKET`)) AS `MARKET_NAME`,`trequest`.`LOC_DISTANCE` AS `TRequest__LOC_DISTANCE`,`tuserower`.`MAIL` AS `TUserOwer__MAIL`,`tuserower`.`NAME` AS `TUserOwer__NAME`,`tuserower`.`SURNAME` AS `TUserOwer__SURNAME`,`tuserower`.`PHONE_MOBILE_COUNTRY` AS `TUserOwer__PHONE_MOBILE_COUNTRY`,`tuserower`.`PHONE_MOBILE_NUM` AS `TUserOwer__PHONE_MOBILE_NUM`,`tuserower`.`PHONE_OTHER_COUNTRY` AS `TUserOwer__PHONE_OTHER_COUNTRY`,`tuserower`.`PHONE_OTHER_NUM` AS `TUserOwer__PHONE_OTHER_NUM`,`tusercpart`.`MAIL` AS `TUserCpart__MAIL`,`tusercpart`.`NAME` AS `TUserCpart__NAME`,`tusercpart`.`SURNAME` AS `TUserCpart__SURNAME`,`tusercpart`.`PHONE_MOBILE_COUNTRY` AS `TUserCpart__PHONE_MOBILE_COUNTRY`,`tusercpart`.`PHONE_MOBILE_NUM` AS `TUserCpart__PHONE_MOBILE_NUM`,`tusercpart`.`PHONE_OTHER_COUNTRY` AS `TUserCpart__PHONE_OTHER_COUNTRY`,`tusercpart`.`PHONE_OTHER_NUM` AS `TUserCpart__PHONE_OTHER_NUM`,(select `t_place`.`PLACE_NAME` from `t_place` where (`t_place`.`ID_PLACE` = `tusercpart`.`ID_PLACE`)) AS `PLACE_CPART`,`tum`.`UM_NAME` AS `TUm__UM_NAME`,`tcurrency`.`CURRENCY_NAME` AS `TCurrency__CURRENCY_NAME`,`ttypes`.`INFO` AS `TTypes__INFO`,`t_product`.`PRODUCT_NAME` AS `t_product__PRODUCT_NAME` from ((((((((`t_trade` `ttrade` left join `t_request` `trequest` on((`trequest`.`ID_REQUEST` = `ttrade`.`ID_REQUEST`))) left join `t_product` on((`trequest`.`ID_PRODUCT` = `t_product`.`ID_PRODUCT`))) left join `t_market` on((`trequest`.`ID_MARKET` = `t_market`.`ID_MARKET`))) left join `t_user` `tuserower` on((`tuserower`.`ID_USER` = `ttrade`.`ID_USER_OWNER`))) left join `t_user` `tusercpart` on((`tusercpart`.`ID_USER` = `ttrade`.`ID_USER_CPART`))) left join `t_um` `tum` on((`tum`.`ID_UM` = `ttrade`.`ID_UM`))) left join `t_currency` `tcurrency` on((`tcurrency`.`ID_CURRENCY` = `ttrade`.`ID_TP_CURRENCY`))) left join `t_types` `ttypes` on((`ttypes`.`ID_TYPE` = `ttrade`.`ID_TP_STATUS_TRADE`))) group by `ttrade`.`ID_TRADE`) VW_TRADE
+            FROM (select `ttrade`.`ID_TRADE` AS `TTrade__ID_TRADE`,`ttrade`.`ID_REQUEST` AS `TTrade__ID_REQUEST`,`ttrade`.`ID_USER_OWNER` AS `TTrade__ID_USER_OWNER`,`ttrade`.`ID_USER_CPART` AS `TTrade__ID_USER_CPART`,`ttrade`.`PRICE` AS `TTrade__PRICE`,`ttrade`.`ID_TP_CURRENCY` AS `TTrade__ID_TP_CURRENCY`,`ttrade`.`QT` AS `TTrade__QT`,`ttrade`.`ID_UM` AS `TTrade__ID_UM`,`ttrade`.`CONFIRMED_OWNER` AS `TTrade__CONFIRMED_OWNER`,`ttrade`.`CONFIRMED_CPART` AS `TTrade__CONFIRMED_CPART`,`ttrade`.`DH_CREATION` AS `TTrade__DH_CREATION`,`ttrade`.`ID_TP_STATUS_TRADE` AS `TTrade__ID_TP_STATUS_TRADE`,`trequest`.`DT_FROM` AS `TRequest__DT_FROM`,`trequest`.`DT_TO` AS `TRequest__DT_TO`,(select `t_types`.`INFO` from `t_types` where (`t_types`.`ID_TYPE` = `trequest`.`ID_TP_BUSINESS`)) AS `BUSINESS`,(select `t_types`.`INFO` from `t_types` where (`t_types`.`ID_TYPE` = `trequest`.`ID_TP_OPERATION`)) AS `OPERATION`,(select `t_types`.`INFO1` from `t_types` where (`t_types`.`ID_TYPE` = `ttrade`.`ID_TP_STATUS_TRADE`)) AS `INFO1`,(select `t_types`.`DATA_1` from `t_types` where (`t_types`.`ID_TYPE` = `ttrade`.`ID_TP_STATUS_TRADE`)) AS `COLOR`,(select `t_market`.`MARKET_NAME` from `t_market` where (`t_market`.`ID_MARKET` = `trequest`.`ID_MARKET`)) AS `MARKET_NAME`,`trequest`.`LOC_DISTANCE` AS `TRequest__LOC_DISTANCE`,`tuserower`.`MAIL` AS `TUserOwer__MAIL`,`tuserower`.`NAME` AS `TUserOwer__NAME`,`tuserower`.`SURNAME` AS `TUserOwer__SURNAME`,`tuserower`.`PHONE_MOBILE_COUNTRY` AS `TUserOwer__PHONE_MOBILE_COUNTRY`,`tuserower`.`PHONE_MOBILE_NUM` AS `TUserOwer__PHONE_MOBILE_NUM`,`tuserower`.`PHONE_OTHER_COUNTRY` AS `TUserOwer__PHONE_OTHER_COUNTRY`,`tuserower`.`PHONE_OTHER_NUM` AS `TUserOwer__PHONE_OTHER_NUM`,`tusercpart`.`MAIL` AS `TUserCpart__MAIL`,`tusercpart`.`NAME` AS `TUserCpart__NAME`,`tusercpart`.`SURNAME` AS `TUserCpart__SURNAME`,`tusercpart`.`PHONE_MOBILE_COUNTRY` AS `TUserCpart__PHONE_MOBILE_COUNTRY`,`tusercpart`.`PHONE_MOBILE_NUM` AS `TUserCpart__PHONE_MOBILE_NUM`,`tusercpart`.`PHONE_OTHER_COUNTRY` AS `TUserCpart__PHONE_OTHER_COUNTRY`,`tusercpart`.`PHONE_OTHER_NUM` AS `TUserCpart__PHONE_OTHER_NUM`,(select `t_locality`.`PLACE_NAME` from `t_locality` where (`t_locality`.`ID_PLACE` = `tusercpart`.`ID_PLACE`)) AS `PLACE_CPART`,`tum`.`UM_NAME` AS `TUm__UM_NAME`,`tcurrency`.`CURRENCY_NAME` AS `TCurrency__CURRENCY_NAME`,`ttypes`.`INFO` AS `TTypes__INFO`,`t_product`.`PRODUCT_NAME` AS `t_product__PRODUCT_NAME` from ((((((((`t_trade` `ttrade` left join `t_request` `trequest` on((`trequest`.`ID_REQUEST` = `ttrade`.`ID_REQUEST`))) left join `t_product` on((`trequest`.`ID_PRODUCT` = `t_product`.`ID_PRODUCT`))) left join `t_market` on((`trequest`.`ID_MARKET` = `t_market`.`ID_MARKET`))) left join `t_user` `tuserower` on((`tuserower`.`ID_USER` = `ttrade`.`ID_USER_OWNER`))) left join `t_user` `tusercpart` on((`tusercpart`.`ID_USER` = `ttrade`.`ID_USER_CPART`))) left join `t_um` `tum` on((`tum`.`ID_UM` = `ttrade`.`ID_UM`))) left join `t_currency` `tcurrency` on((`tcurrency`.`ID_CURRENCY` = `ttrade`.`ID_TP_CURRENCY`))) left join `t_types` `ttypes` on((`ttypes`.`ID_TYPE` = `ttrade`.`ID_TP_STATUS_TRADE`))) group by `ttrade`.`ID_TRADE`) VW_TRADE
             WHERE (TTrade__ID_USER_OWNER = '.$user.' 
             OR TTrade__ID_USER_CPART = '.$user.') 
             GROUP BY OPERATION, t_product__PRODUCT_NAME, TTrade__ID_TP_STATUS_TRADE');

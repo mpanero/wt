@@ -10,7 +10,6 @@ use Cake\TestSuite\TestCase;
  */
 class TTradeTableTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -24,7 +23,7 @@ class TTradeTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_trade'
+        'app.TTrade'
     ];
 
     /**
@@ -35,8 +34,8 @@ class TTradeTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('TTrade') ? [] : ['className' => TTradeTable::class];
-        $this->TTrade = TableRegistry::get('TTrade', $config);
+        $config = TableRegistry::getTableLocator()->exists('TTrade') ? [] : ['className' => TTradeTable::class];
+        $this->TTrade = TableRegistry::getTableLocator()->get('TTrade', $config);
     }
 
     /**

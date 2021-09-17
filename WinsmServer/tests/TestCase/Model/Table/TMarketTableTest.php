@@ -10,7 +10,6 @@ use Cake\TestSuite\TestCase;
  */
 class TMarketTableTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -24,7 +23,7 @@ class TMarketTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_market'
+        'app.TMarket'
     ];
 
     /**
@@ -35,8 +34,8 @@ class TMarketTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('TMarket') ? [] : ['className' => TMarketTable::class];
-        $this->TMarket = TableRegistry::get('TMarket', $config);
+        $config = TableRegistry::getTableLocator()->exists('TMarket') ? [] : ['className' => TMarketTable::class];
+        $this->TMarket = TableRegistry::getTableLocator()->get('TMarket', $config);
     }
 
     /**

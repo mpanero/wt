@@ -12,14 +12,14 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\TRequest get($primaryKey, $options = [])
  * @method \App\Model\Entity\TRequest newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\TRequest[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TRequest|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TRequest|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TRequest saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\TRequest patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\TRequest[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\TRequest findOrCreate($search, callable $callback = null, $options = [])
  */
 class TRequestTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -29,11 +29,11 @@ class TRequestTable extends Table
     public function initialize(array $config)
     {
         parent::initialize($config);
-        
+
         $this->setTable('t_request');
         $this->setDisplayField('ID_REQUEST');
         $this->setPrimaryKey('ID_REQUEST');
-        
+
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('TMarket', [
@@ -42,8 +42,11 @@ class TRequestTable extends Table
         $this->belongsTo('TProduct', [
             'foreignKey' => 'ID_PRODUCT'
         ]);
-        $this->belongsTo('TPlace', [
+        $this->belongsTo('TLocality', [
             'foreignKey' => 'ID_PLACE_DELIVERY'
+        ]);
+        $this->belongsTo('TLocality', [
+            'foreignKey' => 'ID_PLACE_ORIGIN'
         ]);
         $this->belongsTo('TUser', [
             'foreignKey' => 'ID_USER_OWNER'
@@ -62,8 +65,10 @@ class TRequestTable extends Table
         ]);
         $this->belongsTo('TTypes', [
             'foreignKey' => 'ID_TYPE_PAYMENT'
-        ]);        
-        
+        ]); 
+        $this->belongsTo('TTypes', [
+            'foreignKey' => 'DELIVERY_METHOD'
+        ]);         
     }
 
     /**
@@ -75,148 +80,143 @@ class TRequestTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->allowEmpty('ID_REQUEST', 'create');
+            ->allowEmptyString('ID_REQUEST', null, 'create');
 
         $validator
             ->integer('ID_USER_OWNER')
             ->requirePresence('ID_USER_OWNER', 'create')
-            ->notEmpty('ID_USER_OWNER');
+            ->notEmptyString('ID_USER_OWNER');
 
         $validator
             ->dateTime('DH_REQUEST')
-            ->allowEmpty('DH_REQUEST');
+            ->allowEmptyDateTime('DH_REQUEST');
 
         $validator
             ->integer('ID_TP_OPERATION')
-            ->allowEmpty('ID_TP_OPERATION');
+            ->allowEmptyString('ID_TP_OPERATION');
 
         $validator
             ->integer('ID_MARKET')
             ->requirePresence('ID_MARKET', 'create')
-            ->notEmpty('ID_MARKET');
+            ->notEmptyString('ID_MARKET');
 
         $validator
             ->integer('ID_TP_BUSINESS')
-            ->allowEmpty('ID_TP_BUSINESS');
+            ->allowEmptyString('ID_TP_BUSINESS');
 
         $validator
             ->integer('ID_PRODUCT')
             ->requirePresence('ID_PRODUCT', 'create')
-            ->notEmpty('ID_PRODUCT');
+            ->notEmptyString('ID_PRODUCT');
 
         $validator
             ->integer('PRICE_FROM')
-            ->allowEmpty('PRICE_FROM');
+            ->allowEmptyString('PRICE_FROM');
 
         $validator
             ->integer('PRICE_TO')
-            ->allowEmpty('PRICE_TO');
+            ->allowEmptyString('PRICE_TO');
 
         $validator
             ->integer('ID_TP_CURRENCY')
-            ->allowEmpty('ID_TP_CURRENCY');
+            ->allowEmptyString('ID_TP_CURRENCY');
 
         $validator
-            ->allowEmpty('QT_FROM');
+            ->allowEmptyString('QT_FROM');
 
         $validator
-            ->allowEmpty('QT_TO');
+            ->allowEmptyString('QT_TO');
 
         $validator
             ->integer('ID_UM')
-            ->allowEmpty('ID_UM');
+            ->allowEmptyString('ID_UM');
 
         $validator
             ->dateTime('DT_FROM')
-            ->allowEmpty('DT_FROM');
+            ->allowEmptyDateTime('DT_FROM');
 
         $validator
             ->dateTime('DT_TO')
-            ->allowEmpty('DT_TO');
+            ->allowEmptyDateTime('DT_TO');
 
         $validator
-            ->integer('ID_PLACE_DELIVERY')
-            ->allowEmpty('ID_PLACE_DELIVERY');
+            ->allowEmptyString('ID_PLACE_DELIVERY');
 
         $validator
             ->integer('LOC_DISTANCE')
-            ->allowEmpty('LOC_DISTANCE');
+            ->allowEmptyString('LOC_DISTANCE');
 
         $validator
+            ->scalar('LOG')
             ->maxLength('LOG', 100)
-            ->allowEmpty('LOG');
+            ->allowEmptyString('LOG');
 
         $validator
             ->integer('ID_TP_STATUS_REQ')
-            ->allowEmpty('ID_TP_STATUS_REQ');
+            ->allowEmptyString('ID_TP_STATUS_REQ');
 
         $validator
             ->dateTime('DH_LAST_UPDATE')
-            ->allowEmpty('DH_LAST_UPDATE');
+            ->allowEmptyDateTime('DH_LAST_UPDATE');
 
         $validator
             ->integer('ID_TYPE_PRICE')
-            ->allowEmpty('ID_TYPE_PRICE');
+            ->requirePresence('ID_TYPE_PRICE', 'create')
+            ->notEmptyString('ID_TYPE_PRICE');
 
         $validator
             ->integer('ID_PRICE_REF')
-            ->allowEmpty('ID_PRICE_REF');
+            ->allowEmptyString('ID_PRICE_REF');
+
+        $validator
+            ->integer('ID_POSITION')
+            ->allowEmptyString('ID_POSITION');
 
         $validator
             ->dateTime('DT_PRICE_FIX_FROM')
-            ->allowEmpty('DT_PRICE_FIX_FROM');
+            ->allowEmptyDateTime('DT_PRICE_FIX_FROM');
 
         $validator
             ->dateTime('DT_PRICE_FIX_TO')
-            ->allowEmpty('DT_PRICE_FIX_TO');
+            ->allowEmptyDateTime('DT_PRICE_FIX_TO');
 
         $validator
             ->integer('ID_CROP')
-            ->allowEmpty('ID_CROP');
+            ->allowEmptyString('ID_CROP');
 
         $validator
             ->integer('ID_TYPE_PAYMENT')
-            ->allowEmpty('ID_TYPE_PAYMENT');            
-            
+            ->allowEmptyString('ID_TYPE_PAYMENT');
+
+        $validator
+            ->integer('ID_PLACE_ORIGIN')
+            ->allowEmptyString('ID_PLACE_ORIGIN');
+
         $validator
             ->integer('ID_TYPE_DELIVERY')
-            ->allowEmpty('ID_TYPE_DELIVERY');
+            ->allowEmptyString('ID_TYPE_DELIVERY');
+
+        $validator
+            ->integer('DELIVERY_METHOD')
+            ->allowEmptyString('DELIVERY_METHOD');
+
+        $validator
+            ->integer('DELIVERY_AMOUNT')
+            ->allowEmptyString('DELIVERY_AMOUNT');
 
         $validator
             ->integer('TYPE_QUALITY')
-            ->allowEmpty('TYPE_QUALITY');
+            ->allowEmptyString('TYPE_QUALITY');
 
         $validator
+            ->scalar('QUALITY_INFO')
             ->maxLength('QUALITY_INFO', 100)
-            ->allowEmpty('QUALITY_INFO');
+            ->allowEmptyString('QUALITY_INFO');
 
         $validator
             ->integer('ACTIVE')
-            ->requirePresence('ACTIVE', 'create')
-            ->notEmpty('ACTIVE');
+            ->notEmptyString('ACTIVE');
 
         return $validator;
-    
     }
-
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules)
-    {
-        $rules->add($rules->isUnique(['ID_REQUEST']));
-        $rules->add($rules->existsIn(['ID_MARKET'], 'TMarket'));
-        $rules->add($rules->existsIn(['ID_PRODUCT'], 'TProduct'));
-        $rules->add($rules->existsIn(['ID_PLACE_DELIVERY'], 'TPlace'));
-        $rules->add($rules->existsIn(['ID_USER_OWNER'], 'TUser'));
-        /*$rules->add($rules->existsIn(['ID_TP_OPERATION'], 'TType'));*/
-        /*$rules->add($rules->existsIn(['ID_TP_BUSINESS'], 'TType'));*/
-        /*$rules->add($rules->existsIn(['ID_TP_CURRENCY'], 'TCurrency'));*/
-
-        return $rules;
-    }     
 }

@@ -2,13 +2,17 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\TNotificationsController;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\TNotificationsController Test Case
+ *
+ * @uses \App\Controller\TNotificationsController
  */
-class TNotificationsControllerTest extends IntegrationTestCase
+class TNotificationsControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
 
     /**
      * Fixtures
@@ -16,7 +20,7 @@ class TNotificationsControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_notifications'
+        'app.TNotifications'
     ];
 
     /**

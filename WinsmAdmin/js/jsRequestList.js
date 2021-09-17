@@ -66,7 +66,7 @@ function eventsEditModal(){
 
 function loadRequest(info){
     blockUISystem();
-    linksWs["tRequest"] = linksWs["tRequests"].data[info];
+    linksWs["tRequest"] = linksWs["tRequests"][info];
     $("#divEditRequest").load("requestEdit.html?r="+Math.random(), function () {
         eventsEditModal();
     });    
@@ -160,12 +160,12 @@ function eachList(doneList){
 
                 listReg += ''+
                 '<tr>'+
-                    '<td>'+atributo.t_product.PRODUCT_NAME+'</td>'+
+                    '<td>'+((atributo.t_product != null) ? atributo.t_product.PRODUCT_NAME:'Sin informacion')+'</td>'+
                     '<td>'+atributo.TP_OPERATION+'</td>'+
                     '<td>'+atributo.QT_FROM+' a '+atributo.QT_TO+'</td>'+
-                    '<td>'+atributo.t_um.UM_NAME+'</td>'+
+                    '<td>'+((atributo.t_um != null) ? atributo.t_um.UM_NAME:'Sin informacion')+'</td>'+
                     '<td>'+atributo.PRICE_FROM+' a '+atributo.PRICE_TO+'</td>'+
-                    '<td>'+atributo.t_currency.CURRENCY_NAME+'</td>'+
+                    '<td>'+((atributo.t_currency!= null) ? atributo.t_currency.CURRENCY_NAME:'Sin informacion')+'</td>'+
                     '<td class="text-center">'+
                         '<ul class="icons-list">'+
                             '<li class="dropdown">'+

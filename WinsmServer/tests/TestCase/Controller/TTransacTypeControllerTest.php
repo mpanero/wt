@@ -2,13 +2,17 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\TTransacTypeController;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\TTransacTypeController Test Case
+ *
+ * @uses \App\Controller\TTransacTypeController
  */
-class TTransacTypeControllerTest extends IntegrationTestCase
+class TTransacTypeControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
 
     /**
      * Fixtures
@@ -16,7 +20,7 @@ class TTransacTypeControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_transac_type'
+        'app.TTransacType'
     ];
 
     /**

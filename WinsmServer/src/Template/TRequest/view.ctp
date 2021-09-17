@@ -11,53 +11,11 @@
         <li><?= $this->Form->postLink(__('Delete T Request'), ['action' => 'delete', $tRequest->ID_REQUEST], ['confirm' => __('Are you sure you want to delete # {0}?', $tRequest->ID_REQUEST)]) ?> </li>
         <li><?= $this->Html->link(__('List T Request'), ['action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New T Request'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List T Market'), ['controller' => 'TMarket', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New T Market'), ['controller' => 'TMarket', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List T Product'), ['controller' => 'TProduct', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New T Product'), ['controller' => 'TProduct', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List T Place'), ['controller' => 'TPlace', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New T Place'), ['controller' => 'TPlace', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List T User'), ['controller' => 'TUser', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New T User'), ['controller' => 'TUser', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List T Um'), ['controller' => 'TUm', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New T Um'), ['controller' => 'TUm', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List T Currency'), ['controller' => 'TCurrency', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New T Currency'), ['controller' => 'TCurrency', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List T Types'), ['controller' => 'TTypes', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New T Type'), ['controller' => 'TTypes', 'action' => 'add']) ?> </li>
     </ul>
 </nav>
 <div class="tRequest view large-9 medium-8 columns content">
     <h3><?= h($tRequest->ID_REQUEST) ?></h3>
     <table class="vertical-table">
-        <tr>
-            <th scope="row"><?= __('T User') ?></th>
-            <td><?= $tRequest->has('t_user') ? $this->Html->link($tRequest->t_user->ID_USER, ['controller' => 'TUser', 'action' => 'view', $tRequest->t_user->ID_USER]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('T Type') ?></th>
-            <td><?= $tRequest->has('t_type') ? $this->Html->link($tRequest->t_type->INFO, ['controller' => 'TTypes', 'action' => 'view', $tRequest->t_type->ID_TYPE]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('T Market') ?></th>
-            <td><?= $tRequest->has('t_market') ? $this->Html->link($tRequest->t_market->ID_MARKET, ['controller' => 'TMarket', 'action' => 'view', $tRequest->t_market->ID_MARKET]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('T Product') ?></th>
-            <td><?= $tRequest->has('t_product') ? $this->Html->link($tRequest->t_product->ID_PRODUCT, ['controller' => 'TProduct', 'action' => 'view', $tRequest->t_product->ID_PRODUCT]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('T Currency') ?></th>
-            <td><?= $tRequest->has('t_currency') ? $this->Html->link($tRequest->t_currency->ID_CURRENCY, ['controller' => 'TCurrency', 'action' => 'view', $tRequest->t_currency->ID_CURRENCY]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('T Um') ?></th>
-            <td><?= $tRequest->has('t_um') ? $this->Html->link($tRequest->t_um->ID_UM, ['controller' => 'TUm', 'action' => 'view', $tRequest->t_um->ID_UM]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('T Place') ?></th>
-            <td><?= $tRequest->has('t_place') ? $this->Html->link($tRequest->t_place->ID_PLACE, ['controller' => 'TPlace', 'action' => 'view', $tRequest->t_place->ID_PLACE]) : '' ?></td>
-        </tr>
         <tr>
             <th scope="row"><?= __('LOG') ?></th>
             <td><?= h($tRequest->LOG) ?></td>
@@ -71,8 +29,24 @@
             <td><?= $this->Number->format($tRequest->ID_REQUEST) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('ID USER OWNER') ?></th>
+            <td><?= $this->Number->format($tRequest->ID_USER_OWNER) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('ID TP OPERATION') ?></th>
+            <td><?= $this->Number->format($tRequest->ID_TP_OPERATION) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('ID MARKET') ?></th>
+            <td><?= $this->Number->format($tRequest->ID_MARKET) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('ID TP BUSINESS') ?></th>
             <td><?= $this->Number->format($tRequest->ID_TP_BUSINESS) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('ID PRODUCT') ?></th>
+            <td><?= $this->Number->format($tRequest->ID_PRODUCT) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('PRICE FROM') ?></th>
@@ -83,12 +57,24 @@
             <td><?= $this->Number->format($tRequest->PRICE_TO) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('ID TP CURRENCY') ?></th>
+            <td><?= $this->Number->format($tRequest->ID_TP_CURRENCY) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('QT FROM') ?></th>
             <td><?= $this->Number->format($tRequest->QT_FROM) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('QT TO') ?></th>
             <td><?= $this->Number->format($tRequest->QT_TO) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('ID UM') ?></th>
+            <td><?= $this->Number->format($tRequest->ID_UM) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('ID PLACE DELIVERY') ?></th>
+            <td><?= $this->Number->format($tRequest->ID_PLACE_DELIVERY) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('LOC DISTANCE') ?></th>
@@ -107,12 +93,32 @@
             <td><?= $this->Number->format($tRequest->ID_PRICE_REF) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('ID POSITION') ?></th>
+            <td><?= $this->Number->format($tRequest->ID_POSITION) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('ID CROP') ?></th>
             <td><?= $this->Number->format($tRequest->ID_CROP) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('ID TYPE PAYMENT') ?></th>
+            <td><?= $this->Number->format($tRequest->ID_TYPE_PAYMENT) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('ID PLACE ORIGIN') ?></th>
+            <td><?= $this->Number->format($tRequest->ID_PLACE_ORIGIN) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('ID TYPE DELIVERY') ?></th>
             <td><?= $this->Number->format($tRequest->ID_TYPE_DELIVERY) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('DELIVERY METHOD') ?></th>
+            <td><?= $this->Number->format($tRequest->DELIVERY_METHOD) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('DELIVERY AMOUNT') ?></th>
+            <td><?= $this->Number->format($tRequest->DELIVERY_AMOUNT) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('TYPE QUALITY') ?></th>

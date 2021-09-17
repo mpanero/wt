@@ -7,12 +7,11 @@ use Cake\ORM\Entity;
  * TCountry Entity
  *
  * @property int $ID_COUNTRY
- * @property string $COUNTRY_NAME
+ * @property string|null $COUNTRY_NAME
  * @property int $ACTIVE
  */
 class TCountry extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *

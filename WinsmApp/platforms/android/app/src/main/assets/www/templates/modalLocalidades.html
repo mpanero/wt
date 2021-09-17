@@ -1,0 +1,49 @@
+<form name="modalFormLocalities" novalidate style="man-height: 94vh !important;">
+    <!--<div class="col">
+        <label class="item item-input item-select">
+            <span class="input-label">Provincia</span>
+            <select name="ID_PROVINCE" ng-model="formDataLocality.ID_PROVINCE" ng-change="getLocalities(modalFormLocalities)" 
+                class="ng-valid ng-dirty ng-valid-parse ng-touched" aria-invalid="false" select-req>
+                <option ng-repeat="provi in provinces" value="{{provi.ID_PROVINCE}}">{{provi.PROVINCE_NAME}}</option>
+            </select>
+        </label>
+    </div>
+    <div class="col">
+        <label class="item item-input item-select">
+            <span class="input-label">Localidades</span>
+            <select name="ID_LOCALITY" ng-model="formDataLocality.ID_LOCALITY" class="ng-valid ng-dirty ng-valid-parse ng-touched" aria-invalid="false" select-req>
+                <option ng-repeat="local in locals" value="{{local.ID_PLACE}}">{{local.PLACE_NAME}}</option>
+            </select>
+        </label>
+    </div>   -->
+    
+    <div class="form-group">
+        <div class="row resetROW">
+            <!-- Cosecha -->
+            <div class="col col-50" ng-show="formParams.tipoProducto == 1">
+                 <div class="list">
+                    <md-input-container style="margin-right: 10px;" class="md-block" flex="100"> 
+                        <label>Provincia</label>
+                        <md-select name="ID_PROVINCE" ng-model="formDataLocality.ID_PROVINCE" ng-change="getLocalities(modalFormLocalities)" >
+                            <md-option  ng-repeat="provi in provinces" value="{{provi.ID_PROVINCE}}">{{provi.PROVINCE_NAME}}</md-option>
+                        </md-select>
+                    </md-input-container> 
+                 </div>            
+            </div>                
+        </div>        
+    </div>
+  
+    <div class="row resetROW">
+        <div class="col col-50">            
+            <div class="button-bar">
+                <a class="button button-small button-save-winsm" ng-click="addLocality(modalFormLocalities.$valid,$event)" ng-disabled="modalFormLocalities.$invalid">Aceptar</a>
+            </div>  
+        </div> 
+        <div class="col col-50">            
+            <div class="button-bar">
+                <a class="button button-small button-assertive" ng-click="closeModalLocalities($event)">Cerrar</a>
+            </div>  
+        </div>         
+    </div>   
+    
+</form>

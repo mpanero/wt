@@ -2,6 +2,13 @@ $(document).ready(function () {
     $("#btnLogin").off().on("click",function () {
         enviarDatos();
     });
+    $("#btnReg").off().on("click",function () {
+        $(".modalRegiUser").off("webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend").addClass("animated " + "zoomIn").one("webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function () {
+            $('body').attr("style","padding-right: 0px;");
+            $(this).removeClass("animated " + "zoomIn");
+            loadFormRegi();           
+        }); 
+    });    
     //$('#captcha').on('dragstart', function(event) { /*event.preventDefault();*/  return false;});
     $("img").mousedown(function(){
         return false;
@@ -11,6 +18,27 @@ $(document).ready(function () {
     registrarEnter("captcha_code", "btnLogin", true);    
     unblockUISystem();
 });
+
+function loadFormRegi(info){
+    blockUISystem();
+    $("#divRegiUser").load("vista/userRegi.html?r="+Math.random(), function () {
+        eventsRegiModal();
+    });    
+    
+}
+
+function eventsRegiModal(){
+    /************************************* Cerrar Modal Registrar   ************************************/
+    $(".btnCloseModalRegiUser").off('click').on("click",function(events){
+        $(".modalRegiUser").off("webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend").addClass("animated " + "zoomOut").one("webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function () {
+            $('body').attr("style","padding-right: 0px;");
+            $(this).modal('hide');
+            $(this).removeClass("animated " + "zoomOut");
+        });
+        $('body').attr("style","padding-right: 0px;");
+        events.preventDefault();
+    });
+}
 
 function enviarDatos() {
 
@@ -41,14 +69,14 @@ function enviarDatos() {
                             localStorage.setItem("user","");        
                             //wsLogout();
                             //requestLogin(token.login);
-                            swal({ title: "Atencio!", text: 'Sesion Expirada, Inicie Nuevamente',  type: "warning", html: true });                
+                            swal({ title: "Atencion!", text: 'Sesion Expirada, Inicie Nuevamente',  type: "warning", html: true });                
                         }else{
                             unblockUISystem();
                             localStorage.setItem("accessToken","");        
                             localStorage.setItem("user","");        
                             //wsLogout();
                             //requestLogin(token.login);
-                            swal({ title: "Atencio!", text: token.login+', Inicie Nuevamente',  type: "warning", html: true });                               
+                            swal({ title: "Atencion!", text: token.login+', Inicie Nuevamente',  type: "warning", html: true });                               
                         }
 
                     }else{

@@ -5,18 +5,15 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * TProductsPriceFixture
- *
  */
 class TProductsPriceFixture extends TestFixture
 {
-
     /**
      * Table name
      *
      * @var string
      */
     public $table = 't_products_price';
-
     /**
      * Fields
      *
@@ -28,6 +25,7 @@ class TProductsPriceFixture extends TestFixture
         'PRODUCT_NAME' => ['type' => 'string', 'length' => 50, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'ACTIVE' => ['type' => 'integer', 'length' => 1, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'ID_COUNTRY' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'ORDER_INFO' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['ID_PRODUCT_PRICE'], 'length' => []],
         ],
@@ -37,18 +35,22 @@ class TProductsPriceFixture extends TestFixture
         ],
     ];
     // @codingStandardsIgnoreEnd
-
     /**
-     * Records
+     * Init method
      *
-     * @var array
+     * @return void
      */
-    public $records = [
-        [
-            'ID_PRODUCT_PRICE' => 1,
-            'PRODUCT_NAME' => 'Lorem ipsum dolor sit amet',
-            'ACTIVE' => 1,
-            'ID_COUNTRY' => 1
-        ],
-    ];
+    public function init()
+    {
+        $this->records = [
+            [
+                'ID_PRODUCT_PRICE' => 1,
+                'PRODUCT_NAME' => 'Lorem ipsum dolor sit amet',
+                'ACTIVE' => 1,
+                'ID_COUNTRY' => 1,
+                'ORDER_INFO' => 1
+            ],
+        ];
+        parent::init();
+    }
 }

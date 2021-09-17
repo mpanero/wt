@@ -2,13 +2,17 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\TGenderController;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\TGenderController Test Case
+ *
+ * @uses \App\Controller\TGenderController
  */
-class TGenderControllerTest extends IntegrationTestCase
+class TGenderControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
 
     /**
      * Fixtures
@@ -16,7 +20,7 @@ class TGenderControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_gender'
+        'app.TGender'
     ];
 
     /**

@@ -7,13 +7,12 @@ use Cake\ORM\Entity;
  * TMarket Entity
  *
  * @property int $ID_MARKET
- * @property string $MARKET_NAME
+ * @property string|null $MARKET_NAME
  * @property int $ID_COUNTRY
- * @property int $ACTIVE
+ * @property int|null $ACTIVE
  */
 class TMarket extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *

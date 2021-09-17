@@ -10,7 +10,6 @@ use Cake\TestSuite\TestCase;
  */
 class TGenderTableTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -24,7 +23,7 @@ class TGenderTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_gender'
+        'app.TGender'
     ];
 
     /**
@@ -35,8 +34,8 @@ class TGenderTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('TGender') ? [] : ['className' => TGenderTable::class];
-        $this->TGender = TableRegistry::get('TGender', $config);
+        $config = TableRegistry::getTableLocator()->exists('TGender') ? [] : ['className' => TGenderTable::class];
+        $this->TGender = TableRegistry::getTableLocator()->get('TGender', $config);
     }
 
     /**

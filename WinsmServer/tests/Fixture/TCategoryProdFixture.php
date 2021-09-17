@@ -5,18 +5,15 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * TCategoryProdFixture
- *
  */
 class TCategoryProdFixture extends TestFixture
 {
-
     /**
      * Table name
      *
      * @var string
      */
     public $table = 't_category_prod';
-
     /**
      * Fields
      *
@@ -24,12 +21,13 @@ class TCategoryProdFixture extends TestFixture
      */
     // @codingStandardsIgnoreStart
     public $fields = [
-        'ID_CATEGORY_PROD' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'ID_CATEGORY_PROD' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'CATEGORY_PROD_NAME' => ['type' => 'string', 'length' => 100, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'ID_MARKET' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'ACTIVE' => ['type' => 'integer', 'length' => 1, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'ACTIVE' => ['type' => 'integer', 'length' => 1, 'unsigned' => false, 'null' => false, 'default' => '1', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         '_indexes' => [
             'fk_T_CATEGORY_PROD_T_MARKET1_idx' => ['type' => 'index', 'columns' => ['ID_MARKET'], 'length' => []],
+            'ID_CATEGORY_PROD' => ['type' => 'index', 'columns' => ['ID_CATEGORY_PROD'], 'length' => []],
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['ID_CATEGORY_PROD'], 'length' => []],
@@ -41,18 +39,21 @@ class TCategoryProdFixture extends TestFixture
         ],
     ];
     // @codingStandardsIgnoreEnd
-
     /**
-     * Records
+     * Init method
      *
-     * @var array
+     * @return void
      */
-    public $records = [
-        [
-            'ID_CATEGORY_PROD' => 1,
-            'CATEGORY_PROD_NAME' => 'Lorem ipsum dolor sit amet',
-            'ID_MARKET' => 1,
-            'ACTIVE' => 1
-        ],
-    ];
+    public function init()
+    {
+        $this->records = [
+            [
+                'ID_CATEGORY_PROD' => 1,
+                'CATEGORY_PROD_NAME' => 'Lorem ipsum dolor sit amet',
+                'ID_MARKET' => 1,
+                'ACTIVE' => 1
+            ],
+        ];
+        parent::init();
+    }
 }

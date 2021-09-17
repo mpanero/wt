@@ -7,7 +7,7 @@
 	<title>Wintrade Agro</title>
 	
 	<!-- Favicon -->
-    <link rel="shortcut icon" href="assets/images/logo_small.png">
+    <link rel="shortcut icon" href="assets/images/logo_small_color.png">
 
 	<!-- Global stylesheets -->
 	<link href="assets/css/fontRoboto.css" rel="stylesheet" type="text/css">
@@ -26,6 +26,19 @@
 	<script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
 	<script type="text/javascript" src="assets/js/plugins/ui/nicescroll.min.js"></script>
 	<script type="text/javascript" src="assets/js/plugins/ui/drilldown.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/forms/styling/switchery.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/forms/styling/switch.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/pickers/pickadate/picker.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/pickers/pickadate/picker.date.js"></script> 
+	<script type="text/javascript" src="assets/js/plugins/pickers/anytime.min.js"></script> 	
+	<script type="text/javascript" src="lib/mask/src/jquery.mask.js"></script>
+	<script type="text/javascript" src="lib/maskmoney/src/jquery.maskMoney.js"></script>	
+    <script type="text/javascript" src="assets/js/plugins/bootstrap-datetimepicker/build/moment/min/moment-with-locales.js"></script>   
+    <script type="text/javascript" src="assets/js/plugins/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.js"></script>	
+	<script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/dockmodal/dockmodal.js"></script>
 	<!-- /core JS files -->
 
 	<!-- JS principales -->
@@ -71,7 +84,9 @@
 				<form id="formLogin" action="#" autocomplete="false">
 					<div class="panel panel-body login-form">
 						<div class="text-center">
-							<div class="icon-object border-slate-300 text-slate-300"><i class="icon-headset"></i></div>
+							<!-- <div class="icon-object border-slate-300 text-slate-300">-->
+								<img src="assets/images/logo_small_color.png" alt="">
+							<!-- </div>-->
 							<h5 class="content-group">Ingresa a su cuenta <small class="display-block">Ingresa tus Credenciales</small></h5>
 						</div>
 
@@ -108,7 +123,7 @@
 						</div>
 
 						<div class="text-center">
-							<a id="recuperarclave" href="#"></a>
+							<a id="btnReg" href="#" class="menuList animation" data-animation="zoomIn" data-toggle="modal" data-target="#modalRegiUser">Registrarse</a>
 						</div>
 					</div>
 				</form>
@@ -129,6 +144,36 @@
 
 	</div>
 	<!-- /page container -->
+
+	<!-- ****************************************** Modal Registrar User ************************************* -->
+	<div id="modalRegiUser" class="modal modalRegiUser" data-keyboard="false" data-backdrop="static">
+		<form id="formRegiUser" action="#" method="post" enctype="multipart/form-data">
+			<div class="modal-dialog modal-full">
+				<div class="modal-content">
+					<div class="modal-header">
+						<!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+						<h5 class="modal-title"><i class="icon-menu7"></i> Registrar Usuario</h5>
+					</div>
+
+					<div class="modal-body">
+						<div id="divRegiUser" class="panel panel-danger panel-bordered" height="300">
+							
+						</div>			
+					</div>
+
+					<div class="row">
+						<div class="">
+							<div class="modal-footer">
+								<button type="button" class="btn btn-link btnCloseModalRegiUser"><i class="icon-cross"></i> Cancelar</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</form>
+	</div>
+	<!-- /modal -->	
 
 </body>
 </html>

@@ -17,6 +17,9 @@
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('ID_POSITION') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('POSITION') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('DATE_POSITION') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('ID_TYPE_PRICE_INFO') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('ACTIVE') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -25,6 +28,9 @@
             <tr>
                 <td><?= $this->Number->format($tPosition->ID_POSITION) ?></td>
                 <td><?= h($tPosition->POSITION) ?></td>
+                <td><?= h($tPosition->DATE_POSITION) ?></td>
+                <td><?= $this->Number->format($tPosition->ID_TYPE_PRICE_INFO) ?></td>
+                <td><?= $this->Number->format($tPosition->ACTIVE) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $tPosition->ID_POSITION]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $tPosition->ID_POSITION]) ?>

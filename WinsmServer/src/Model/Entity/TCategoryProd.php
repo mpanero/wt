@@ -7,13 +7,12 @@ use Cake\ORM\Entity;
  * TCategoryProd Entity
  *
  * @property int $ID_CATEGORY_PROD
- * @property string $CATEGORY_PROD_NAME
+ * @property string|null $CATEGORY_PROD_NAME
  * @property int $ID_MARKET
  * @property int $ACTIVE
  */
 class TCategoryProd extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *

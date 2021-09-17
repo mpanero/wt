@@ -9,17 +9,17 @@ use Cake\ORM\Entity;
  * @property int $ID
  * @property int $ID_TYPE_PRICE_INFO
  * @property int $ID_PRODUCT
- * @property \Cake\I18n\FrozenDate $DATE_PRICE
+ * @property \Cake\I18n\FrozenTime $DATE_PRICE
  * @property int $ID_PLACE_PRICE
- * @property float $PRICE_VALUE
+ * @property float|null $PRICE_VALUE
  * @property int $ID_TYPE_CURRENCY
  * @property float $VAR
  * @property int $ID_POSITION
  * @property \Cake\I18n\FrozenTime $UPDATED
+ * @property int $LAST
  */
 class TPrice extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -38,6 +38,7 @@ class TPrice extends Entity
         'ID_TYPE_CURRENCY' => true,
         'VAR' => true,
         'ID_POSITION' => true,
-        'UPDATED' => true
+        'UPDATED' => true,
+        'LAST' => true
     ];
 }

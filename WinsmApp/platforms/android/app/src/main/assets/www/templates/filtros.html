@@ -1,15 +1,15 @@
 <ion-view view-title="Filtros de Busqueda">
     <ion-content class="animate-fade-slide-in">
-        <div class="list-actions" style="top: -26.5pt !important;  right: auto !important ; bottom: initial; left: -11pt !important;  position: absolute;  border-color: black; z-index: 99999 !important; display:block;">
+        <!--<div class="list-actions" style="top: -26.5pt !important;  right: auto !important ; bottom: initial; left: -11pt !important;  position: absolute;  border-color: black; z-index: 99999 !important; display:block;">
             <button class="button button-clear" ng-click="cancelar()"><i class=" icon-arrow-left16" style="font-size: 18pt; color:#fff;"></i></button>
         </div> 
         <div class="list-title" style="top: -20pt !important;  right: auto !important ; bottom: initial; left: auto !important;  position: absolute;  border-color: #072142; z-index: 9999 !important; display:block; width: 100%; min-width: 100%; text-align: -webkit-center; font-size: 14pt; background-color: #072142; color: white; height: 4.5vh; font-weight: bold; line-height: 26pt;">&nbsp;
             Filtros de Busqueda
-        </div>     
+        </div> -->    
         <section>
-        <form name="findRequest" novalidate style="margin-top: 20pt;">
+        <form name="findRequest" novalidate style="margin-top:0pt;">
         
-            <ion-scroll class="myScroll" zooming="false" direction="y" >            
+            <!--<ion-scroll class="myScroll" zooming="false" direction="y" >            -->
             <div class="item item-divider" style="background-color: beige;">
                 Filtros Obligatorios
             </div>            
@@ -140,7 +140,7 @@
                 </div>             
             </div>
             <div class="row resetROW">            
-                <div class="col col-50 ">
+                <!--<div class="col col-50 ">
                     <div class="list">
 
                         <md-input-container style="margin-right: 10px;"  class="item">
@@ -160,7 +160,23 @@
                             </md-select>
                         </md-input-container>                         
                     </div>            
-                </div>                
+                </div>   -->
+                <div class="col col-50">
+                    <div class="list">
+                        <md-input-container class="md-block">
+                            <label>Origen</label>
+                            <input type="text" name="t_ORIGIN_NAME" ng-model="formData.t_ORIGIN_NAME" ng-readonly="all" ng-click="findOrigen($event)" autocomplete="off" />
+                        </md-input-container>
+                    </div>            
+                </div>
+                <div class="col col-50">
+                    <div class="list">
+                        <md-input-container class="md-block">
+                            <label>Lugar Entrega</label>
+                            <input type="text" name="t_DELIVERY_NAME" ng-model="formData.t_DELIVERY_NAME" ng-readonly="all" ng-click="findDelivery($event)" autocomplete="off" />
+                        </md-input-container>
+                    </div>            
+                </div>                 
             </div>
             <div class="row resetROW">            
                 <div class="col col-50 ">
@@ -186,8 +202,10 @@
                 </div>            
             </div>
             <input type="hidden" ng-model="formData.ID_USER_OWNER" name="ID_USER_OWNER" ng-value="" />
-         </ion-scroll>
-                   
+            <input type="hidden" ng-model="formParams.ID_PLACE_ORIGIN" name="ID_PLACE_ORIGIN" ng-value="" />
+            <input type="hidden" ng-model="formParams.ID_PLACE_DELIVERY" name="ID_PLACE_DELIVERY" ng-value="" />            
+        <!-- </ion-scroll>-->
+           <ion-infinite-scroll ng-if="moreDataCanBeLoaded()" icon="ion-loading-c" on-infinite="loadMore()" distance="50%"></ion-infinite-scroll>    
         </form>  
         </section> 
     </ion-content>

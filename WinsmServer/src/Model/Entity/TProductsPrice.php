@@ -10,10 +10,10 @@ use Cake\ORM\Entity;
  * @property string $PRODUCT_NAME
  * @property int $ACTIVE
  * @property int $ID_COUNTRY
+ * @property int $ORDER_INFO
  */
 class TProductsPrice extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -25,9 +25,8 @@ class TProductsPrice extends Entity
      */
     protected $_accessible = [
         'PRODUCT_NAME' => true,
-        'ORDER_INFO' => true,
-        'ID_COUNTRY' => true,
         'ACTIVE' => true,
+        'ID_COUNTRY' => true,
+        'ORDER_INFO' => true
     ];
-    
 }

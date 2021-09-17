@@ -8,45 +8,41 @@ use Cake\ORM\Entity;
  *
  * @property int $ID_REQUEST
  * @property int $ID_USER_OWNER
- * @property \Cake\I18n\FrozenTime $DH_REQUEST
- * @property int $ID_TP_OPERATION
+ * @property \Cake\I18n\FrozenTime|null $DH_REQUEST
+ * @property int|null $ID_TP_OPERATION
  * @property int $ID_MARKET
- * @property int $ID_TP_BUSINESS
+ * @property int|null $ID_TP_BUSINESS
  * @property int $ID_PRODUCT
- * @property int $PRICE_FROM
- * @property int $PRICE_TO
- * @property int $ID_TP_CURRENCY
- * @property int $QT_FROM
- * @property int $QT_TO
- * @property int $ID_UM
- * @property \Cake\I18n\FrozenTime $DT_FROM
- * @property \Cake\I18n\FrozenTime $DT_TO
- * @property int $ID_PLACE_DELIVERY
- * @property int $LOC_DISTANCE
- * @property string $LOG
- * @property int $ID_TP_STATUS_REQ
- * @property \Cake\I18n\FrozenTime $DH_LAST_UPDATE
+ * @property int|null $PRICE_FROM
+ * @property int|null $PRICE_TO
+ * @property int|null $ID_TP_CURRENCY
+ * @property int|null $QT_FROM
+ * @property int|null $QT_TO
+ * @property int|null $ID_UM
+ * @property \Cake\I18n\FrozenTime|null $DT_FROM
+ * @property \Cake\I18n\FrozenTime|null $DT_TO
+ * @property int|null $ID_PLACE_DELIVERY
+ * @property int|null $LOC_DISTANCE
+ * @property string|null $LOG
+ * @property int|null $ID_TP_STATUS_REQ
+ * @property \Cake\I18n\FrozenTime|null $DH_LAST_UPDATE
  * @property int $ID_TYPE_PRICE
- * @property int $ID_PRICE_REF
- * @property \Cake\I18n\FrozenTime $DT_PRICE_FIX_FROM
- * @property \Cake\I18n\FrozenTime $DT_PRICE_FIX_TO
- * @property int $ID_CROP
- * @property int $ID_TYPE_DELIVERY
- * @property int $TYPE_QUALITY
- * @property string $QUALITY_INFO
+ * @property int|null $ID_PRICE_REF
+ * @property int|null $ID_POSITION
+ * @property \Cake\I18n\FrozenTime|null $DT_PRICE_FIX_FROM
+ * @property \Cake\I18n\FrozenTime|null $DT_PRICE_FIX_TO
+ * @property int|null $ID_CROP
+ * @property int|null $ID_TYPE_PAYMENT
+ * @property int|null $ID_PLACE_ORIGIN
+ * @property int|null $ID_TYPE_DELIVERY
+ * @property int|null $DELIVERY_METHOD
+ * @property int|null $DELIVERY_AMOUNT
+ * @property int|null $TYPE_QUALITY
+ * @property string|null $QUALITY_INFO
  * @property int $ACTIVE
- *
- * @property \App\Model\Entity\TMarket $t_market
- * @property \App\Model\Entity\TProduct $t_product
- * @property \App\Model\Entity\TPlace $t_place
- * @property \App\Model\Entity\TUser $t_user
- * @property \App\Model\Entity\TUm $t_um
- * @property \App\Model\Entity\TCurrency $t_currency
- * @property \App\Model\Entity\TType $t_type
  */
 class TRequest extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -78,20 +74,17 @@ class TRequest extends Entity
         'DH_LAST_UPDATE' => true,
         'ID_TYPE_PRICE' => true,
         'ID_PRICE_REF' => true,
+        'ID_POSITION' => true,
         'DT_PRICE_FIX_FROM' => true,
         'DT_PRICE_FIX_TO' => true,
         'ID_CROP' => true,
         'ID_TYPE_PAYMENT' => true,
+        'ID_PLACE_ORIGIN' => true,
         'ID_TYPE_DELIVERY' => true,
+        'DELIVERY_METHOD' => true,
+        'DELIVERY_AMOUNT' => true,
         'TYPE_QUALITY' => true,
         'QUALITY_INFO' => true,
-        'ACTIVE' => true,
-        't_market' => true,
-        't_product' => true,
-        't_place' => true,
-        't_user' => true,
-        't_um' => true,
-        't_currency' => true,
-        't_type' => true
+        'ACTIVE' => true
     ];
 }

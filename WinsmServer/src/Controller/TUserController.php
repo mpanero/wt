@@ -25,10 +25,10 @@ class TUserController extends AppController
 	{
         parent::initialize();
 		if($this->request->session()->read('Auth.TUser.token')){
-            $this->Auth->allow(['addUser', 'editUser', 'page', 'logout']);
+            $this->Auth->allow(['editUser', 'page', 'logout']);
 			return true;
         }else{
-            $this->Auth->allow(['login', 'logout', 'newUser', 'sendmail','confirmUser','newPass']); //El uso de AuthComponent estándar permite que la lógica permita el acceso no autenticado a las acciones / add y / token
+            $this->Auth->allow(['login', 'logout', 'newUser','addUser', 'sendmail','confirmUser','newPass','findUsers']); //El uso de AuthComponent estándar permite que la lógica permita el acceso no autenticado a las acciones / add y / token
 			return true;
         }       
     }
@@ -91,7 +91,7 @@ class TUserController extends AppController
                 ->first();
                 //var_dump($auth);
                 //debug($auth);
-                //$md5 = Security::hash($pass,"sha256",true);
+                //$md5 = Security::hash($pass,"SHA256",true);
                 //echo $user.":".$pass.":".$md5;
                 //$this->set('login', $user.":".$pass.":".$md5);
                 //$this->set('_serialize', ['login']);                
@@ -561,10 +561,25 @@ class TUserController extends AppController
             //$tUser = $this->TUser->patchEntity($tUser, $this->request->query);
             foreach ($this->request->query as $key => $value) {
                 # code...
-                $tUser->$key = $value;
+                $pos = strpos($key, '_submit');                
+                if($pos !== false){
+                    $data = explode("_submit",$key);
+                    $propiedad = $data[0];
+                    $tUser->$propiedad = $value;
+                }else{
+                    if($key == "ACTIVITY"){
+                        $tUser->$key = implode(",", $value);
+                    }else{
+                        $tUser->$key = $value;
+                    }
+                    
+                }
+                
             }              
             $tUser->ID_ROL = 2;
             $tUser->ACTIVE = 1;
+            $tUser->ID_TYPE_STATUS_USER = 320;
+            
             $dateB = new Date($tUser->BIRTHDATE);
             
             $tUser->BIRTHDATE = $dateB->format('Y-m-d');
@@ -624,12 +639,17 @@ class TUserController extends AppController
                 $propiedad = $data[0];
                 $tUser->$propiedad = $value;
             }else{
-                $tUser->$key = $value;
+                if($key == "ACTIVITY"){
+                    $tUser->$key = implode(",", $value);
+                }else{
+                    $tUser->$key = $value;
+                }
+                
             }            
         }        
         
         $dateF = new Time($tUser->BIRTHDATE);
-        $tUser->BIRTHDATE = $dateF->format('Y-m-d H:i:s');
+        $tUser->BIRTHDATE = $dateF->format('Y-m-d');
         
         /*debug($tUser);*/
         if ($this->TUser->save($tUser)) {
@@ -645,5 +665,28 @@ class TUserController extends AppController
         $this->set('_serialize', ['tUser']);
     
     }
+
+    /**
+     * Page method
+     *
+     * @return \Cake\Network\Response|null
+     */
+    public function findUsers()
+    {
+        $tUser = $this->TUser->find('all', array(
+            'order' => ['TUser.MAIL' => 'ASC'],
+            'conditions' => [],
+            'contain' => []
+        ))->select(['TUser.MAIL']);            
+        $countR = $tUser->count();
+        if($countR > 0){// si existe tUser 
+            $this->set('tUser', $tUser);
+            $this->set('_serialize', ['tUser']);
+        }else{
+            $data = "no data";
+            $this->set('tUser', $data);
+            $this->set('_serialize', ['tUser']); 
+        }             
+    }     
 
 }

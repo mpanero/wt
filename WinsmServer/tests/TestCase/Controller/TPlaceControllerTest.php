@@ -2,13 +2,17 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\TPlaceController;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\TPlaceController Test Case
+ *
+ * @uses \App\Controller\TPlaceController
  */
-class TPlaceControllerTest extends IntegrationTestCase
+class TPlaceControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
 
     /**
      * Fixtures
@@ -16,7 +20,7 @@ class TPlaceControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_place'
+        'app.TPlace'
     ];
 
     /**

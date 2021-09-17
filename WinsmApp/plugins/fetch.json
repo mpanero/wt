@@ -31,14 +31,6 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-splashscreen": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-splashscreen@5.0.1"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
   "cordova-plugin-screen-orientation": {
     "source": {
       "type": "registry",
@@ -50,15 +42,31 @@
   "es6-promise-plugin": {
     "source": {
       "type": "registry",
-      "id": "es6-promise-plugin@^4.1.0"
+      "id": "es6-promise-plugin@^4.2.2"
     },
-    "is_top_level": false,
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-splashscreen": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-splashscreen@5.0.3"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-statusbar": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-statusbar@2.4.3"
+    },
+    "is_top_level": true,
     "variables": {}
   },
   "cordova-plugin-call-number": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-call-number"
+      "id": "cordova-plugin-call-number@^1.0.1"
     },
     "is_top_level": true,
     "variables": {}

@@ -17,11 +17,13 @@
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('ID_CHAT') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('ID_TRADE') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('ID_USER_OWNER') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('ID_USER_CPART') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('COD_REF') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('ID_USER_ORIGEN') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('ID_USER_DESTINY') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('SMS') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('READ_CHAT') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('DT_CREATED') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('VERIFIED') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -30,11 +32,13 @@
             <tr>
                 <td><?= $this->Number->format($tChat->ID_CHAT) ?></td>
                 <td><?= $this->Number->format($tChat->ID_TRADE) ?></td>
-                <td><?= $this->Number->format($tChat->ID_USER_OWNER) ?></td>
-                <td><?= $this->Number->format($tChat->ID_USER_CPART) ?></td>
+                <td><?= h($tChat->COD_REF) ?></td>
+                <td><?= $this->Number->format($tChat->ID_USER_ORIGEN) ?></td>
+                <td><?= $this->Number->format($tChat->ID_USER_DESTINY) ?></td>
                 <td><?= h($tChat->SMS) ?></td>
                 <td><?= $this->Number->format($tChat->READ_CHAT) ?></td>
                 <td><?= h($tChat->DT_CREATED) ?></td>
+                <td><?= $this->Number->format($tChat->VERIFIED) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $tChat->ID_CHAT]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $tChat->ID_CHAT]) ?>

@@ -7,13 +7,13 @@ use Cake\ORM\Entity;
  * TPlace Entity
  *
  * @property int $ID_PLACE
- * @property string $PLACE_NAME
+ * @property string|null $PLACE_NAME
+ * @property int $ID_PROVINCE
  * @property int $ID_COUNTRY
- * @property int $ACTIVE
+ * @property int|null $ACTIVE
  */
 class TPlace extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -25,6 +25,7 @@ class TPlace extends Entity
      */
     protected $_accessible = [
         'PLACE_NAME' => true,
+        'ID_PROVINCE' => true,
         'ID_COUNTRY' => true,
         'ACTIVE' => true
     ];

@@ -21,6 +21,10 @@
             <td><?= h($tNotification->DESCRIPTION) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('COD REF') ?></th>
+            <td><?= h($tNotification->COD_REF) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('ID NOTIF') ?></th>
             <td><?= $this->Number->format($tNotification->ID_NOTIF) ?></td>
         </tr>
@@ -33,8 +37,8 @@
             <td><?= $this->Number->format($tNotification->ID_USER) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('READ') ?></th>
-            <td><?= $this->Number->format($tNotification->READ) ?></td>
+            <th scope="row"><?= __('READ NOTIF') ?></th>
+            <td><?= $this->Number->format($tNotification->READ_NOTIF) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('DT CREATED') ?></th>

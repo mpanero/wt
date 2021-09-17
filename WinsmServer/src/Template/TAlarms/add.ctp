@@ -16,11 +16,16 @@
         <legend><?= __('Add T Alarm') ?></legend>
         <?php
             echo $this->Form->control('ID_USER');
+            echo $this->Form->control('ID_PLACE_PRICE');
+            echo $this->Form->control('ID_MARKET');
             echo $this->Form->control('ID_PRODUCT');
             echo $this->Form->control('ID_TYPE_PRICE');
-            echo $this->Form->control('ID_MARKET');
             echo $this->Form->control('PRICE_FROM');
             echo $this->Form->control('PRICE_TO');
+            echo $this->Form->control('ID_CURRENCY');
+            echo $this->Form->control('AUT_GENERATION');
+            echo $this->Form->control('ID_TP_OPERATION');
+            echo $this->Form->control('ID_POSITION');
             echo $this->Form->control('ACTIVE');
         ?>
     </fieldset>

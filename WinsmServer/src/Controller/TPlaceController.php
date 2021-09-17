@@ -15,12 +15,15 @@ class TPlaceController extends AppController
 	
 	public function initialize()
 	{
-		parent::initialize();
-		$this->Auth->allow(['index']);
-		if($this->request->session()->check("Auth.TUser.token")){
+        parent::initialize();
+		if($this->request->session()->read('Auth.TUser.token')){
+            $this->Auth->allow(['view', 'add', 'edit','delete']);
 			return true;
-		}
-	}     
+        }else{
+            $this->Auth->allow(['index']); //El uso de AuthComponent estándar permite que la lógica permita el acceso no autenticado a las acciones / add y / token
+			return true;
+        }       
+    }      
 
     /**
      * Index method

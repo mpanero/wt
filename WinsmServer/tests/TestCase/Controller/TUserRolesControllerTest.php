@@ -2,13 +2,17 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\TUserRolesController;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\TUserRolesController Test Case
+ *
+ * @uses \App\Controller\TUserRolesController
  */
-class TUserRolesControllerTest extends IntegrationTestCase
+class TUserRolesControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
 
     /**
      * Fixtures
@@ -16,7 +20,7 @@ class TUserRolesControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_user_roles'
+        'app.TUserRoles'
     ];
 
     /**

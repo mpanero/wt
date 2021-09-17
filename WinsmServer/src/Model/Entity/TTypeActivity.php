@@ -8,12 +8,11 @@ use Cake\ORM\Entity;
  *
  * @property int $ID_ACTIVITY
  * @property string $ACTIVITY_NAME
- * @property string $ACTIVITY_NAME_EN
- * @property int $ACTIVITY_NAME_PO
+ * @property string|null $ACTIVITY_NAME_EN
+ * @property int|null $ACTIVITY_NAME_PO
  */
 class TTypeActivity extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -24,6 +23,7 @@ class TTypeActivity extends Entity
      * @var array
      */
     protected $_accessible = [
+        'ID_ACTIVITY' => true,
         'ACTIVITY_NAME' => true,
         'ACTIVITY_NAME_EN' => true,
         'ACTIVITY_NAME_PO' => true

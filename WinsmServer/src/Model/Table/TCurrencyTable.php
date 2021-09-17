@@ -12,14 +12,14 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\TCurrency get($primaryKey, $options = [])
  * @method \App\Model\Entity\TCurrency newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\TCurrency[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TCurrency|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TCurrency|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TCurrency saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\TCurrency patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\TCurrency[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\TCurrency findOrCreate($search, callable $callback = null, $options = [])
  */
 class TCurrencyTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -45,16 +45,16 @@ class TCurrencyTable extends Table
     {
         $validator
             ->integer('ID_CURRENCY')
-            ->allowEmpty('ID_CURRENCY', 'create');
+            ->allowEmptyString('ID_CURRENCY', null, 'create');
 
         $validator
             ->scalar('CURRENCY_NAME')
             ->maxLength('CURRENCY_NAME', 45)
-            ->allowEmpty('CURRENCY_NAME');
+            ->allowEmptyString('CURRENCY_NAME');
 
         $validator
             ->integer('ID_COUNTRY')
-            ->allowEmpty('ID_COUNTRY');
+            ->allowEmptyString('ID_COUNTRY');
 
         return $validator;
     }

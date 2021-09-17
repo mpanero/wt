@@ -17,11 +17,16 @@
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('ID_ALARM') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('ID_USER') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('ID_PLACE_PRICE') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('ID_MARKET') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('ID_PRODUCT') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('ID_TYPE_PRICE') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('ID_MARKET') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('PRICE_FROM') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('PRICE_TO') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('ID_CURRENCY') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('AUT_GENERATION') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('ID_TP_OPERATION') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('ID_POSITION') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('ACTIVE') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
@@ -31,11 +36,16 @@
             <tr>
                 <td><?= $this->Number->format($tAlarm->ID_ALARM) ?></td>
                 <td><?= $this->Number->format($tAlarm->ID_USER) ?></td>
+                <td><?= $this->Number->format($tAlarm->ID_PLACE_PRICE) ?></td>
+                <td><?= $this->Number->format($tAlarm->ID_MARKET) ?></td>
                 <td><?= $this->Number->format($tAlarm->ID_PRODUCT) ?></td>
                 <td><?= $this->Number->format($tAlarm->ID_TYPE_PRICE) ?></td>
-                <td><?= $this->Number->format($tAlarm->ID_MARKET) ?></td>
                 <td><?= $this->Number->format($tAlarm->PRICE_FROM) ?></td>
                 <td><?= $this->Number->format($tAlarm->PRICE_TO) ?></td>
+                <td><?= $this->Number->format($tAlarm->ID_CURRENCY) ?></td>
+                <td><?= $this->Number->format($tAlarm->AUT_GENERATION) ?></td>
+                <td><?= $this->Number->format($tAlarm->ID_TP_OPERATION) ?></td>
+                <td><?= $this->Number->format($tAlarm->ID_POSITION) ?></td>
                 <td><?= $this->Number->format($tAlarm->ACTIVE) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $tAlarm->ID_ALARM]) ?>

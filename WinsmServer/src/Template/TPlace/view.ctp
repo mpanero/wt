@@ -25,6 +25,10 @@
             <td><?= $this->Number->format($tPlace->ID_PLACE) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('ID PROVINCE') ?></th>
+            <td><?= $this->Number->format($tPlace->ID_PROVINCE) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('ID COUNTRY') ?></th>
             <td><?= $this->Number->format($tPlace->ID_COUNTRY) ?></td>
         </tr>

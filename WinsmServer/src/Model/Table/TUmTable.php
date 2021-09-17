@@ -12,14 +12,14 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\TUm get($primaryKey, $options = [])
  * @method \App\Model\Entity\TUm newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\TUm[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TUm|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TUm|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TUm saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\TUm patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\TUm[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\TUm findOrCreate($search, callable $callback = null, $options = [])
  */
 class TUmTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -45,15 +45,16 @@ class TUmTable extends Table
     {
         $validator
             ->integer('ID_UM')
-            ->allowEmpty('ID_UM', 'create');
+            ->allowEmptyString('ID_UM', null, 'create');
 
         $validator
+            ->scalar('UM_NAME')
             ->maxLength('UM_NAME', 45)
-            ->allowEmpty('UM_NAME');
+            ->allowEmptyString('UM_NAME');
 
         $validator
             ->integer('ID_COUNTRY')
-            ->allowEmpty('ID_COUNTRY');
+            ->allowEmptyString('ID_COUNTRY');
 
         return $validator;
     }

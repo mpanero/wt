@@ -12,14 +12,14 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\TType get($primaryKey, $options = [])
  * @method \App\Model\Entity\TType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\TType[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TType|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\TType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\TType[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\TType findOrCreate($search, callable $callback = null, $options = [])
  */
 class TTypesTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -31,7 +31,7 @@ class TTypesTable extends Table
         parent::initialize($config);
 
         $this->setTable('t_types');
-        $this->setDisplayField('INFO');
+        $this->setDisplayField('ID_TYPE');
         $this->setPrimaryKey('ID_TYPE');
     }
 
@@ -44,28 +44,39 @@ class TTypesTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->allowEmpty('ID_TYPE', 'create');
+            ->allowEmptyString('ID_TYPE', null, 'create');
 
         $validator
+            ->scalar('TYPE')
             ->maxLength('TYPE', 20)
             ->requirePresence('TYPE', 'create')
-            ->notEmpty('TYPE');
+            ->notEmptyString('TYPE');
 
         $validator
+            ->scalar('INFO')
             ->maxLength('INFO', 100)
             ->requirePresence('INFO', 'create')
-            ->notEmpty('INFO');
+            ->notEmptyString('INFO');
 
         $validator
-            ->allowEmpty('INFO1');
-        
-        $validator
-            ->allowEmpty('DATA_1');            
+            ->scalar('INFO1')
+            ->maxLength('INFO1', 200)
+            ->allowEmptyString('INFO1');
 
         $validator
             ->integer('ACTIVE')
-            ->requirePresence('ACTIVE', 'create')
-            ->notEmpty('ACTIVE');
+            ->notEmptyString('ACTIVE');
+
+        $validator
+            ->scalar('DATA_1')
+            ->maxLength('DATA_1', 50)
+            ->requirePresence('DATA_1', 'create')
+            ->notEmptyString('DATA_1');
+
+        $validator
+            ->integer('ORDER_INFO')
+            ->requirePresence('ORDER_INFO', 'create')
+            ->notEmptyString('ORDER_INFO');
 
         return $validator;
     }

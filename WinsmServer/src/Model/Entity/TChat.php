@@ -8,15 +8,16 @@ use Cake\ORM\Entity;
  *
  * @property int $ID_CHAT
  * @property int $ID_TRADE
+ * @property string|null $COD_REF
  * @property int $ID_USER_ORIGEN
  * @property int $ID_USER_DESTINY
  * @property string $SMS
- * @property int $READ_CHAT
+ * @property int|null $READ_CHAT
  * @property \Cake\I18n\FrozenTime $DT_CREATED
+ * @property int $VERIFIED
  */
 class TChat extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -33,6 +34,7 @@ class TChat extends Entity
         'ID_USER_DESTINY' => true,
         'SMS' => true,
         'READ_CHAT' => true,
-        'DT_CREATED' => true
+        'DT_CREATED' => true,
+        'VERIFIED' => true
     ];
 }

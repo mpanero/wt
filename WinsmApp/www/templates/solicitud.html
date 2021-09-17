@@ -8,7 +8,7 @@
         </div>        
         <section>
         <form name="newRequest"  novalidate style="margin-top: 15pt;">
-            <ion-scroll class="myScroll" zooming="false" direction="y" > 
+            <!-- <ion-scroll class="myScroll" zooming="false" direction="y" > -->
             <div class="item item-divider" style="background-color: beige;">
                 Producto
             </div>            
@@ -313,8 +313,8 @@
             <input type="hidden" ng-model="formData.ID_MARKET" name="ID_MARKET" ng-value="1" value="1" />
             
             
-         </ion-scroll>
-                   
+         <!-- </ion-scroll> -->
+            <ion-infinite-scroll ng-if="moreDataCanBeLoaded()" icon="ion-loading-c" on-infinite="loadMore()"></ion-infinite-scroll>           
         </form>  
         </section> 
         

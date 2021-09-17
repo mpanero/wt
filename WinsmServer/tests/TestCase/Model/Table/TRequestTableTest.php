@@ -10,7 +10,6 @@ use Cake\TestSuite\TestCase;
  */
 class TRequestTableTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -24,14 +23,7 @@ class TRequestTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_request',
-        'app.t_market',
-        'app.t_product',
-        'app.t_place',
-        'app.t_user',
-        'app.t_um',
-        'app.t_currency',
-        'app.t_types'
+        'app.TRequest'
     ];
 
     /**
@@ -42,8 +34,8 @@ class TRequestTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('TRequest') ? [] : ['className' => TRequestTable::class];
-        $this->TRequest = TableRegistry::get('TRequest', $config);
+        $config = TableRegistry::getTableLocator()->exists('TRequest') ? [] : ['className' => TRequestTable::class];
+        $this->TRequest = TableRegistry::getTableLocator()->get('TRequest', $config);
     }
 
     /**
@@ -74,26 +66,6 @@ class TRequestTableTest extends TestCase
      * @return void
      */
     public function testValidationDefault()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test beforeSave method
-     *
-     * @return void
-     */
-    public function testBeforeSave()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     */
-    public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

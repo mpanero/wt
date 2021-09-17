@@ -1,6 +1,9 @@
 <ion-view view-title="Home" align-title="center">
-    <ion-content scroll="false">
-      <div class="splash-bg"></div>
+    <ion-content>
+      <div class="bg-splash">
+          &nbsp;
+        
+        </div>
       <div class="splash-info">
         <div class="splash-logo"></div>
         <div class="splash-intro">
@@ -21,8 +24,8 @@
               </md-menu-content>
             </md-menu>            
         </div>             
-      <div padding>
-        <ion-scroll class="myScroll" zooming="false" direction="y" >  
+      <div>
+        <ion-scroll class="myScroll" zooming="false" direction="y" >
             <ion-grid class="grid">
               <ion-row class="row resetROW">
                 <ion-col class="col elementCenter">
@@ -72,33 +75,7 @@
                 </ion-col>
               </ion-row>
             </ion-grid>
-
-            <ion-grid class="grid">
-              <ion-row class="row resetROW">
-                <ion-col class="col elementCenter">
-                  <div>
-                    <md-button color="danger" icon-only="" ion-button="" outline="" class="button rootBtn" data-ink-color="#CD3385" data-ink-opacity=".8" ng-click="listAlarm()">
-                      <!-- <span class="button-inner icon ion-star"></span> -->
-                      <i class="icon-feed" style="font-size: 25pt !important; color: #04204a !important;"></i>
-                      <div class="button-effect"></div>
-                    </md-button> 
-                    <div style="margin-top: -7pt; font-size: 12pt; color: #04204a; font-weight: 700;">Mis Alarma</div>
-                  </div>                    
-                </ion-col>
-                <ion-col class="col elementCenter">
-                  <div>
-                    <md-button color="danger" icon-only="" ion-button="" outline="" class="button rootBtn" data-ink-color="#CD3385" data-ink-opacity=".8" ng-click="listNotification()">
-                      <!-- <span class="button-inner icon ion-star"></span> -->
-                        <i class="icon-bubble-notification" style="font-size: 25pt !important; color: #04204a !important;"></i>
-                        <span ng-class="{badgeNone: notifyCount < 1, badgeTen: notifyCount > 9, badge: notifyCount < 10}" class="bg-danger-400 media-badge animation spandNotif" data-animation="bounce">{{notifyCount}}</span>
-                        <div class="button-effect"></div>                        
-                    </md-button> 
-                    <div style="margin-top: -7pt; font-size: 12pt; color: #04204a; font-weight: 700;">Notificaciones</div>
-                  </div>                   
-                </ion-col>                  
-              </ion-row>
-            </ion-grid>
-
+            
             <ion-grid class="grid">
               <ion-row class="row resetROW">
                 <ion-col class="col elementCenter">
@@ -122,11 +99,40 @@
                   </div>                   
                 </ion-col>                  
               </ion-row>
-            </ion-grid>  
+            </ion-grid>             
+
+            <ion-grid class="grid">
+              <ion-row class="row resetROW">
+                <ion-col class="col elementCenter">
+                  <div>
+                    <md-button color="danger" icon-only="" ion-button="" outline="" class="button rootBtn" data-ink-color="#CD3385" data-ink-opacity=".8" ng-click="listNotification()">
+                      <!-- <span class="button-inner icon ion-star"></span> -->
+                        <i class="icon-bubble-notification" style="font-size: 25pt !important; color: #04204a !important;"></i>
+                        <span ng-class="{badgeNone: notifyCount < 1, badgeTen: notifyCount > 9, badge: notifyCount < 10}" class="bg-danger-400 media-badge animation spandNotif" data-animation="bounce">{{notifyCount}}</span>
+                        <div class="button-effect"></div>                        
+                    </md-button> 
+                    <div style="margin-top: -7pt; font-size: 12pt; color: #04204a; font-weight: 700;">Notificaciones</div>
+                  </div>                   
+                </ion-col>                   
+                <ion-col class="col elementCenter">
+                  <div>
+                    <!--<md-button color="danger" icon-only="" ion-button="" outline="" class="button rootBtn" data-ink-color="#CD3385" data-ink-opacity=".8" ng-click="listAlarm()">
+                      <!-- <span class="button-inner icon ion-star"></span> -->
+                    <!--  <i class="icon-feed" style="font-size: 25pt !important; color: #04204a !important;"></i>
+                      <div class="button-effect"></div>
+                    </md-button> 
+                    <div style="margin-top: -7pt; font-size: 12pt; color: #04204a; font-weight: 700;">Mis Alarma</div>-->
+                  </div>                    
+                </ion-col>                 
+              </ion-row>
+            </ion-grid>
+ 
            
-            </ion-scroll>                                
-        </div>
+            </ion-scroll>        
             
+            <!--<ion-infinite-scroll ng-if="moreDataCanBeLoaded()" icon="ion-loading-c" on-infinite="loadMore()" distance="0%"></ion-infinite-scroll>-->
+        </div>
+        
     </ion-content>
      <ion-footer-bar style="text-align:center;" class="hide-on-keyboard-open button-close-winsm">
         <div class="row hide-on-keyboard-open" style="text-align:center;" >

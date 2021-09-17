@@ -49,6 +49,10 @@
             <td><?= $this->Number->format($tPrice->ID_POSITION) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('LAST') ?></th>
+            <td><?= $this->Number->format($tPrice->LAST) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('DATE PRICE') ?></th>
             <td><?= h($tPrice->DATE_PRICE) ?></td>
         </tr>

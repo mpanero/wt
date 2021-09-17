@@ -5,18 +5,15 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * TPlacesPriceFixture
- *
  */
 class TPlacesPriceFixture extends TestFixture
 {
-
     /**
      * Table name
      *
      * @var string
      */
     public $table = 't_places_price';
-
     /**
      * Fields
      *
@@ -38,19 +35,22 @@ class TPlacesPriceFixture extends TestFixture
         ],
     ];
     // @codingStandardsIgnoreEnd
-
     /**
-     * Records
+     * Init method
      *
-     * @var array
+     * @return void
      */
-    public $records = [
-        [
-            'ID_PLACE_PRICE' => 1,
-            'PLACE_NAME' => 'Lorem ipsum dolor sit amet',
-            'ID_COUNTRY' => 1,
-            'ACTIVE' => 1,
-            'ORDER_INFO' => 1
-        ],
-    ];
+    public function init()
+    {
+        $this->records = [
+            [
+                'ID_PLACE_PRICE' => 1,
+                'PLACE_NAME' => 'Lorem ipsum dolor sit amet',
+                'ID_COUNTRY' => 1,
+                'ACTIVE' => 1,
+                'ORDER_INFO' => 1
+            ],
+        ];
+        parent::init();
+    }
 }

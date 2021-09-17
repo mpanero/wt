@@ -123,26 +123,43 @@ class TPositionController extends AppController
     public function find()
     {
 
-        $tPosition = $this->TPosition->find('all', array(
+    	$price = null;
+    	if(!empty($this->request->query('category'))){
+    		$price = $this->request->query('category');
+    	}else{
+    		if(!empty($this->request->query['category'])){
+    			$price = $this->request->query['category'];
+    		}
+        }
+                
+        if($price){
+            $tPosition = $this->TPosition->find('all', array(
                 'order' => ['TPosition.DATE_POSITION' => 'ASC'],
-                'conditions' => array('TPosition.ACTIVE' => 1
+                'conditions' => array('TPosition.ACTIVE' => 1,'ID_TYPE_PRICE_INFO' => $price
                 ),
                 'contain' => []
 
-        ))
-        ->select(['TPosition.ID_POSITION,',
-        'TPosition.POSITION'
-        ]);
-        //debug($tPosition);
-        $count = $tPosition->count();
-        if($count > 0){// si existe tPosition    			 
-            $this->set(compact('tPosition'));
-            $this->set('_serialize', ['tPosition']);                
+            ))
+            ->select(['TPosition.ID_POSITION,',
+            'TPosition.POSITION'
+            ]);
+            //debug($tPosition);
+            $count = $tPosition->count();
+            if($count > 0){// si existe tPosition    			 
+                $this->set(compact('tPosition'));
+                $this->set('_serialize', ['tPosition']);                
+            }else{
+                $data = "no data";
+                $this->set('tPosition', $data);
+                $this->set('_serialize', ['tPosition']); 
+            } 
+
         }else{
             $data = "no data";
             $this->set('tPosition', $data);
             $this->set('_serialize', ['tPosition']); 
-        }     
+    	}
+    
 
     }    
 }

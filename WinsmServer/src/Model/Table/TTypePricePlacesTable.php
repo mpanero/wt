@@ -12,14 +12,14 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\TTypePricePlace get($primaryKey, $options = [])
  * @method \App\Model\Entity\TTypePricePlace newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\TTypePricePlace[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TTypePricePlace|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TTypePricePlace|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TTypePricePlace saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\TTypePricePlace patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\TTypePricePlace[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\TTypePricePlace findOrCreate($search, callable $callback = null, $options = [])
  */
 class TTypePricePlacesTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -44,17 +44,17 @@ class TTypePricePlacesTable extends Table
         $validator
             ->integer('ID_TYPE_PRICE_INFO')
             ->requirePresence('ID_TYPE_PRICE_INFO', 'create')
-            ->notEmpty('ID_TYPE_PRICE_INFO');
+            ->notEmptyString('ID_TYPE_PRICE_INFO');
 
         $validator
             ->integer('ID_PLACE_PRICE')
             ->requirePresence('ID_PLACE_PRICE', 'create')
-            ->notEmpty('ID_PLACE_PRICE');
+            ->notEmptyString('ID_PLACE_PRICE');
 
         $validator
             ->integer('ACTIVE')
             ->requirePresence('ACTIVE', 'create')
-            ->notEmpty('ACTIVE');
+            ->notEmptyString('ACTIVE');
 
         return $validator;
     }

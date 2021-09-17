@@ -30,6 +30,7 @@
             echo $this->Form->control('VAR');
             echo $this->Form->control('ID_POSITION');
             echo $this->Form->control('UPDATED');
+            echo $this->Form->control('LAST');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

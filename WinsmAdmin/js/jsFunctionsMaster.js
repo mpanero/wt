@@ -11,9 +11,11 @@ var timeDown = 2400; // 40 min
 var displayText = "60 seg.";
 var validateSession = null;
 var countD = null;
-var root = "../../winsm";
-//var root = "../../stagro_st";
-//var root = "http://smartradeagro.com/winsm";
+/** server */
+//var root = "../../core";
+/** localhost */
+var root = "../../wtagro_wt";
+
 var linksWs = {
     formSubmit: null,
     mercados:"",
@@ -33,6 +35,12 @@ var linksWs = {
     toperaciones:"",
     pricePlaces:"",
     prodPrice:"",
+    provinces:"",
+    tProvince:"",
+    localities:"",
+    tLocality:"",
+    tActivities:"",
+    tActivity:"",
     tNotify:null,
     tNotifys:null,
     tRequest:null,
@@ -42,10 +50,11 @@ var linksWs = {
     tAlarm:null,
     tAlarms:null,
     tUser:null,
-    tUsers:null
+    tUsers:null,
+    idsUsers:null
 };
 $(document).ready(function () {
-    
+    findUsers();
 });
 
 function showNotifys(){
@@ -207,6 +216,13 @@ function dateFromMysql(mysql_string){
    }
 
    return result;   
+}
+
+function initCheckSwitch(){
+    var elems = document.querySelectorAll('.switchery');
+    for (var i = 0; i < elems.length; i++) {
+        var switchery = new Switchery(elems[i]);
+    }
 }
 
 function initStyleRadio(){
@@ -510,7 +526,68 @@ function applyMask() {
             close: 'Cerrar',
             format: 'dddd d !de mmmm !del yyyy',
             formatSubmit: 'yyyy-mm-dd'
+            
         });
+
+    });
+    
+    // Basic options
+    $('.pickadateBirthday').each(function() {
+        var val = $(this).val();
+        //date = moment(val).toDate();
+        var date = "";
+        var dateF = null;
+
+        if(val != "" && val != undefined && val != 0){
+            if(val.match(/^\d{4}-\d{2}-\d{2}$/)){
+                date = new Date(val.split("-")[0], parseInt(val.split("-")[1])-1, val.split("-")[2]);
+            }else{
+                if(val.match(/^\d{2}-\d{2}-\d{4}$/)){
+                    date = new Date(val.split("-")[2], parseInt(val.split("-")[1])-1, val.split("-")[0]);
+                }else{
+                    if(val.match(/^\d{2}-\d{2}-\d{4} ([0-1]\d|2[0-3]):([0-5]\d):([0-5]\d)$/)){
+                        dateF = val.split(" ");
+                        date = new Date(dateF[0].split("-")[2], parseInt(dateF[0].split("-")[1])-1, dateF[0].split("-")[0]);
+                    }
+                }
+            }
+
+            $(this).pickadate({
+                monthsFull: [ 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre' ],
+                monthsShort: [ 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic' ],
+                weekdaysFull: [ 'domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado' ],
+                weekdaysShort: [ 'dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb' ],
+                today: 'Hoy',
+                clear: 'Borrar',
+                close: 'Cerrar',
+                format: 'dddd d !de mmmm !del yyyy',
+                formatSubmit: 'yyyy-mm-dd',
+                selectMonths: true,
+                selectYears: 70,
+                max: true,
+                onStart: function() {
+                    this.set('select', date); // Set to current date on load en error probar {}
+                    this.render(true); // Refresh the picker date on load
+                }                 
+                
+            });
+        }else{
+            $(this).pickadate({
+                monthsFull: [ 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre' ],
+                monthsShort: [ 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic' ],
+                weekdaysFull: [ 'domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado' ],
+                weekdaysShort: [ 'dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb' ],
+                today: 'Hoy',
+                clear: 'Borrar',
+                close: 'Cerrar',
+                format: 'dddd d !de mmmm !del yyyy',
+                formatSubmit: 'yyyy-mm-dd',
+                selectMonths: true,
+                selectYears: 70,
+                max: true               
+                
+            });      
+        }      
 
     });
 
@@ -561,7 +638,7 @@ function applyMask() {
                 clear: 'Borrar',
                 close: 'Cerrar',
                 format: 'dddd d !de mmmm !del yyyy',
-                formatSubmit: 'yyyy-mm-dd'            
+                formatSubmit: 'yyyy-mm-dd'  
             });
         }
 
@@ -595,9 +672,7 @@ function applyMask() {
                 });
             }
         } 
-        
-
-   
+          
     }); 
 
     // Select2 select
@@ -798,6 +873,253 @@ function initTooltipOptions(){
 }
 
 /************************************************** geters ***************************************************/
+function findLocality(pv, cbs) {
+    
+    $.ajax({
+        method: 'post',
+        dataType:"json",
+        url: root+"/TLocality/load"+'.json?'+$.param({loc:pv}), 
+        headers: {
+            'Authorization':"Bearer "+localStorage.getItem('accessToken')
+        },                
+        cache:false
+    }).done(function(doneLocalities){
+        if (evalResponseAjax(doneLocalities)) {
+            linksWs["tLocality"] = $.parseJSON(JSON.stringify(doneLocalities.tLocality));
+            if(typeof linksWs["tLocality"] !== null && typeof linksWs["tLocality"] !== typeof undefined){
+                cbs(linksWs["tLocality"]);
+            }else{
+                cbs("");
+            }
+        }else{
+            cbs("");
+        }           
+        
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        //unblockUISystem();
+        if(jqXHR.status == 401){
+            swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+            sessionLogout();   
+            cbs(""); 
+        }else{
+            if(jqXHR.status == 403){
+                swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                sessionLogout();
+                cbs("");
+            }else{
+                if(jqXHR.status == 404){
+                    swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 500){
+                        swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                        cbs("");    
+                    }
+                }
+            }
+        }
+        
+    });
+
+}
+
+function findLocalitys(pv, cbs) {
+    if(linksWs["localities"] != ""){
+        cbs(linksWs["localities"]);
+    }else{     
+        $.ajax({
+            method: 'post',
+            dataType:"json",
+            url: root+"/TLocality/find"+'.json?'+$.param({provi:pv}), 
+            headers: {
+                'Authorization':"Bearer "+localStorage.getItem('accessToken')
+            },                
+            cache:false
+        }).done(function(doneLocalities){
+            if (evalResponseAjax(doneLocalities)) {
+                linksWs["localities"] = $.parseJSON(JSON.stringify(doneLocalities.tLocality));
+                if(typeof linksWs["localities"] !== null && typeof linksWs["localities"] !== typeof undefined){
+                    cbs(linksWs["localities"]);
+                }else{
+                    cbs("");
+                }
+            }else{
+                cbs("");
+            }           
+            
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            //unblockUISystem();
+            if(jqXHR.status == 401){
+                swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+                sessionLogout();   
+                cbs(""); 
+            }else{
+                if(jqXHR.status == 403){
+                    swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                    sessionLogout();
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 404){
+                        swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                        cbs("");
+                    }else{
+                        if(jqXHR.status == 500){
+                            swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                            cbs("");    
+                        }
+                    }
+                }
+            }
+            
+        });
+    }
+}
+
+function findProvinces(pv, cbs) {
+    if(linksWs["provinces"] != ""){
+        cbs(linksWs["provinces"]);
+    }else{     
+        $.ajax({
+            method: 'post',
+            dataType:"json",
+            url: root+"/TProvince"+'.json', 
+            headers: {
+                'Authorization':"Bearer "+localStorage.getItem('accessToken')
+            },                
+            cache:false
+        }).done(function(doneProvinces){
+            if (evalResponseAjax(doneProvinces)) {
+                linksWs["provinces"] = $.parseJSON(JSON.stringify(doneProvinces.tProvince));
+                if(typeof linksWs["provinces"] !== null && typeof linksWs["provinces"] !== typeof undefined){
+                    cbs(linksWs["provinces"]);
+                }else{
+                    cbs("");
+                }
+            }else{
+                cbs("");
+            }           
+            
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            //unblockUISystem();
+            if(jqXHR.status == 401){
+                swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+                sessionLogout();   
+                cbs(""); 
+            }else{
+                if(jqXHR.status == 403){
+                    swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                    sessionLogout();
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 404){
+                        swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                        cbs("");
+                    }else{
+                        if(jqXHR.status == 500){
+                            swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                            cbs("");    
+                        }
+                    }
+                }
+            }
+            
+        });
+    }
+}
+
+function findUsers(){
+    $.ajax({
+        method: 'post',
+        dataType:"json",
+        url: root+'/TUser/findUsers.json', 
+        headers: {
+            'Authorization':"Bearer "+localStorage.getItem('accessToken')
+        },                
+        cache:false
+    }).done(function(doneUsersIds){
+        if (evalResponseAjax(doneUsersIds)) {
+            var users = $.parseJSON(JSON.stringify(doneUsersIds.tUser));
+            if(typeof users !== null && typeof users !== typeof undefined && typeof (users) !== 'string'){
+                linksWs["idsUsers"] = users;
+            }else{
+                
+            }
+        }else{
+           
+        }           
+        
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        //unblockUISystem();
+        if(jqXHR.status == 401){
+            sessionLogout();   
+        }else{
+            if(jqXHR.status == 403){
+                sessionLogout();
+            }else{
+                if(jqXHR.status == 404){
+                }else{
+                    if(jqXHR.status == 500){
+                    }
+                }
+            }
+        }
+        
+    });   
+}
+
+function findActivity(pv, cbs) {
+
+    if(linksWs["tActivities"] != ""){
+        cbs(linksWs["tActivities"]);
+    }else{
+        $.ajax({
+            method: 'post',
+            dataType:"json",
+            url: root+'/TTypeActivity/index.json', 
+            headers: {
+                'Authorization':"Bearer "+localStorage.getItem('accessToken')
+            },                
+            cache:false
+        }).done(function(doneActivi){
+            if (evalResponseAjax(doneActivi)) {
+                linksWs["tActivities"] = $.parseJSON(JSON.stringify(doneActivi.tTypeActivity));
+                if(typeof linksWs["tActivities"] !== null && typeof linksWs["tActivities"] !== typeof undefined && typeof (linksWs["tActivities"]) !== 'string'){
+                    cbs(linksWs["tActivities"]);
+                }else{
+                    cbs("");
+                }
+            }else{
+                cbs("");
+            }           
+            
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            //unblockUISystem();
+            if(jqXHR.status == 401){
+                swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+                sessionLogout();   
+                cbs(""); 
+            }else{
+                if(jqXHR.status == 403){
+                    swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                    sessionLogout();
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 404){
+                        swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                        cbs("");
+                    }else{
+                        if(jqXHR.status == 500){
+                            swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                            cbs("");    
+                        }
+                    }
+                }
+            }
+            
+        });
+    }
+   
+}
 
 function resumenPrice(ind, cbs) {
 
@@ -821,7 +1143,31 @@ function resumenPrice(ind, cbs) {
             cbs("");
         }           
         
-    });    
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        //unblockUISystem();
+        if(jqXHR.status == 401){
+            swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+            sessionLogout();   
+            cbs(""); 
+        }else{
+            if(jqXHR.status == 403){
+                swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                sessionLogout();
+                cbs("");
+            }else{
+                if(jqXHR.status == 404){
+                    swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 500){
+                        swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                        cbs("");    
+                    }
+                }
+            }
+        }
+        
+    });     
     
 }
 
@@ -851,7 +1197,31 @@ function resumenTrade(ind, cbs) {
             cbs("");
         }           
         
-    });    
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        //unblockUISystem();
+        if(jqXHR.status == 401){
+            swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+            sessionLogout();   
+            cbs(""); 
+        }else{
+            if(jqXHR.status == 403){
+                swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                sessionLogout();
+                cbs("");
+            }else{
+                if(jqXHR.status == 404){
+                    swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 500){
+                        swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                        cbs("");    
+                    }
+                }
+            }
+        }
+        
+    });   
     
 }
 
@@ -879,6 +1249,30 @@ function resumenRequest(ind, cbs) {
         }else{
             cbs("");
         }           
+        
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        //unblockUISystem();
+        if(jqXHR.status == 401){
+            swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+            sessionLogout();   
+            cbs(""); 
+        }else{
+            if(jqXHR.status == 403){
+                swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                sessionLogout();
+                cbs("");
+            }else{
+                if(jqXHR.status == 404){
+                    swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 500){
+                        swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                        cbs("");    
+                    }
+                }
+            }
+        }
         
     });    
     
@@ -908,6 +1302,30 @@ function findProdPrice(pv, cbs) {
                 cbs("");
             }           
             
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            //unblockUISystem();
+            if(jqXHR.status == 401){
+                swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+                sessionLogout();   
+                cbs(""); 
+            }else{
+                if(jqXHR.status == 403){
+                    swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                    sessionLogout();
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 404){
+                        swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                        cbs("");
+                    }else{
+                        if(jqXHR.status == 500){
+                            swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                            cbs("");    
+                        }
+                    }
+                }
+            }
+            
         });
     }
 }
@@ -935,6 +1353,30 @@ function findPricePlace(pv, cbs) {
             }else{
                 cbs("");
             }           
+            
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            //unblockUISystem();
+            if(jqXHR.status == 401){
+                swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+                sessionLogout();   
+                cbs(""); 
+            }else{
+                if(jqXHR.status == 403){
+                    swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                    sessionLogout();
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 404){
+                        swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                        cbs("");
+                    }else{
+                        if(jqXHR.status == 500){
+                            swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                            cbs("");    
+                        }
+                    }
+                }
+            }
             
         });
     }
@@ -964,6 +1406,30 @@ function findTOperaci(pv, cbs) {
                 cbs("");
             }           
             
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            //unblockUISystem();
+            if(jqXHR.status == 401){
+                swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+                sessionLogout();   
+                cbs(""); 
+            }else{
+                if(jqXHR.status == 403){
+                    swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                    sessionLogout();
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 404){
+                        swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                        cbs("");
+                    }else{
+                        if(jqXHR.status == 500){
+                            swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                            cbs("");    
+                        }
+                    }
+                }
+            }
+            
         });
     }
 }
@@ -991,6 +1457,30 @@ function findOperaci(pv, cbs) {
             }else{
                 cbs("");
             }           
+            
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            //unblockUISystem();
+            if(jqXHR.status == 401){
+                swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+                sessionLogout();   
+                cbs(""); 
+            }else{
+                if(jqXHR.status == 403){
+                    swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                    sessionLogout();
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 404){
+                        swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                        cbs("");
+                    }else{
+                        if(jqXHR.status == 500){
+                            swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                            cbs("");    
+                        }
+                    }
+                }
+            }
             
         });
     }
@@ -1020,6 +1510,30 @@ function findCalidad(pv, cbs) {
                 cbs("");
             }           
             
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            //unblockUISystem();
+            if(jqXHR.status == 401){
+                swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+                sessionLogout();   
+                cbs(""); 
+            }else{
+                if(jqXHR.status == 403){
+                    swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                    sessionLogout();
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 404){
+                        swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                        cbs("");
+                    }else{
+                        if(jqXHR.status == 500){
+                            swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                            cbs("");    
+                        }
+                    }
+                }
+            }
+            
         });
     }
 }
@@ -1047,6 +1561,30 @@ function findTEntrega(pv, cbs) {
             }else{
                 cbs("");
             }           
+            
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            //unblockUISystem();
+            if(jqXHR.status == 401){
+                swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+                sessionLogout();   
+                cbs(""); 
+            }else{
+                if(jqXHR.status == 403){
+                    swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                    sessionLogout();
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 404){
+                        swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                        cbs("");
+                    }else{
+                        if(jqXHR.status == 500){
+                            swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                            cbs("");    
+                        }
+                    }
+                }
+            }
             
         });
     }
@@ -1076,6 +1614,30 @@ function findPlaces(pv, cbs) {
                 cbs("");
             }           
             
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            //unblockUISystem();
+            if(jqXHR.status == 401){
+                swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+                sessionLogout();   
+                cbs(""); 
+            }else{
+                if(jqXHR.status == 403){
+                    swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                    sessionLogout();
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 404){
+                        swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                        cbs("");
+                    }else{
+                        if(jqXHR.status == 500){
+                            swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                            cbs("");    
+                        }
+                    }
+                }
+            }
+            
         });
     }
 }
@@ -1104,6 +1666,30 @@ function findTPago(pv, cbs) {
                 cbs("");
             }           
             
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            //unblockUISystem();
+            if(jqXHR.status == 401){
+                swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+                sessionLogout();   
+                cbs(""); 
+            }else{
+                if(jqXHR.status == 403){
+                    swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                    sessionLogout();
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 404){
+                        swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                        cbs("");
+                    }else{
+                        if(jqXHR.status == 500){
+                            swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                            cbs("");    
+                        }
+                    }
+                }
+            }
+            
         });
     }
 }
@@ -1131,6 +1717,30 @@ function findUnidad(pv, cbs) {
             }else{
                 cbs("");
             }           
+            
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            //unblockUISystem();
+            if(jqXHR.status == 401){
+                swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+                sessionLogout();   
+                cbs(""); 
+            }else{
+                if(jqXHR.status == 403){
+                    swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                    sessionLogout();
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 404){
+                        swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                        cbs("");
+                    }else{
+                        if(jqXHR.status == 500){
+                            swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                            cbs("");    
+                        }
+                    }
+                }
+            }
             
         });
     }
@@ -1163,11 +1773,13 @@ function findPosition(pv, cbs) {
         }).fail(function (jqXHR, textStatus, errorThrown) {
             //unblockUISystem();
             if(jqXHR.status == 401){
-                swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });   
+                swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+                sessionLogout();   
                 cbs(""); 
             }else{
                 if(jqXHR.status == 403){
                     swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                    sessionLogout();
                     cbs("");
                 }else{
                     if(jqXHR.status == 404){
@@ -1210,6 +1822,30 @@ function findPriceRf(pv, cbs) {
                 cbs("");
             }           
             
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            //unblockUISystem();
+            if(jqXHR.status == 401){
+                swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+                sessionLogout();   
+                cbs(""); 
+            }else{
+                if(jqXHR.status == 403){
+                    swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                    sessionLogout();
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 404){
+                        swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                        cbs("");
+                    }else{
+                        if(jqXHR.status == 500){
+                            swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                            cbs("");    
+                        }
+                    }
+                }
+            }
+            
         });
     }
 }
@@ -1237,6 +1873,30 @@ function findMonedas(pv, cbs) {
             }else{
                 cbs("");
             }           
+            
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            //unblockUISystem();
+            if(jqXHR.status == 401){
+                swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+                sessionLogout();   
+                cbs(""); 
+            }else{
+                if(jqXHR.status == 403){
+                    swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                    sessionLogout();
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 404){
+                        swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                        cbs("");
+                    }else{
+                        if(jqXHR.status == 500){
+                            swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                            cbs("");    
+                        }
+                    }
+                }
+            }
             
         });
     }
@@ -1266,6 +1926,30 @@ function findTPrices(pv, cbs) {
                 cbs("");
             }           
             
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            //unblockUISystem();
+            if(jqXHR.status == 401){
+                swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+                sessionLogout();   
+                cbs(""); 
+            }else{
+                if(jqXHR.status == 403){
+                    swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                    sessionLogout();
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 404){
+                        swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                        cbs("");
+                    }else{
+                        if(jqXHR.status == 500){
+                            swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                            cbs("");    
+                        }
+                    }
+                }
+            }
+            
         });
     }
 }
@@ -1294,6 +1978,30 @@ function findCosecha(pv, cbs) {
                 cbs("");
             }           
             
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            //unblockUISystem();
+            if(jqXHR.status == 401){
+                swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+                sessionLogout();   
+                cbs(""); 
+            }else{
+                if(jqXHR.status == 403){
+                    swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                    sessionLogout();
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 404){
+                        swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                        cbs("");
+                    }else{
+                        if(jqXHR.status == 500){
+                            swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                            cbs("");    
+                        }
+                    }
+                }
+            }
+            
         });
     }
 }
@@ -1321,6 +2029,30 @@ function findProduct(mk, tp, cbs) {
             }else{
                 cbs("");
             }           
+            
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            //unblockUISystem();
+            if(jqXHR.status == 401){
+                swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+                sessionLogout();   
+                cbs(""); 
+            }else{
+                if(jqXHR.status == 403){
+                    swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                    sessionLogout();
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 404){
+                        swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                        cbs("");
+                    }else{
+                        if(jqXHR.status == 500){
+                            swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                            cbs("");    
+                        }
+                    }
+                }
+            }
             
         });
     //}
@@ -1351,6 +2083,30 @@ function findTipoProducto(ind, cbs) {
                 cbs("");
             }           
             
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            //unblockUISystem();
+            if(jqXHR.status == 401){
+                swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+                sessionLogout();   
+                cbs(""); 
+            }else{
+                if(jqXHR.status == 403){
+                    swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                    sessionLogout();
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 404){
+                        swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                        cbs("");
+                    }else{
+                        if(jqXHR.status == 500){
+                            swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                            cbs("");    
+                        }
+                    }
+                }
+            }
+            
         });    
     }
 }
@@ -1379,6 +2135,30 @@ function findTMarket(ind, cbs) {
             }else{
                 cbs("");
             }           
+            
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            //unblockUISystem();
+            if(jqXHR.status == 401){
+                swal({ title: "Error!", text: 'Error 401: No Autorizado',  type: "error", html: true });
+                sessionLogout();   
+                cbs(""); 
+            }else{
+                if(jqXHR.status == 403){
+                    swal({ title: "Error!", text: 'Error 403: Acceso Prohibido',  type: "error", html: true });    
+                    sessionLogout();
+                    cbs("");
+                }else{
+                    if(jqXHR.status == 404){
+                        swal({ title: "Error!", text: 'Error 404: Objeto No Localizado',  type: "error", html: true });    
+                        cbs("");
+                    }else{
+                        if(jqXHR.status == 500){
+                            swal({ title: "Error!", text: 'Error 500: Interno',  type: "error", html: true });
+                            cbs("");    
+                        }
+                    }
+                }
+            }
             
         });    
     }

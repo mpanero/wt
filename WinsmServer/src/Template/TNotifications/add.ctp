@@ -18,8 +18,9 @@
             echo $this->Form->control('ID_TYPE_NOTIF');
             echo $this->Form->control('ID_USER');
             echo $this->Form->control('DESCRIPTION');
-            echo $this->Form->control('READ');
+            echo $this->Form->control('READ_NOTIF');
             echo $this->Form->control('DT_CREATED');
+            echo $this->Form->control('COD_REF');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

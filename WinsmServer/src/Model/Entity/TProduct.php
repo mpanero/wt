@@ -7,14 +7,15 @@ use Cake\ORM\Entity;
  * TProduct Entity
  *
  * @property int $ID_PRODUCT
- * @property string $PRODUCT_NAME
+ * @property string|null $PRODUCT_NAME
+ * @property string|null $ACRONYM
  * @property int $ID_MARKET
  * @property int $ID_CATEGORY_PROD
- * @property int $ACTIVE
+ * @property string $ICON_PATH
+ * @property int|null $ACTIVE
  */
 class TProduct extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -29,6 +30,7 @@ class TProduct extends Entity
         'ACRONYM' => true,
         'ID_MARKET' => true,
         'ID_CATEGORY_PROD' => true,
+        'ICON_PATH' => true,
         'ACTIVE' => true
     ];
 }

@@ -12,14 +12,14 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\TUserRole get($primaryKey, $options = [])
  * @method \App\Model\Entity\TUserRole newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\TUserRole[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TUserRole|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TUserRole|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TUserRole saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\TUserRole patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\TUserRole[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\TUserRole findOrCreate($search, callable $callback = null, $options = [])
  */
 class TUserRolesTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -45,17 +45,17 @@ class TUserRolesTable extends Table
     {
         $validator
             ->integer('ID_ROL')
-            ->allowEmpty('ID_ROL', 'create');
+            ->allowEmptyString('ID_ROL', null, 'create');
 
         $validator
+            ->scalar('DESCRIPTION')
             ->maxLength('DESCRIPTION', 45)
             ->requirePresence('DESCRIPTION', 'create')
-            ->notEmpty('DESCRIPTION');
+            ->notEmptyString('DESCRIPTION');
 
         $validator
             ->integer('ACTIVE')
-            ->requirePresence('ACTIVE', 'create')
-            ->notEmpty('ACTIVE');
+            ->notEmptyString('ACTIVE');
 
         return $validator;
     }

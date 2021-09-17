@@ -153,5 +153,6 @@ class TTypesController extends AppController
     		$this->set('_serialize', ['tTypes']);
     	}
     	
-    }    
+    }           
+
 }

@@ -10,7 +10,6 @@ use Cake\TestSuite\TestCase;
  */
 class TAlarmsTableTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -24,7 +23,7 @@ class TAlarmsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_alarms'
+        'app.TAlarms'
     ];
 
     /**
@@ -35,8 +34,8 @@ class TAlarmsTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('TAlarms') ? [] : ['className' => TAlarmsTable::class];
-        $this->TAlarms = TableRegistry::get('TAlarms', $config);
+        $config = TableRegistry::getTableLocator()->exists('TAlarms') ? [] : ['className' => TAlarmsTable::class];
+        $this->TAlarms = TableRegistry::getTableLocator()->get('TAlarms', $config);
     }
 
     /**

@@ -5,18 +5,15 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * TMarketFixture
- *
  */
 class TMarketFixture extends TestFixture
 {
-
     /**
      * Table name
      *
      * @var string
      */
     public $table = 't_market';
-
     /**
      * Fields
      *
@@ -30,6 +27,7 @@ class TMarketFixture extends TestFixture
         'ACTIVE' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         '_indexes' => [
             'fk_T_MARKET_T_COUNTRY1_idx' => ['type' => 'index', 'columns' => ['ID_COUNTRY'], 'length' => []],
+            'ID_MARKET' => ['type' => 'index', 'columns' => ['ID_MARKET'], 'length' => []],
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['ID_MARKET'], 'length' => []],
@@ -41,18 +39,21 @@ class TMarketFixture extends TestFixture
         ],
     ];
     // @codingStandardsIgnoreEnd
-
     /**
-     * Records
+     * Init method
      *
-     * @var array
+     * @return void
      */
-    public $records = [
-        [
-            'ID_MARKET' => 1,
-            'MARKET_NAME' => 'Lorem ipsum dolor sit amet',
-            'ID_COUNTRY' => 1,
-            'ACTIVE' => 1
-        ],
-    ];
+    public function init()
+    {
+        $this->records = [
+            [
+                'ID_MARKET' => 1,
+                'MARKET_NAME' => 'Lorem ipsum dolor sit amet',
+                'ID_COUNTRY' => 1,
+                'ACTIVE' => 1
+            ],
+        ];
+        parent::init();
+    }
 }

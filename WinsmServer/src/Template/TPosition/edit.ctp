@@ -22,6 +22,9 @@
         <legend><?= __('Edit T Position') ?></legend>
         <?php
             echo $this->Form->control('POSITION');
+            echo $this->Form->control('DATE_POSITION');
+            echo $this->Form->control('ID_TYPE_PRICE_INFO');
+            echo $this->Form->control('ACTIVE');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

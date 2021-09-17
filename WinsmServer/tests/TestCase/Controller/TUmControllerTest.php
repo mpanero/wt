@@ -2,13 +2,17 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\TUmController;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\TUmController Test Case
+ *
+ * @uses \App\Controller\TUmController
  */
-class TUmControllerTest extends IntegrationTestCase
+class TUmControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
 
     /**
      * Fixtures
@@ -16,7 +20,7 @@ class TUmControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_um'
+        'app.TUm'
     ];
 
     /**

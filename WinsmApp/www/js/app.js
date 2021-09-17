@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('ui.router.history', ['ui.router'])
+angular.module('ui.router.history', ['ui.router','ngMaterial', 'ngAnimate', 'ngSanitize', 'ui.bootstrap'])
 	.service('$history', function($state, $rootScope, $window) {
 
   var history = [];
@@ -258,6 +258,16 @@ angular.module('ui.router.history', ['ui.router'])
             }
         }
     })
+    .state('app.wizard', {
+        url: '/wizard',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/wizard.html',
+                controller: 'wizardCtrl'
+            }
+        }
+    })
+     
     
     ;
 
@@ -269,11 +279,11 @@ angular.module('starter', ['ionic', 'ionic-material', 'starter.controllers', 'io
 .filter('split', function() {
     return function(input, splitChar, splitIndex) {
         // do some bounds checking here to ensure it has that index
-        if(!angular.isUndefined(input) || input != null){
+        if(!angular.isUndefined(input) && input !== null && typeof input !== typeof undefined){
             return input.split(splitChar)[splitIndex];   
         }
         
-    }
+    };
 })
 
 .filter('chkEmptyAlpha',function(){
@@ -324,6 +334,36 @@ angular.module('starter', ['ionic', 'ionic-material', 'starter.controllers', 'io
   };
 })
 
+.directive('cuit', function($ionicPopup) {
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    link: function(scope, elm, attrs, ngModel) {
+        var etiqueta = elm.parent();
+        //angular.element(elm).scope
+        scope.$watch(attrs.ngModel, function(value) {
+            if (angular.isUndefined(value)) {
+                //etiqueta.attr("style","border-bottom: solid 1px #ccc;");
+                ngModel.$setValidity("cuit",false);
+
+            }else{
+                //return false;                 
+                if(esCUITValida(value)){
+                    //etiqueta.attr("style","border-bottom: solid 1px #60bc3f;");  
+                    ngModel.$setValidity("cuit",true);
+                    //return true;
+                }else{
+                    //etiqueta.attr("style","border-bottom: solid 1px #f00;"); 
+                    ngModel.$setValidity("cuit",false);
+                    //return false;                   
+                }             
+            }
+
+        });       
+    }
+  };
+})
+
 .directive('onlyEmail', function($ionicPopup) {
   return {
     restrict: 'A',
@@ -345,6 +385,40 @@ angular.module('starter', ['ionic', 'ionic-material', 'starter.controllers', 'io
             }else{
                 //etiqueta.attr("style","border-bottom: solid 1px #ccc;");
                 ngModel.$setValidity("onlyEmail",false);
+                //return false;              
+            }
+
+        });       
+    }
+  };
+})
+
+.directive('uniqueEmail', function($ionicPopup) {
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    link: function(scope, elm, attrs, ngModel) {
+        var etiqueta = elm.parent();
+        //angular.element(elm).scope
+        scope.$watch(attrs.ngModel, function(value) {
+            if (!angular.isUndefined(value)) {
+                if(value.toString().match(/^[a-zA-Z0-9\._-]+@[a-zA-Z0-9-]{2,}[.][a-zA-Z]{2,4}$/)){
+                    //etiqueta.attr("style","border-bottom: solid 1px #60bc3f;"); 
+                    if(isUniqueMail(value)){
+                        ngModel.$setValidity("uniqueEmail",true);    
+                    }else{
+                        ngModel.$setValidity("uniqueEmail",false);
+                    }
+                    
+                    //return true;
+                }else{
+                    //etiqueta.attr("style","border-bottom: solid 1px #f00;"); 
+                    ngModel.$setValidity("uniqueEmail",false);
+                    //return false;                   
+                }
+            }else{
+                //etiqueta.attr("style","border-bottom: solid 1px #ccc;");
+                ngModel.$setValidity("uniqueEmail",false);
                 //return false;              
             }
 
@@ -478,7 +552,8 @@ angular.module('starter', ['ionic', 'ionic-material', 'starter.controllers', 'io
         var etiqueta = elm.parent();
         //angular.element(elm).scope
         scope.$watch(attrs.ngModel, function(value) {
-            if (!angular.isUndefined(value)) {
+            console.log("number "+value);
+            if (!(value === null) && !angular.isUndefined(value) ) {
                 if(value.toString().match(/^[0-9]+$/)){
                     elm.attr("style","border-bottom: solid 1px #072142;");  
                     ngModel.$setValidity("number",true);
@@ -543,7 +618,7 @@ angular.module('starter', ['ionic', 'ionic-material', 'starter.controllers', 'io
                 if(value == 300){
                     pri.controller('ngModel').$setValidity("priReq",true);
                     pri.val("");
-                    if(pos.val() != "" && !angular.isUndefined(pos.val())){
+                    if(pos.val() !== "" && !angular.isUndefined(pos.val())){
                         pos.controller('ngModel').$setValidity("posReq",true);        
                     }else{
                         pos.controller('ngModel').$setValidity("posReq",false);    
@@ -553,7 +628,7 @@ angular.module('starter', ['ionic', 'ionic-material', 'starter.controllers', 'io
                     if(value == 301){
                         pos.controller('ngModel').$setValidity("posReq",true);
                         pos.val("");
-                        if(pri.val() != "" && !angular.isUndefined(pri.val())){
+                        if(pri.val() !== "" && !angular.isUndefined(pri.val())){
                             pri.controller('ngModel').$setValidity("priReq",true);        
                         }else{
                             pri.controller('ngModel').$setValidity("priReq",false);    
@@ -890,8 +965,9 @@ angular.module('starter', ['ionic', 'ionic-material', 'starter.controllers', 'io
         }
       });
     }
-  }
+  };
 })
+
 .config(function ($ionicConfigProvider, ionicDatePickerProvider) {
     var toDate = new Date();
     var datePickerObj = {
@@ -915,8 +991,8 @@ angular.module('starter', ['ionic', 'ionic-material', 'starter.controllers', 'io
 })
 
 .value("linksWs",{
-    link_root: "http://smartradeagro.com/winsm",
-    /*link_root: "http://localhost/stagro_st",*/
+    link_root: "http://wintradeagro.com/core",
+    /*link_root: "http://localhost/wtagro_wt",*/
     link_login: "/TUser/login",
     link_logout: "/TUser/logout",
     request: "",
@@ -925,15 +1001,24 @@ angular.module('starter', ['ionic', 'ionic-material', 'starter.controllers', 'io
     negocios : "",
     alarm:"",
     alarms:"",
+    localities:"",
+    locality:"",    
     notify:"",
     notifys:"",
     products:"",
+    provinces:"",
+    provence:"",
     places:"",
     positions:"",
+    deliveri:"",
+    deliveries:"",
     chat: "",
     chats: "",
+    usersId:"",
     deviceOs : "",
     checkRed : "",
+    prodCateg: "",
+    prodCategs: "",
     ge       : "",
     me       : "",
     pr       : "",
@@ -946,7 +1031,7 @@ angular.module('starter', ['ionic', 'ionic-material', 'starter.controllers', 'io
     ta       : "",
     user     : "",
     pc       : "",
-    pr       : "",
+    prd      : "",
     po       : "",
     co       : "",
     pa       : "",
@@ -975,7 +1060,7 @@ angular.module('starter', ['ionic', 'ionic-material', 'starter.controllers', 'io
         Number.prototype.padLeft = function(base,chr){
            var  len = (String(base || 10).length - String(this).length)+1;
            return len > 0? new Array(len).join(chr || '0')+this : this;
-        }        
+        };        
         $rootScope.$on("$stateChangeSuccess", function(event, to, toParams, from, fromParams) {
             if (!from.abstract) {
                 $history.push(from, fromParams);
@@ -1062,11 +1147,37 @@ angular.module('starter', ['ionic', 'ionic-material', 'starter.controllers', 'io
             cbRed(states[networkState]);
         };
         
+        window.esCUITValida = function(inputValor) {
+            inputString = inputValor.toString();
+            if (inputString.length == 11) {
+                var Caracters_1_2 = inputString.charAt(0) + inputString.charAt(1);
+                if (Caracters_1_2 == "20" || Caracters_1_2 == "23" || Caracters_1_2 == "24" || Caracters_1_2 == "27" || Caracters_1_2 == "30" || Caracters_1_2 == "33" || Caracters_1_2 == "34") {
+                    var Count = inputString.charAt(0) * 5 + inputString.charAt(1) * 4 + inputString.charAt(2) * 3 + inputString.charAt(3) * 2 + inputString.charAt(4) * 7 + inputString.charAt(5) * 6 + inputString.charAt(6) * 5 + inputString.charAt(7) * 4 + inputString.charAt(8) * 3 + inputString.charAt(9) * 2 + inputString.charAt(10) * 1;
+                    var Division = Count / 11;
+                    if (Division == Math.floor(Division)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        };
+        
+        window.isUniqueMail = function(inputValor) {
+            var inputString = inputValor.toString();
+            var unique = true;
+            angular.forEach(linksWs.usersId, function(data, index) { 
+                if(inputString == data.MAIL){
+                    unique = false;
+                }
+            });
+            return unique;
+        };        
+        
         //Network Call WS
         window.onWsAction = function(urlTo, parameters, successPostCallback) {
             checkRed(function(red){
                 if(red){
-                    if(linksWs.link_root != null && linksWs.link_root != "" ){
+                    if(linksWs.link_root !== null && linksWs.link_root !== "" ){
                         $http({
                             method: 'post',
                             url: urlTo,

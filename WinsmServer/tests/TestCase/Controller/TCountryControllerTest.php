@@ -2,13 +2,17 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\TCountryController;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\TCountryController Test Case
+ *
+ * @uses \App\Controller\TCountryController
  */
-class TCountryControllerTest extends IntegrationTestCase
+class TCountryControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
 
     /**
      * Fixtures
@@ -16,7 +20,7 @@ class TCountryControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_country'
+        'app.TCountry'
     ];
 
     /**

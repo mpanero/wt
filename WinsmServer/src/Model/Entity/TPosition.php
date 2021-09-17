@@ -8,11 +8,12 @@ use Cake\ORM\Entity;
  *
  * @property int $ID_POSITION
  * @property string $POSITION
- * @property \Cake\I18n\FrozenTime $DATE_POSITION
+ * @property \Cake\I18n\FrozenDate $DATE_POSITION
+ * @property int $ID_TYPE_PRICE_INFO
+ * @property int $ACTIVE
  */
 class TPosition extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -24,6 +25,8 @@ class TPosition extends Entity
      */
     protected $_accessible = [
         'POSITION' => true,
-        'DATE_POSITION' => true
+        'DATE_POSITION' => true,
+        'ID_TYPE_PRICE_INFO' => true,
+        'ACTIVE' => true
     ];
 }

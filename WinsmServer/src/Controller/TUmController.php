@@ -17,7 +17,7 @@ class TUmController extends AppController
 	{
 		parent::initialize();
 		if($this->request->session()->check('Auth.TUser.token')){
-            $this->Auth->allow(['index']);
+            $this->Auth->allow(['index','findUM']);
 			return true;
 		}
 	}     
@@ -113,4 +113,49 @@ class TUmController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    /**
+     * findUM method
+     *
+     * @param string|null $type.
+     * @return \Cake\Network\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function findUM()
+    {
+    	$category = null;
+    	if(!empty($this->request->query('category'))){
+    		$category = $this->request->query('category');
+    	}else{
+    		if(!empty($this->request->query['category'])){
+    			$category = $this->request->query['category'];
+    		}
+    	}
+    	
+    	if($category){
+            $tUm = $this->TUm->find()
+            ->join([
+                'table' => 't_rel_prod_um',
+                'alias' => 'TRelProdUm',
+                'type' => 'LEFT',
+                'conditions' => ['TUm.ID_UM = TRelProdUm.ID_UM']
+            ])
+            ->where(['TRelProdUm.ID_CATEGORY_PROD' => $category]);                      
+            //debug($tUm);
+            $count = $tUm->count();
+
+    		if($count > 0){// si existe tipo
+                $this->set(compact('tUm'));
+                $this->set('_serialize', ['tUm']);      
+    		}else{
+    			$this->set('tUm', "UmNotExist");
+    			$this->set('_serialize', ['tUm']);
+    		}
+    
+    	}else{
+    		$this->set('tUm', "UmEmpty");
+    		$this->set('_serialize', ['tUm']);
+    	}
+    	
+    }     
 }

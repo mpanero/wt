@@ -10,7 +10,6 @@ use Cake\TestSuite\TestCase;
  */
 class TTransacTypeTableTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -24,7 +23,7 @@ class TTransacTypeTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_transac_type'
+        'app.TTransacType'
     ];
 
     /**
@@ -35,8 +34,8 @@ class TTransacTypeTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('TTransacType') ? [] : ['className' => TTransacTypeTable::class];
-        $this->TTransacType = TableRegistry::get('TTransacType', $config);
+        $config = TableRegistry::getTableLocator()->exists('TTransacType') ? [] : ['className' => TTransacTypeTable::class];
+        $this->TTransacType = TableRegistry::getTableLocator()->get('TTransacType', $config);
     }
 
     /**

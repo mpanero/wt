@@ -9,7 +9,7 @@
         "parents": {
           "/*": [
             {
-              "xml": "<feature name=\"CallNumber\"><param name=\"android-package\" value=\"mx.ferreyra.callnumber.CFCallNumber\" /></feature>",
+              "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
               "count": 1
             },
             {
@@ -29,7 +29,11 @@
               "count": 1
             },
             {
-              "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "xml": "<feature name=\"StatusBar\"><param name=\"android-package\" value=\"org.apache.cordova.statusbar.StatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"CallNumber\"><param name=\"android-package\" value=\"mx.ferreyra.callnumber.CFCallNumber\" /></feature>",
               "count": 1
             },
             {
@@ -43,15 +47,15 @@
         "parents": {
           "/*": [
             {
+              "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+              "count": 1
+            },
+            {
               "xml": "<uses-permission android:name=\"android.permission.CALL_PHONE\" />",
               "count": 1
             },
             {
               "xml": "<uses-feature android:name=\"android.hardware.telephony\" android:required=\"false\" />",
-              "count": 1
-            },
-            {
-              "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
               "count": 1
             }
           ]
@@ -60,44 +64,39 @@
     }
   },
   "installed_plugins": {
-    "cordova-plugin-call-number": {
-      "PACKAGE_NAME": "com.devru.smartrade"
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
     },
     "cordova-plugin-console": {
-      "PACKAGE_NAME": "com.devru.smartrade"
+      "PACKAGE_NAME": "io.cordova.hellocordova"
     },
     "cordova-plugin-device": {
-      "PACKAGE_NAME": "com.devru.smartrade"
+      "PACKAGE_NAME": "io.cordova.hellocordova"
     },
     "cordova-plugin-network-information": {
-      "PACKAGE_NAME": "com.devru.smartrade"
+      "PACKAGE_NAME": "io.cordova.hellocordova"
     },
     "es6-promise-plugin": {
-      "PACKAGE_NAME": "com.devru.smartrade"
+      "PACKAGE_NAME": "io.cordova.hellocordova"
     },
     "cordova-plugin-screen-orientation": {
-      "PACKAGE_NAME": "com.devru.smartrade"
+      "PACKAGE_NAME": "io.cordova.hellocordova"
     },
     "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "com.devru.smartrade"
+      "PACKAGE_NAME": "io.cordova.hellocordova"
     },
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.devru.smartrade"
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "cordova-plugin-call-number": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
     },
     "ionic-plugin-keyboard": {
-      "PACKAGE_NAME": "com.devru.smartrade"
+      "PACKAGE_NAME": "io.cordova.hellocordova"
     }
   },
   "dependent_plugins": {},
   "modules": [
-    {
-      "id": "cordova-plugin-call-number.CallNumber",
-      "file": "plugins/cordova-plugin-call-number/www/CallNumber.js",
-      "pluginId": "cordova-plugin-call-number",
-      "clobbers": [
-        "call"
-      ]
-    },
     {
       "id": "cordova-plugin-device.device",
       "file": "plugins/cordova-plugin-device/www/device.js",
@@ -146,6 +145,22 @@
       ]
     },
     {
+      "id": "cordova-plugin-statusbar.statusbar",
+      "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+      "pluginId": "cordova-plugin-statusbar",
+      "clobbers": [
+        "window.StatusBar"
+      ]
+    },
+    {
+      "id": "cordova-plugin-call-number.CallNumber",
+      "file": "plugins/cordova-plugin-call-number/www/CallNumber.js",
+      "pluginId": "cordova-plugin-call-number",
+      "clobbers": [
+        "call"
+      ]
+    },
+    {
       "id": "ionic-plugin-keyboard.keyboard",
       "file": "plugins/ionic-plugin-keyboard/www/android/keyboard.js",
       "pluginId": "ionic-plugin-keyboard",
@@ -156,14 +171,15 @@
     }
   ],
   "plugin_metadata": {
-    "cordova-plugin-call-number": "1.0.1",
+    "cordova-plugin-whitelist": "1.3.4",
     "cordova-plugin-console": "1.1.0",
-    "cordova-plugin-device": "2.0.1",
-    "cordova-plugin-network-information": "2.0.1",
+    "cordova-plugin-device": "2.0.3",
+    "cordova-plugin-network-information": "2.0.2",
     "es6-promise-plugin": "4.2.2",
-    "cordova-plugin-screen-orientation": "3.0.1",
-    "cordova-plugin-splashscreen": "5.0.1",
-    "cordova-plugin-whitelist": "1.3.3",
+    "cordova-plugin-screen-orientation": "3.0.2",
+    "cordova-plugin-splashscreen": "5.0.3",
+    "cordova-plugin-statusbar": "2.4.3",
+    "cordova-plugin-call-number": "1.0.1",
     "ionic-plugin-keyboard": "2.2.1"
   }
 }

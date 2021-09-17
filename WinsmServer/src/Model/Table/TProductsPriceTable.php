@@ -12,14 +12,14 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\TProductsPrice get($primaryKey, $options = [])
  * @method \App\Model\Entity\TProductsPrice newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\TProductsPrice[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TProductsPrice|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TProductsPrice|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TProductsPrice saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\TProductsPrice patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\TProductsPrice[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\TProductsPrice findOrCreate($search, callable $callback = null, $options = [])
  */
 class TProductsPriceTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -45,22 +45,28 @@ class TProductsPriceTable extends Table
     {
         $validator
             ->integer('ID_PRODUCT_PRICE')
-            ->allowEmpty('ID_PRODUCT_PRICE', 'create');
+            ->allowEmptyString('ID_PRODUCT_PRICE', null, 'create');
 
         $validator
+            ->scalar('PRODUCT_NAME')
             ->maxLength('PRODUCT_NAME', 50)
             ->requirePresence('PRODUCT_NAME', 'create')
-            ->notEmpty('PRODUCT_NAME');
+            ->notEmptyString('PRODUCT_NAME');
 
         $validator
             ->integer('ACTIVE')
             ->requirePresence('ACTIVE', 'create')
-            ->notEmpty('ACTIVE');
+            ->notEmptyString('ACTIVE');
 
         $validator
             ->integer('ID_COUNTRY')
             ->requirePresence('ID_COUNTRY', 'create')
-            ->notEmpty('ID_COUNTRY');
+            ->notEmptyString('ID_COUNTRY');
+
+        $validator
+            ->integer('ORDER_INFO')
+            ->requirePresence('ORDER_INFO', 'create')
+            ->notEmptyString('ORDER_INFO');
 
         return $validator;
     }

@@ -1,25 +1,12 @@
 # Uncomment the following to prevent the httpoxy vulnerability
 # See: https://httpoxy.org/
-<IfModule mod_headers.c>
-#    Header set Access-Control-Allow-Origin "*"
-    Header add Access-Control-Allow-Origin: "*" env=CORS
-    Header add Access-Control-Allow-Methods: GET,POST,OPTIONS,DELETE,PUT
-#    Header add Access-Control-Allow-Headers: "Content-Type, Origin" 
-    Header set Access-Control-Allow-Headers: "origin, x-requested-with, content-type"
-    Header add Access-Control-Allow-Credentials: true   
-</IfModule>
+#<IfModule mod_headers.c>
+#    RequestHeader unset Proxy
+#</IfModule>
+
 <IfModule mod_rewrite.c>
-	Options -Indexes 
-#    RewriteEngine on
-#    RewriteCond %{REQUEST_FILENAME} !-f
-#    RewriteCond %{REQUEST_FILENAME} !-d
-#    RewriteRule ^(.*)$ index.php?PATH_INFO=$1 [L,QSA]
-#    RewriteRule .* - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]    
-    RewriteEngine On
-    RewriteCond %{HTTP:Authorization} ^(.*)
-    RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+    RewriteEngine on
+    RewriteRule    ^(\.well-known/.*)$ $1 [L]
     RewriteRule    ^$    webroot/    [L]
     RewriteRule    (.*) webroot/$1    [L]
-#    RewriteRule .* - [e=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
-#    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
 </IfModule>

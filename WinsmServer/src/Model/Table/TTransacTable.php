@@ -12,14 +12,14 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\TTransac get($primaryKey, $options = [])
  * @method \App\Model\Entity\TTransac newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\TTransac[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TTransac|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TTransac|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TTransac saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\TTransac patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\TTransac[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\TTransac findOrCreate($search, callable $callback = null, $options = [])
  */
 class TTransacTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -44,47 +44,46 @@ class TTransacTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->allowEmpty('ID_TRANSAC', 'create');
+            ->allowEmptyString('ID_TRANSAC', null, 'create');
 
         $validator
             ->requirePresence('ID_USER', 'create')
-            ->notEmpty('ID_USER');
+            ->notEmptyString('ID_USER');
 
         $validator
             ->requirePresence('ID_REQUEST', 'create')
-            ->notEmpty('ID_REQUEST');
+            ->notEmptyString('ID_REQUEST');
 
         $validator
             ->requirePresence('ID_TRADE', 'create')
-            ->notEmpty('ID_TRADE');
+            ->notEmptyString('ID_TRADE');
 
         $validator
             ->integer('SEC')
-            ->requirePresence('SEC', 'create')
-            ->notEmpty('SEC');
+            ->notEmptyString('SEC');
 
         $validator
             ->requirePresence('ID_TRANSAC_TYPE', 'create')
-            ->notEmpty('ID_TRANSAC_TYPE');
+            ->notEmptyString('ID_TRANSAC_TYPE');
 
         $validator
             ->dateTime('DH_TRANSAC')
-            ->requirePresence('DH_TRANSAC', 'create')
-            ->notEmpty('DH_TRANSAC');
+            ->notEmptyDateTime('DH_TRANSAC');
 
         $validator
             ->numeric('VALUE')
-            ->requirePresence('VALUE', 'create')
-            ->notEmpty('VALUE');
+            ->notEmptyString('VALUE');
 
         $validator
+            ->scalar('INFO')
             ->maxLength('INFO', 1000)
             ->requirePresence('INFO', 'create')
-            ->notEmpty('INFO');
+            ->notEmptyString('INFO');
 
         $validator
+            ->scalar('COMMENTS')
             ->requirePresence('COMMENTS', 'create')
-            ->notEmpty('COMMENTS');
+            ->notEmptyString('COMMENTS');
 
         return $validator;
     }

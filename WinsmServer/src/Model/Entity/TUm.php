@@ -7,12 +7,11 @@ use Cake\ORM\Entity;
  * TUm Entity
  *
  * @property int $ID_UM
- * @property string $UM_NAME
- * @property int $ID_COUNTRY
+ * @property string|null $UM_NAME
+ * @property int|null $ID_COUNTRY
  */
 class TUm extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *

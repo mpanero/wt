@@ -169,12 +169,16 @@ class TRequestController extends AppController
                 $newObjeto['DT_TO'] = $dateT->format('Y-m-d H:i:s'); 
             }
             if (array_key_exists('DT_TO', $newObjeto)) {
-                $dateXF = new Date($newObjeto['DT_PRICE_FIX_FROM']);
-                $newObjeto['DT_PRICE_FIX_FROM'] = $dateXF->format('Y-m-d H:i:s');
+                if (array_key_exists('DT_PRICE_FIX_FROM', $newObjeto)){
+                    $dateXF = new Date($newObjeto['DT_PRICE_FIX_FROM']);
+                    $newObjeto['DT_PRICE_FIX_FROM'] = $dateXF->format('Y-m-d H:i:s');
+                }
             }
             if (array_key_exists('DT_TO', $newObjeto)) {
-                $dateXT = new Date($newObjeto['DT_PRICE_FIX_TO']);
-                $newObjeto['DT_PRICE_FIX_TO'] = $dateXT->format('Y-m-d H:i:s'); 
+                if (array_key_exists('DT_PRICE_FIX_TO', $newObjeto)) {
+                    $dateXT = new Date($newObjeto['DT_PRICE_FIX_TO']);
+                    $newObjeto['DT_PRICE_FIX_TO'] = $dateXT->format('Y-m-d H:i:s'); 
+                }
             }
             // Make the entity think it is new.
             //$tRequest->accessible('*', true);
@@ -230,7 +234,7 @@ class TRequestController extends AppController
                     'conditions' => array('TRequest.ID_USER_OWNER' => $user,
     					'TRequest.ACTIVE' => 1
     				),
-                    'contain' => ['TMarket', 'TProduct', 'TPlace', 'TUser', 'TUm', 'TCurrency', 'TTypes']
+                    'contain' => ['TMarket', 'TProduct', 'TLocality', 'TUser', 'TUm', 'TCurrency', 'TTypes']
 
             ))
             ->select(['TRequest.ID_REQUEST',
@@ -262,6 +266,8 @@ class TRequestController extends AppController
             'TRequest.ID_TYPE_PAYMENT',
             'TRequest.ID_PLACE_ORIGIN',
             'TRequest.ID_TYPE_DELIVERY',
+            'TRequest.DELIVERY_METHOD',
+            'TRequest.DELIVERY_AMOUNT',
             'TRequest.TYPE_QUALITY',
             'TRequest.QUALITY_INFO',
             'TRequest.ACTIVE',
@@ -271,9 +277,8 @@ class TRequestController extends AppController
             'TUm.ID_UM',
             'TUm.UM_NAME',
             'TUm.ID_COUNTRY',
-            'TPlace.ID_PLACE',
-            'TPlace.PLACE_NAME',
-            'TPlace.ID_COUNTRY',
+            'PLACE_ORIGIN_NAME' => "(SELECT PLACE_NAME FROM t_locality WHERE t_locality.ID_PLACE = TRequest.ID_PLACE_ORIGIN)",
+            'PLACE_DELIVERY_NAME' => "(SELECT PLACE_NAME FROM t_locality WHERE t_locality.ID_PLACE = TRequest.ID_PLACE_DELIVERY)",
             'TProduct.ID_PRODUCT',
             'TProduct.PRODUCT_NAME',
             'TProduct.ID_MARKET',
@@ -332,7 +337,7 @@ class TRequestController extends AppController
         }
 
         $tRequest = $this->TRequest->get($id, [
-            'contain' => ['TMarket', 'TProduct', 'TPlace', 'TUser', 'TUm', 'TCurrency', 'TTypes']
+            'contain' => ['TMarket', 'TProduct', 'TLocality', 'TUser', 'TUm', 'TCurrency', 'TTypes']
         ]);
         $tRequest = $this->TRequest->newEntity();
         $newObjeto = [];
@@ -362,7 +367,7 @@ class TRequestController extends AppController
         //debug($tRequest);
         if ($this->TRequest->save($tRequest)) {
             $tRequest = $this->TRequest->get($id, [
-                'contain' => ['TMarket', 'TProduct', 'TPlace', 'TUser', 'TUm', 'TCurrency', 'TTypes']
+                'contain' => ['TMarket', 'TProduct', 'TLocality', 'TUser', 'TUm', 'TCurrency', 'TTypes']
             ]);            
             $this->set(compact('tRequest'));
             $this->set('_serialize', ['tRequest']);
@@ -587,7 +592,7 @@ class TRequestController extends AppController
     		$tRequest = $this->TRequest->find('all', array(
                     'order' => ['TRequest.ID_REQUEST' => 'DESC'],
                     'conditions' => $conditions,
-                    'contain' => ['TMarket', 'TProduct', 'TPlace', 'TUser', 'TUm', 'TCurrency', 'TTypes']
+                    'contain' => ['TMarket', 'TProduct', 'TLocality', 'TUser', 'TUm', 'TCurrency', 'TTypes']
 
             ))
             ->select(['TRequest.ID_REQUEST',
@@ -619,6 +624,8 @@ class TRequestController extends AppController
             'TRequest.ID_TYPE_PAYMENT',
             'TRequest.ID_PLACE_ORIGIN',
             'TRequest.ID_TYPE_DELIVERY',
+            'TRequest.DELIVERY_METHOD',
+            'TRequest.DELIVERY_AMOUNT',
             'TRequest.TYPE_QUALITY',
             'TRequest.QUALITY_INFO',
             'TRequest.ACTIVE',
@@ -628,9 +635,8 @@ class TRequestController extends AppController
             'TUm.ID_UM',
             'TUm.UM_NAME',
             'TUm.ID_COUNTRY',
-            'TPlace.ID_PLACE',
-            'TPlace.PLACE_NAME',
-            'TPlace.ID_COUNTRY',
+            'PLACE_ORIGIN_NAME' => "(SELECT PLACE_NAME FROM t_locality WHERE t_locality.ID_PLACE = TRequest.ID_PLACE_ORIGIN)",
+            'PLACE_DELIVERY_NAME' => "(SELECT PLACE_NAME FROM t_locality WHERE t_locality.ID_PLACE = TRequest.ID_PLACE_DELIVERY)",
             'TProduct.ID_PRODUCT',
             'TProduct.PRODUCT_NAME',
             'TProduct.ID_MARKET',
@@ -843,7 +849,7 @@ class TRequestController extends AppController
     		$tRequest = $this->TRequest->find('all', array(
                     'order' => ['TRequest.ID_REQUEST' => 'DESC'],
                     'conditions' => $conditions,
-                    'contain' => ['TMarket', 'TProduct', 'TPlace', 'TUser', 'TUm', 'TCurrency', 'TTypes']
+                    'contain' => ['TMarket', 'TProduct', 'TLocality', 'TUser', 'TUm', 'TCurrency', 'TTypes']
 
             ))
             ->select(['TRequest.ID_REQUEST',
@@ -875,6 +881,8 @@ class TRequestController extends AppController
             'TRequest.ID_TYPE_PAYMENT',
             'TRequest.ID_PLACE_ORIGIN',
             'TRequest.ID_TYPE_DELIVERY',
+            'TRequest.DELIVERY_METHOD',
+            'TRequest.DELIVERY_AMOUNT',
             'TRequest.TYPE_QUALITY',
             'TRequest.QUALITY_INFO',
             'TRequest.ACTIVE',
@@ -884,9 +892,8 @@ class TRequestController extends AppController
             'TUm.ID_UM',
             'TUm.UM_NAME',
             'TUm.ID_COUNTRY',
-            'TPlace.ID_PLACE',
-            'TPlace.PLACE_NAME',
-            'TPlace.ID_COUNTRY',
+            'PLACE_ORIGIN_NAME' => "(SELECT PLACE_NAME FROM t_locality WHERE t_locality.ID_PLACE = TRequest.ID_PLACE_ORIGIN)",
+            'PLACE_DELIVERY_NAME' => "(SELECT PLACE_NAME FROM t_locality WHERE t_locality.ID_PLACE = TRequest.ID_PLACE_DELIVERY)",
             'TProduct.ID_PRODUCT',
             'TProduct.PRODUCT_NAME',
             'TProduct.ID_MARKET',
@@ -907,7 +914,7 @@ class TRequestController extends AppController
                 $query = $this->TRequest->find('all', array(
                     'order' => ['TRequest.ID_REQUEST' => 'DESC'],
                     'conditions' => $conditions,
-                    'contain' => ['TMarket', 'TProduct', 'TPlace', 'TUser', 'TUm', 'TCurrency', 'TTypes']  
+                    'contain' => ['TMarket', 'TProduct', 'TLocality', 'TUser', 'TUm', 'TCurrency', 'TTypes']  
                 ));
                 $count = $query->count();
                 $resp = array();
@@ -962,7 +969,7 @@ class TRequestController extends AppController
                 'conditions' => array('TRequest.ID_USER_OWNER' => $user,
                     'TRequest.ACTIVE' => 1
                 ),
-                'contain' => ['TMarket', 'TProduct', 'TPlace', 'TUser', 'TUm', 'TCurrency', 'TTypes']
+                'contain' => ['TMarket', 'TProduct', 'TLocality', 'TUser', 'TUm', 'TCurrency', 'TTypes']
 
             ))
             ->select(['TRequest.ID_REQUEST',
@@ -994,6 +1001,8 @@ class TRequestController extends AppController
             'TRequest.ID_TYPE_PAYMENT',
             'TRequest.ID_PLACE_ORIGIN',
             'TRequest.ID_TYPE_DELIVERY',
+            'TRequest.DELIVERY_METHOD',
+            'TRequest.DELIVERY_AMOUNT',
             'TRequest.TYPE_QUALITY',
             'TRequest.QUALITY_INFO',
             'TRequest.ACTIVE',
@@ -1003,9 +1012,8 @@ class TRequestController extends AppController
             'TUm.ID_UM',
             'TUm.UM_NAME',
             'TUm.ID_COUNTRY',
-            'TPlace.ID_PLACE',
-            'TPlace.PLACE_NAME',
-            'TPlace.ID_COUNTRY',
+            'PLACE_ORIGIN_NAME' => "(SELECT PLACE_NAME FROM t_locality WHERE t_locality.ID_PLACE = TRequest.ID_PLACE_ORIGIN)",
+            'PLACE_DELIVERY_NAME' => "(SELECT PLACE_NAME FROM t_locality WHERE t_locality.ID_PLACE = TRequest.ID_PLACE_DELIVERY)",
             'TProduct.ID_PRODUCT',
             'TProduct.PRODUCT_NAME',
             'TProduct.ID_MARKET',

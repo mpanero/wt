@@ -8,21 +8,28 @@ use Cake\ORM\Entity;
  *
  * @property int $ID_TRADE
  * @property int $ID_REQUEST
- * @property int $ID_REQUEST_1
- * @property int $ID_USER
- * @property int $ID_USER_1
- * @property float $PRICE
- * @property int $ID_TP_CURRENCY
- * @property float $QT
+ * @property string|null $COD_REF
+ * @property int $ID_USER_OWNER
+ * @property int $ID_USER_CPART
+ * @property float|null $PRICE
+ * @property int|null $ID_TP_CURRENCY
+ * @property float|null $QT
  * @property int $ID_UM
- * @property int $CONFIRMED
- * @property int $CONFIRMED_1
- * @property \Cake\I18n\FrozenTime $DH_CREATION
- * @property int $ID_TP_STATUS_TRADE
+ * @property int|null $CONFIRMED_OWNER
+ * @property int|null $CONFIRMED_CPART
+ * @property \Cake\I18n\FrozenTime|null $DH_CREATION
+ * @property int|null $ID_TP_STATUS_TRADE
+ * @property int|null $ID_TYPE_PRICE
+ * @property int|null $ID_PRICE_REF
+ * @property \Cake\I18n\FrozenTime|null $DT_PRICE_FIX_FROM
+ * @property \Cake\I18n\FrozenTime|null $DT_PRICE_FIX_TO
+ * @property int|null $ID_CROP
+ * @property int|null $ID_TYPE_DELIVERY
+ * @property int|null $TYPE_QUALITY
+ * @property string|null $QUALITY_INFO
  */
 class TTrade extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -44,6 +51,14 @@ class TTrade extends Entity
         'CONFIRMED_OWNER' => true,
         'CONFIRMED_CPART' => true,
         'DH_CREATION' => true,
-        'ID_TP_STATUS_TRADE' => true
+        'ID_TP_STATUS_TRADE' => true,
+        'ID_TYPE_PRICE' => true,
+        'ID_PRICE_REF' => true,
+        'DT_PRICE_FIX_FROM' => true,
+        'DT_PRICE_FIX_TO' => true,
+        'ID_CROP' => true,
+        'ID_TYPE_DELIVERY' => true,
+        'TYPE_QUALITY' => true,
+        'QUALITY_INFO' => true
     ];
 }

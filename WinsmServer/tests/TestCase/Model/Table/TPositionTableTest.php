@@ -10,7 +10,6 @@ use Cake\TestSuite\TestCase;
  */
 class TPositionTableTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -24,7 +23,7 @@ class TPositionTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_position'
+        'app.TPosition'
     ];
 
     /**
@@ -35,8 +34,8 @@ class TPositionTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('TPosition') ? [] : ['className' => TPositionTable::class];
-        $this->TPosition = TableRegistry::get('TPosition', $config);
+        $config = TableRegistry::getTableLocator()->exists('TPosition') ? [] : ['className' => TPositionTable::class];
+        $this->TPosition = TableRegistry::getTableLocator()->get('TPosition', $config);
     }
 
     /**

@@ -2,13 +2,17 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\TPositionController;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\TPositionController Test Case
+ *
+ * @uses \App\Controller\TPositionController
  */
-class TPositionControllerTest extends IntegrationTestCase
+class TPositionControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
 
     /**
      * Fixtures
@@ -16,7 +20,7 @@ class TPositionControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_position'
+        'app.TPosition'
     ];
 
     /**

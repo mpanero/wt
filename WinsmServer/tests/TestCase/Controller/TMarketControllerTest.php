@@ -2,13 +2,17 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\TMarketController;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\TMarketController Test Case
+ *
+ * @uses \App\Controller\TMarketController
  */
-class TMarketControllerTest extends IntegrationTestCase
+class TMarketControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
 
     /**
      * Fixtures
@@ -16,7 +20,7 @@ class TMarketControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_market'
+        'app.TMarket'
     ];
 
     /**

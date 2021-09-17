@@ -17,6 +17,7 @@
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('ID_PLACE') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('PLACE_NAME') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('ID_PROVINCE') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('ID_COUNTRY') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('ACTIVE') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -27,6 +28,7 @@
             <tr>
                 <td><?= $this->Number->format($tPlace->ID_PLACE) ?></td>
                 <td><?= h($tPlace->PLACE_NAME) ?></td>
+                <td><?= $this->Number->format($tPlace->ID_PROVINCE) ?></td>
                 <td><?= $this->Number->format($tPlace->ID_COUNTRY) ?></td>
                 <td><?= $this->Number->format($tPlace->ACTIVE) ?></td>
                 <td class="actions">

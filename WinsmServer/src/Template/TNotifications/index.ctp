@@ -19,8 +19,9 @@
                 <th scope="col"><?= $this->Paginator->sort('ID_TYPE_NOTIF') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('ID_USER') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('DESCRIPTION') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('READ') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('READ_NOTIF') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('DT_CREATED') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('COD_REF') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -31,8 +32,9 @@
                 <td><?= $this->Number->format($tNotification->ID_TYPE_NOTIF) ?></td>
                 <td><?= $this->Number->format($tNotification->ID_USER) ?></td>
                 <td><?= h($tNotification->DESCRIPTION) ?></td>
-                <td><?= $this->Number->format($tNotification->READ) ?></td>
+                <td><?= $this->Number->format($tNotification->READ_NOTIF) ?></td>
                 <td><?= h($tNotification->DT_CREATED) ?></td>
+                <td><?= h($tNotification->COD_REF) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $tNotification->ID_NOTIF]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $tNotification->ID_NOTIF]) ?>

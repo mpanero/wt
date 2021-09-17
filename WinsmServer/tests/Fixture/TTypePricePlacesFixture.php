@@ -5,11 +5,9 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * TTypePricePlacesFixture
- *
  */
 class TTypePricePlacesFixture extends TestFixture
 {
-
     /**
      * Fields
      *
@@ -26,17 +24,20 @@ class TTypePricePlacesFixture extends TestFixture
         ],
     ];
     // @codingStandardsIgnoreEnd
-
     /**
-     * Records
+     * Init method
      *
-     * @var array
+     * @return void
      */
-    public $records = [
-        [
-            'ID_TYPE_PRICE_INFO' => 1,
-            'ID_PLACE_PRICE' => 1,
-            'ACTIVE' => 1
-        ],
-    ];
+    public function init()
+    {
+        $this->records = [
+            [
+                'ID_TYPE_PRICE_INFO' => 1,
+                'ID_PLACE_PRICE' => 1,
+                'ACTIVE' => 1
+            ],
+        ];
+        parent::init();
+    }
 }

@@ -12,14 +12,14 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\TPosition get($primaryKey, $options = [])
  * @method \App\Model\Entity\TPosition newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\TPosition[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TPosition|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TPosition|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TPosition saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\TPosition patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\TPosition[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\TPosition findOrCreate($search, callable $callback = null, $options = [])
  */
 class TPositionTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -45,13 +45,28 @@ class TPositionTable extends Table
     {
         $validator
             ->integer('ID_POSITION')
-            ->allowEmpty('ID_POSITION', 'create');
+            ->allowEmptyString('ID_POSITION', null, 'create');
 
         $validator
+            ->scalar('POSITION')
             ->maxLength('POSITION', 10)
             ->requirePresence('POSITION', 'create')
-            ->notEmpty('POSITION')
+            ->notEmptyString('POSITION')
             ->add('POSITION', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+
+        $validator
+            ->date('DATE_POSITION')
+            ->requirePresence('DATE_POSITION', 'create')
+            ->notEmptyDate('DATE_POSITION');
+
+        $validator
+            ->integer('ID_TYPE_PRICE_INFO')
+            ->requirePresence('ID_TYPE_PRICE_INFO', 'create')
+            ->notEmptyString('ID_TYPE_PRICE_INFO');
+
+        $validator
+            ->integer('ACTIVE')
+            ->notEmptyString('ACTIVE');
 
         return $validator;
     }

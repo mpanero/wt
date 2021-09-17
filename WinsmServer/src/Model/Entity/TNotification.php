@@ -10,12 +10,12 @@ use Cake\ORM\Entity;
  * @property int $ID_TYPE_NOTIF
  * @property int $ID_USER
  * @property string $DESCRIPTION
- * @property int $READ
+ * @property int $READ_NOTIF
  * @property \Cake\I18n\FrozenTime $DT_CREATED
+ * @property string|null $COD_REF
  */
 class TNotification extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -27,10 +27,10 @@ class TNotification extends Entity
      */
     protected $_accessible = [
         'ID_TYPE_NOTIF' => true,
-        'COD_REF' => true,
         'ID_USER' => true,
         'DESCRIPTION' => true,
         'READ_NOTIF' => true,
-        'DT_CREATED' => true
+        'DT_CREATED' => true,
+        'COD_REF' => true
     ];
 }

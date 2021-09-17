@@ -1,14 +1,14 @@
-<ion-view view-title="Mercado">
+<ion-view view-title="Consulta de Mercado">
     <ion-content>
-        <div class="list-actions" style="top: -6.5pt !important;  right: auto !important ; bottom: initial; left: -11pt !important;  position: absolute;  border-color: black; z-index: 99999 !important; display:block;">
+        <!--<div class="list-actions" style="top: -6.5pt !important;  right: auto !important ; bottom: initial; left: -11pt !important;  position: absolute;  border-color: black; z-index: 99999 !important; display:block;">
             <button class="button button-clear" ng-click="back($event)"><i class=" icon-arrow-left16" style="font-size: 18pt; color:#fff;"></i></button>            
         </div> 
         <div class="list-title" style="top: 0pt !important;  right: auto !important ; bottom: initial; left: auto !important;  position: absolute;  border-color: #072142; z-index: 9999 !important; display:block; width: 100%; min-width: 100%; text-align: -webkit-center; font-size: 14pt; background-color: #072142; color: white; height: 4.5vh; font-weight: bold; line-height: 26pt;">&nbsp;
             Consulta de Mercado
-        </div>         
+        </div>   -->      
         <section class="requestList animate-fade-slide-in-right">
             <ul class="content has-header">
-                <ion-scroll class="myScroll" zooming="false" direction="y">
+                <!-- <ion-scroll class="myScroll" zooming="false" direction="y"> -->
                 <li ng-repeat="mercado in requests track by $index" class="animate-fade-slide-in-right">
                     <a class="item list" ng-click="showProfile($event, $index)">
                         <div class="imageWrapper">
@@ -23,7 +23,8 @@
                         </div> 
                     </a>
                 </li>
-                </ion-scroll>
+                <!--</ion-scroll>-->
+                <ion-infinite-scroll ng-if="moreDataCanBeLoaded()" icon="ion-loading-c" on-infinite="loadMore()" distance="50%"></ion-infinite-scroll>
             </ul>         
             <div class="profile">
                 <header style="background-color: #04204a !important;">
@@ -50,7 +51,8 @@
                     </li>
                     <li>
                         <h4>Fecha de Entrega:</h4>
-                        <p>{{mercado.DT_FROM |split:'T':0}} a {{mercado.DT_TO |split:'T':0}}</p>
+                        <p ng-show="!isNull(mercado.DT_FROM)">{{mercado.DT_FROM |split:'T':0}} a {{mercado.DT_TO |split:'T':0}}</p>
+                        <p ng-show="isNull(mercado.DT_FROM)">Sin Informaaci&oacute;n</p>
                     </li>  
                     <li>
                         <h4>Lugar de Entrega:</h4>

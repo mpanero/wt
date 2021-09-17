@@ -12,14 +12,14 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\TPlacesPrice get($primaryKey, $options = [])
  * @method \App\Model\Entity\TPlacesPrice newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\TPlacesPrice[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TPlacesPrice|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TPlacesPrice|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TPlacesPrice saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\TPlacesPrice patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\TPlacesPrice[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\TPlacesPrice findOrCreate($search, callable $callback = null, $options = [])
  */
 class TPlacesPriceTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -45,27 +45,28 @@ class TPlacesPriceTable extends Table
     {
         $validator
             ->integer('ID_PLACE_PRICE')
-            ->allowEmpty('ID_PLACE_PRICE', 'create');
+            ->allowEmptyString('ID_PLACE_PRICE', null, 'create');
 
         $validator
+            ->scalar('PLACE_NAME')
             ->maxLength('PLACE_NAME', 50)
             ->requirePresence('PLACE_NAME', 'create')
-            ->notEmpty('PLACE_NAME');
+            ->notEmptyString('PLACE_NAME');
 
         $validator
             ->integer('ID_COUNTRY')
             ->requirePresence('ID_COUNTRY', 'create')
-            ->notEmpty('ID_COUNTRY');
+            ->notEmptyString('ID_COUNTRY');
 
         $validator
             ->integer('ACTIVE')
             ->requirePresence('ACTIVE', 'create')
-            ->notEmpty('ACTIVE');
+            ->notEmptyString('ACTIVE');
 
         $validator
             ->integer('ORDER_INFO')
             ->requirePresence('ORDER_INFO', 'create')
-            ->notEmpty('ORDER_INFO');
+            ->notEmptyString('ORDER_INFO');
 
         return $validator;
     }

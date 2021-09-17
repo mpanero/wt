@@ -10,7 +10,6 @@ use Cake\TestSuite\TestCase;
  */
 class TCategoryProdTableTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -24,7 +23,7 @@ class TCategoryProdTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_category_prod'
+        'app.TCategoryProd'
     ];
 
     /**
@@ -35,8 +34,8 @@ class TCategoryProdTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('TCategoryProd') ? [] : ['className' => TCategoryProdTable::class];
-        $this->TCategoryProd = TableRegistry::get('TCategoryProd', $config);
+        $config = TableRegistry::getTableLocator()->exists('TCategoryProd') ? [] : ['className' => TCategoryProdTable::class];
+        $this->TCategoryProd = TableRegistry::getTableLocator()->get('TCategoryProd', $config);
     }
 
     /**

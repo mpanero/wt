@@ -5,11 +5,9 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * TNotificationsFixture
- *
  */
 class TNotificationsFixture extends TestFixture
 {
-
     /**
      * Fields
      *
@@ -21,8 +19,9 @@ class TNotificationsFixture extends TestFixture
         'ID_TYPE_NOTIF' => ['type' => 'integer', 'length' => 3, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'ID_USER' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'DESCRIPTION' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'READ' => ['type' => 'integer', 'length' => 1, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'READ_NOTIF' => ['type' => 'integer', 'length' => 1, 'unsigned' => false, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'DT_CREATED' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
+        'COD_REF' => ['type' => 'string', 'length' => 20, 'null' => true, 'default' => null, 'collate' => 'latin1_swedish_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['ID_NOTIF'], 'length' => []],
         ],
@@ -32,20 +31,24 @@ class TNotificationsFixture extends TestFixture
         ],
     ];
     // @codingStandardsIgnoreEnd
-
     /**
-     * Records
+     * Init method
      *
-     * @var array
+     * @return void
      */
-    public $records = [
-        [
-            'ID_NOTIF' => 1,
-            'ID_TYPE_NOTIF' => 1,
-            'ID_USER' => 1,
-            'DESCRIPTION' => 'Lorem ipsum dolor sit amet',
-            'READ' => 1,
-            'DT_CREATED' => '2018-04-29 22:18:56'
-        ],
-    ];
+    public function init()
+    {
+        $this->records = [
+            [
+                'ID_NOTIF' => 1,
+                'ID_TYPE_NOTIF' => 1,
+                'ID_USER' => 1,
+                'DESCRIPTION' => 'Lorem ipsum dolor sit amet',
+                'READ_NOTIF' => 1,
+                'DT_CREATED' => '2019-11-03 15:13:47',
+                'COD_REF' => 'Lorem ipsum dolor '
+            ],
+        ];
+        parent::init();
+    }
 }

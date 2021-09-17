@@ -5,11 +5,9 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * TUserRolesFixture
- *
  */
 class TUserRolesFixture extends TestFixture
 {
-
     /**
      * Fields
      *
@@ -29,17 +27,20 @@ class TUserRolesFixture extends TestFixture
         ],
     ];
     // @codingStandardsIgnoreEnd
-
     /**
-     * Records
+     * Init method
      *
-     * @var array
+     * @return void
      */
-    public $records = [
-        [
-            'ID_ROL' => 1,
-            'DESCRIPTION' => 'Lorem ipsum dolor sit amet',
-            'ACTIVE' => 1
-        ],
-    ];
+    public function init()
+    {
+        $this->records = [
+            [
+                'ID_ROL' => 1,
+                'DESCRIPTION' => 'Lorem ipsum dolor sit amet',
+                'ACTIVE' => 1
+            ],
+        ];
+        parent::init();
+    }
 }

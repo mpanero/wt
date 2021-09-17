@@ -12,14 +12,14 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\TTypeActivity get($primaryKey, $options = [])
  * @method \App\Model\Entity\TTypeActivity newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\TTypeActivity[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TTypeActivity|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TTypeActivity|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TTypeActivity saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\TTypeActivity patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\TTypeActivity[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\TTypeActivity findOrCreate($search, callable $callback = null, $options = [])
  */
 class TTypeActivityTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -31,8 +31,6 @@ class TTypeActivityTable extends Table
         parent::initialize($config);
 
         $this->setTable('t_type_activity');
-        $this->setDisplayField('ID_ACTIVITY');
-        $this->setPrimaryKey('ID_ACTIVITY');
     }
 
     /**
@@ -44,20 +42,23 @@ class TTypeActivityTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->allowEmpty('ID_ACTIVITY', 'create');
+            ->requirePresence('ID_ACTIVITY', 'create')
+            ->notEmptyString('ID_ACTIVITY');
 
         $validator
+            ->scalar('ACTIVITY_NAME')
             ->maxLength('ACTIVITY_NAME', 50)
             ->requirePresence('ACTIVITY_NAME', 'create')
-            ->notEmpty('ACTIVITY_NAME');
+            ->notEmptyString('ACTIVITY_NAME');
 
         $validator
+            ->scalar('ACTIVITY_NAME_EN')
             ->maxLength('ACTIVITY_NAME_EN', 50)
-            ->allowEmpty('ACTIVITY_NAME_EN');
+            ->allowEmptyString('ACTIVITY_NAME_EN');
 
         $validator
             ->integer('ACTIVITY_NAME_PO')
-            ->allowEmpty('ACTIVITY_NAME_PO');
+            ->allowEmptyString('ACTIVITY_NAME_PO');
 
         return $validator;
     }

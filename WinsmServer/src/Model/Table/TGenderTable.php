@@ -12,14 +12,14 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\TGender get($primaryKey, $options = [])
  * @method \App\Model\Entity\TGender newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\TGender[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TGender|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TGender|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TGender saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\TGender patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\TGender[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\TGender findOrCreate($search, callable $callback = null, $options = [])
  */
 class TGenderTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -45,24 +45,23 @@ class TGenderTable extends Table
     {
         $validator
             ->integer('ID_GENDER')
-            ->allowEmpty('ID_GENDER', 'create')
+            ->allowEmptyString('ID_GENDER', null, 'create')
             ->add('ID_GENDER', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->scalar('GENDER_NAME')
             ->maxLength('GENDER_NAME', 50)
-            ->requirePresence('GENDER_NAME', 'create')
-            ->notEmpty('GENDER_NAME');
+            ->notEmptyString('GENDER_NAME');
 
         $validator
             ->scalar('GENDER_INI')
-            ->maxLength('GENDER_INI', 1)
-            ->allowEmpty('GENDER_INI');
+            ->maxLength('GENDER_INI', 3)
+            ->requirePresence('GENDER_INI', 'create')
+            ->notEmptyString('GENDER_INI');
 
         $validator
             ->integer('ACTIVE')
-            ->requirePresence('ACTIVE', 'create')
-            ->notEmpty('ACTIVE');
+            ->notEmptyString('ACTIVE');
 
         return $validator;
     }

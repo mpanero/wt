@@ -12,14 +12,14 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\TCountry get($primaryKey, $options = [])
  * @method \App\Model\Entity\TCountry newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\TCountry[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TCountry|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TCountry|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TCountry saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\TCountry patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\TCountry[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\TCountry findOrCreate($search, callable $callback = null, $options = [])
  */
 class TCountryTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -45,17 +45,17 @@ class TCountryTable extends Table
     {
         $validator
             ->integer('ID_COUNTRY')
-            ->allowEmpty('ID_COUNTRY', 'create');
+            ->allowEmptyString('ID_COUNTRY', null, 'create');
 
         $validator
             ->scalar('COUNTRY_NAME')
             ->maxLength('COUNTRY_NAME', 45)
-            ->allowEmpty('COUNTRY_NAME');
+            ->allowEmptyString('COUNTRY_NAME');
 
         $validator
             ->integer('ACTIVE')
             ->requirePresence('ACTIVE', 'create')
-            ->notEmpty('ACTIVE');
+            ->notEmptyString('ACTIVE');
 
         return $validator;
     }

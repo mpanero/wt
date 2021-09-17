@@ -17,8 +17,10 @@
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('ID_PRODUCT') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('PRODUCT_NAME') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('ACRONYM') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('ID_MARKET') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('ID_CATEGORY_PROD') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('ICON_PATH') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('ACTIVE') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
@@ -28,8 +30,10 @@
             <tr>
                 <td><?= $this->Number->format($tProduct->ID_PRODUCT) ?></td>
                 <td><?= h($tProduct->PRODUCT_NAME) ?></td>
+                <td><?= h($tProduct->ACRONYM) ?></td>
                 <td><?= $this->Number->format($tProduct->ID_MARKET) ?></td>
                 <td><?= $this->Number->format($tProduct->ID_CATEGORY_PROD) ?></td>
+                <td><?= h($tProduct->ICON_PATH) ?></td>
                 <td><?= $this->Number->format($tProduct->ACTIVE) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $tProduct->ID_PRODUCT]) ?>

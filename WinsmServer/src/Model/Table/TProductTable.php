@@ -12,14 +12,14 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\TProduct get($primaryKey, $options = [])
  * @method \App\Model\Entity\TProduct newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\TProduct[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TProduct|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TProduct|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TProduct saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\TProduct patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\TProduct[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\TProduct findOrCreate($search, callable $callback = null, $options = [])
  */
 class TProductTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -33,6 +33,10 @@ class TProductTable extends Table
         $this->setTable('t_product');
         $this->setDisplayField('ID_PRODUCT');
         $this->setPrimaryKey('ID_PRODUCT');
+
+        $this->belongsTo('TCategoryProd', [
+            'foreignKey' => 'ID_CATEGORY_PROD'
+        ]);         
     }
 
     /**
@@ -45,29 +49,37 @@ class TProductTable extends Table
     {
         $validator
             ->integer('ID_PRODUCT')
-            ->allowEmpty('ID_PRODUCT', 'create');
+            ->allowEmptyString('ID_PRODUCT', null, 'create');
 
         $validator
+            ->scalar('PRODUCT_NAME')
             ->maxLength('PRODUCT_NAME', 100)
-            ->allowEmpty('PRODUCT_NAME');
+            ->allowEmptyString('PRODUCT_NAME');
 
         $validator
-            ->maxLength('ACRONYM', 20)
-            ->allowEmpty('ACRONYM');            
-            
+            ->scalar('ACRONYM')
+            ->maxLength('ACRONYM', 10)
+            ->allowEmptyString('ACRONYM');
+
         $validator
             ->integer('ID_MARKET')
             ->requirePresence('ID_MARKET', 'create')
-            ->notEmpty('ID_MARKET');
+            ->notEmptyString('ID_MARKET');
 
         $validator
             ->integer('ID_CATEGORY_PROD')
             ->requirePresence('ID_CATEGORY_PROD', 'create')
-            ->notEmpty('ID_CATEGORY_PROD');
+            ->notEmptyString('ID_CATEGORY_PROD');
+
+        $validator
+            ->scalar('ICON_PATH')
+            ->maxLength('ICON_PATH', 100)
+            ->requirePresence('ICON_PATH', 'create')
+            ->notEmptyString('ICON_PATH');
 
         $validator
             ->integer('ACTIVE')
-            ->allowEmpty('ACTIVE');
+            ->allowEmptyString('ACTIVE');
 
         return $validator;
     }

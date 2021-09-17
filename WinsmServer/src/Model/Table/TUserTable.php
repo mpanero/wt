@@ -12,14 +12,14 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\TUser get($primaryKey, $options = [])
  * @method \App\Model\Entity\TUser newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\TUser[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TUser|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TUser|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TUser saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\TUser patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\TUser[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\TUser findOrCreate($search, callable $callback = null, $options = [])
  */
 class TUserTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -34,6 +34,7 @@ class TUserTable extends Table
         $this->setDisplayField('ID_USER');
         $this->setPrimaryKey('ID_USER');
 
+
         $this->addBehavior('Timestamp');
         
         $this->belongsTo('TGender', [
@@ -46,9 +47,11 @@ class TUserTable extends Table
 
         $this->belongsTo('TPlace', [
             'foreignKey' => 'ID_PLACE'
-        ]);     
-        
-        
+        ]);   
+
+        $this->belongsToMany( 'TTypeActivity', [
+            'foreignKey' => 'ACTIVITY'
+        ] );         
     }
 
     /**
@@ -61,72 +64,94 @@ class TUserTable extends Table
     {
         $validator
             ->integer('ID_USER')
-            ->notEmpty('ID_USER', 'create');
+            ->allowEmptyString('ID_USER', null, 'create');
 
         $validator
+            ->scalar('MAIL')
             ->maxLength('MAIL', 45)
-            ->notEmpty('MAIL');
+            ->allowEmptyString('MAIL');
 
         $validator
             ->integer('ACTIVE')
-            ->allowEmpty('ACTIVE');
+            ->allowEmptyString('ACTIVE');
 
         $validator
             ->scalar('PASSWORD')
-            ->maxLength('PASSWORD', 256)
-            ->notEmpty('PASSWORD');
+            ->maxLength('PASSWORD', 255)
+            ->allowEmptyString('PASSWORD');
 
         $validator
+            ->scalar('NAME')
             ->maxLength('NAME', 100)
-            ->notEmpty('NAME');
+            ->allowEmptyString('NAME');
 
         $validator
             ->scalar('SURNAME')
             ->maxLength('SURNAME', 100)
-            ->notEmpty('SURNAME');
+            ->allowEmptyString('SURNAME');
 
         $validator
             ->scalar('COMPANY')
             ->maxLength('COMPANY', 60)
-            ->notEmpty('COMPANY');
-            
+            ->allowEmptyString('COMPANY');
+
         $validator
             ->integer('ID_GENDER')
-            ->requirePresence('ID_GENDER', 'create')
-            ->notEmpty('ID_GENDER');
+            ->allowEmptyString('ID_GENDER');
 
         $validator
             ->date('BIRTHDATE')
-            ->allowEmpty('BIRTHDATE');
-            
-        $validator
-            ->scalar('PHONE_MOBILE_COUNTRY')
-            ->maxLength('PHONE_MOBILE_COUNTRY', 4)
-            ->allowEmpty('PHONE_MOBILE_COUNTRY');    
+            ->allowEmptyDate('BIRTHDATE');
 
         $validator
-            ->scalar('PHONE_MOBILE_NUM')
-            ->maxLength('PHONE_MOBILE_NUM', 45)
-            ->allowEmpty('PHONE_MOBILE_NUM');
+            ->integer('PHONE_MOBILE_COUNTRY')
+            ->allowEmptyString('PHONE_MOBILE_COUNTRY');
 
         $validator
-            ->scalar('PHONE_OTHER_COUNTRY')
-            ->maxLength('PHONE_OTHER_COUNTRY', 4)
-            ->allowEmpty('PHONE_OTHER_COUNTRY'); 
+            ->notEmptyString('PHONE_MOBILE_NUM');
 
         $validator
-            ->scalar('PHONE_OTHER_NUM')
-            ->maxLength('PHONE_OTHER_NUM', 45)
-            ->allowEmpty('PHONE_OTHER_NUM');
+            ->integer('PHONE_OTHER_COUNTRY')
+            ->allowEmptyString('PHONE_OTHER_COUNTRY');
+
+        $validator
+            ->allowEmptyString('PHONE_OTHER_NUM');
 
         $validator
             ->integer('ID_ROL')
-            ->requirePresence('ID_ROL', 'create')
-            ->allowEmpty('ID_ROL');
+            ->allowEmptyString('ID_ROL');
 
         $validator
-            ->requirePresence('ID_PLACE', 'create')
-            ->allowEmpty('ID_PLACE');
+            ->allowEmptyString('ID_PLACE');
+
+        $validator
+            ->integer('ID_LEGAL')
+            ->allowEmptyString('ID_LEGAL');
+
+        $validator
+            ->scalar('ACTIVITY')
+            ->maxLength('ACTIVITY', 20)
+            ->allowEmptyString('ACTIVITY');
+
+        $validator
+            ->integer('ID_TYPE_STATUS_USER')
+            ->allowEmptyString('ID_TYPE_STATUS_USER');
+
+        $validator
+            ->integer('Q1')
+            ->allowEmptyString('Q1');
+
+        $validator
+            ->integer('Q2')
+            ->allowEmptyString('Q2');
+
+        $validator
+            ->integer('Q3')
+            ->allowEmptyString('Q3');
+
+        $validator
+            ->integer('USER_ADMIN')
+            ->allowEmptyString('USER_ADMIN');
 
         return $validator;
     }

@@ -23,7 +23,10 @@
         <?php
             echo $this->Form->control('TYPE');
             echo $this->Form->control('INFO');
+            echo $this->Form->control('INFO1');
             echo $this->Form->control('ACTIVE');
+            echo $this->Form->control('DATA_1');
+            echo $this->Form->control('ORDER_INFO');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

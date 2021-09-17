@@ -5,18 +5,15 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * TUmFixture
- *
  */
 class TUmFixture extends TestFixture
 {
-
     /**
      * Table name
      *
      * @var string
      */
     public $table = 't_um';
-
     /**
      * Fields
      *
@@ -36,17 +33,20 @@ class TUmFixture extends TestFixture
         ],
     ];
     // @codingStandardsIgnoreEnd
-
     /**
-     * Records
+     * Init method
      *
-     * @var array
+     * @return void
      */
-    public $records = [
-        [
-            'ID_UM' => 1,
-            'UM_NAME' => 'Lorem ipsum dolor sit amet',
-            'ID_COUNTRY' => 1
-        ],
-    ];
+    public function init()
+    {
+        $this->records = [
+            [
+                'ID_UM' => 1,
+                'UM_NAME' => 'Lorem ipsum dolor sit amet',
+                'ID_COUNTRY' => 1
+            ],
+        ];
+        parent::init();
+    }
 }

@@ -545,7 +545,7 @@ section.requestList {
     /*transform: translate(-50%,-50%);*/
     width: 320px;
     /*margin-top: 5% !important;*/
-    margin-top: 6% !important;
+    margin-top: 0% !important;
 }
  
 section.requestList > ul {
@@ -556,7 +556,7 @@ section.requestList > ul {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     position: absolute;
     right: 0;
-    top: 3%;
+    top: 1%;
     z-index: 0;
 }
  
@@ -651,15 +651,16 @@ section.requestList > ul li button.iconList{
     transform: translate3d(0,0,0);
 }
 /************************************************************ My style *************************************************/
-.splash-bg {
+.bg-splash {
+  padding-top: 30pt;
   position: relative;
-  background: url("../img/fondo-app-1.png") no-repeat transparent;
+  background: url("../img/splashbg.png") no-repeat transparent;
   background-size: cover;
   height: 14%; 
   z-index: 1;
   background-repeat: repeat-x;
-  -webkit-animation: animatedBackground 40s linear infinite;
-  animation: animatedBackground 40s linear infinite;
+  /*-webkit-animation: animatedBackground 40s linear infinite;
+  animation: animatedBackground 40s linear infinite;*/
 }
 
 @-webkit-keyframes animatedBackground {
@@ -682,8 +683,8 @@ section.requestList > ul li button.iconList{
 /* Home */
 .splash-info {
   position: relative;
-  z-index: 2;
-  margin-top: -58px;
+  z-index: 1;
+  margin-top: -41pt;
   text-align: center;
 }
 
@@ -847,7 +848,7 @@ div .list-actions:hover{
 .btn,.btn-danger.active,.btn-danger:active,.btn-default.active,.btn-default:active,.btn-info.active,.btn-info:active,.btn-primary.active,.btn-primary:active,.btn-warning.active,.btn-warning:active,.btn.active,.btn:active,.dropdown-menu>.disabled>a:focus,.dropdown-menu>.disabled>a:hover,.form-control,.navbar-toggle,.open>.btn-danger.dropdown-toggle,.open>.btn-default.dropdown-toggle,.open>.btn-info.dropdown-toggle,.open>.btn-primary.dropdown-toggle,.open>.btn-warning.dropdown-toggle{background-image:none}
 
 .ionic_datepicker_popup .popup-body .month_select select, .ionic_datepicker_popup .popup-body .year_select select {
-    left: -20px !important;
+    left: 1px !important;
     border: none;
     padding: 0;
 }
@@ -1043,28 +1044,31 @@ table tr:nth-child(even) {
   }
 
 .classA{
-    background-color: #007AFF !important; 
-    background: #007AFF !important;
+    /*007AFF*/
+    background-color: #D6DCE4 !important; 
+    background: #D6DCE4 !important;
     display: inline-block !important;
-    color: white !important;
+    color: black !important;
     padding: 10px !important;
     border-radius: 10px !important;
     text-align: left !important;
-    max-width: 240px !important;   
+    max-width: 240px !important; 
+    font-weight: bold;
 }
 
 
 .classB{
     color: black !important;
-    background-color: #C7C7CC !important;  
-    background: #C7C7CC !important;
+    background-color: #FFF2CC !important;  
+    background: #FFF2CC !important;
     display: inline-block !important;
-    color: white !important;
+    color: black !important;
     padding: 10px !important;
     border-radius: 10px !important;
     text-align: left !important;
     max-width: 240px !important;  
     text-align: left!important;
+    font-weight: bold;
 }
 
 .classC {
@@ -1128,3 +1132,152 @@ table tr:nth-child(even) {
     text-align: center;
     border-radius: 10px;
 }
+
+/********** WIZARD ************/
+
+
+/*------>>> Animations <<<-----*/
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.25s ease-in;
+  -moz-transition: opacity 0.25s ease-in;
+  -o-transition: opacity 0.25s ease-in;
+  -ms-transition: opacity 0.25s ease-in;
+  transition: opacity 0.25s ease-in;
+  transition-delay: 0.25s;
+}
+.fade.in{
+  opacity: 1;
+}
+
+.animate-switch-container {
+  position:relative;
+  /*overflow: hidden;*/
+  /*height: auto;*/
+  width: auto;
+  border: solid 1px black;
+  box-shadow: 6px 6px 15px gray;
+  padding:10px;
+  border-radius:10px;
+  margin-top: 0pt;
+  background-size: 50px 50px;
+}
+.animate-switch{
+  padding:3px;
+  width: 100%;
+}
+.animate-switch.ng-animate {
+  -webkit-transition:all 0.5s;
+  transition:all 0.5s;
+  position:absolute;
+
+}
+/* hide leaving slide  */
+/* show */
+.animate-switch.ng-leave{
+  left:0;
+}
+/* hide */
+.forward .animate-switch.ng-leave.ng-leave-active{
+  left:-100%;
+}
+.backward .animate-switch.ng-leave.ng-leave-active{
+  left: 100%;
+}
+/* show entering slide  */
+/* hide */
+.forward .animate-switch.ng-enter {
+  left:100%;
+}
+.backward .animate-switch.ng-enter {
+  left:-100%;
+}
+/* show */
+.animate-switch.ng-enter.ng-enter-active {
+  left:0;
+}
+
+
+/*-----------------------------------*/
+/*------>>> Validation <<<-----------*/
+/*-----------------------------------*/
+
+.form-validation input.ng-invalid-maxlength {
+  border:2px solid #D9272D;
+}
+
+
+.length-error {
+  color: #D9272D;
+  display: block;
+  font-size: 12px;
+  opacity: .8;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+  position: relative;
+  line-height: 18px;
+  padding: 10px 10px 5px 10px;
+  margin: -25px 0 20px 0;
+  background-color: #E3E3E3;
+  border-radius: 0 0 5px 5px;
+}
+
+.input-error {
+  border: 2px solid #D9272D;
+}
+
+/*-----------------------------------*/
+/*------->>> FORM STYLES <<<---------*/
+/*-----------------------------------*/
+
+.note {
+  display: block;
+  font-size: 12px;
+  opacity: .8;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+  position: relative;
+  line-height: 18px;
+}
+
+.note-input {
+  padding: 10px 10px 5px 10px;
+  margin: -25px 0 20px 0;
+  background-color: #E3E3E3;
+  border-radius: 0 0 5px 5px;
+}
+
+.note-input-error, .required-error-banner {
+  background-color: rgba(217, 39, 45, 0.5);
+}
+
+/*-----------------------------------*/
+/*----------->>> HELPERS <<<-------------*/
+/*-----------------------------------*/
+
+/*
+  Allow angular.js to be loaded in body, hiding cloaked elements until
+  templates compile.  The !important is important given that there may be
+  other selectors that are more specific or come later and might alter display.
+ */
+[ng\:cloak], [ng-cloak], .ng-cloak {
+    display: none;
+}
+
+.cat{
+    text-align: center;
+    display: -webkit-box;
+    display: -webkit-block;
+    display: -moz-box;
+    display: -moz-block;
+    display: -ms-flexbox;
+    display: block;
+    padding: 5px;
+    width: 100%;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+

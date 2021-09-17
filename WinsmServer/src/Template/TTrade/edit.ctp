@@ -22,6 +22,7 @@
         <legend><?= __('Edit T Trade') ?></legend>
         <?php
             echo $this->Form->control('ID_REQUEST');
+            echo $this->Form->control('COD_REF');
             echo $this->Form->control('ID_USER_OWNER');
             echo $this->Form->control('ID_USER_CPART');
             echo $this->Form->control('PRICE');
@@ -32,6 +33,14 @@
             echo $this->Form->control('CONFIRMED_CPART');
             echo $this->Form->control('DH_CREATION', ['empty' => true]);
             echo $this->Form->control('ID_TP_STATUS_TRADE');
+            echo $this->Form->control('ID_TYPE_PRICE');
+            echo $this->Form->control('ID_PRICE_REF');
+            echo $this->Form->control('DT_PRICE_FIX_FROM', ['empty' => true]);
+            echo $this->Form->control('DT_PRICE_FIX_TO', ['empty' => true]);
+            echo $this->Form->control('ID_CROP');
+            echo $this->Form->control('ID_TYPE_DELIVERY');
+            echo $this->Form->control('TYPE_QUALITY');
+            echo $this->Form->control('QUALITY_INFO');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

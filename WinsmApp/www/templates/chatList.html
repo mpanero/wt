@@ -1,14 +1,14 @@
-<ion-view view-title="Mis Chat">
+<ion-view view-title="Mensajes">
     <ion-content>
-        <div class="list-actions" style="top: -6pt !important;  right: auto !important ; bottom: initial; left: -11pt !important;  position: absolute;  border-color: black; z-index: 99999 !important; display:block; width: 5%;">
+        <!--<div class="list-actions" style="top: -6pt !important;  right: auto !important ; bottom: initial; left: -11pt !important;  position: absolute;  border-color: black; z-index: 99999 !important; display:block; width: 5%;">
             <button class="button button-clear" ng-click="back()"><i class=" icon-arrow-left16" style="font-size: 18pt; color:#fff;"></i></button>
         </div> 
         <div class="list-title" style="top: 0pt !important;  right: auto !important ; bottom: initial; left: auto !important;  position: absolute;  border-color: #072142; z-index: 9999 !important; display:block; width: 100%; min-width: 100%; text-align: -webkit-center; font-size: 14pt; background-color: #072142; color: white; height: 4.5vh; font-weight: bold; line-height: 26pt;">&nbsp;
             Mis Chat
-        </div>         
+        </div>         -->
         <section class="requestList animate-fade-slide-in-right">
             <ul class="content has-header">
-                <ion-scroll class="myScroll" zooming="false" direction="y" >
+                <!--<ion-scroll class="myScroll" zooming="false" direction="y" >-->
                 <li ng-repeat="chat in chats track by $index" class="animate-fade-slide-in-right" ng-click="viewChat($event, $index)">
                     <a class="item list" >
                         <div class="imageWrapperTrade">
@@ -26,7 +26,8 @@
                         </div>                        
                     </a>
                 </li>
-                </ion-scroll>
+                <ion-infinite-scroll ng-if="moreDataCanBeLoaded()" icon="ion-loading-c" on-infinite="loadMore()" distance="50%"></ion-infinite-scroll>
+                <!--</ion-scroll>-->
             </ul>         
  
         </section>         

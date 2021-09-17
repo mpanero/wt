@@ -16,6 +16,7 @@
         <legend><?= __('Add T Place') ?></legend>
         <?php
             echo $this->Form->control('PLACE_NAME');
+            echo $this->Form->control('ID_PROVINCE');
             echo $this->Form->control('ID_COUNTRY');
             echo $this->Form->control('ACTIVE');
         ?>

@@ -17,7 +17,7 @@ class TProductController extends AppController
 	{
 		parent::initialize();
 		if($this->request->session()->check('Auth.TUser.token')){
-            $this->Auth->allow(['find']);
+            $this->Auth->allow(['find','findAll']);
 			return true;
 		}
 	}     
@@ -166,5 +166,52 @@ class TProductController extends AppController
             $this->set('_serialize', ['tProduct']);
         }
     }
+
+    /**
+     * Find method
+     *
+     * @param string|null $id T Product id.
+     * @return \Cake\Network\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function findAll()
+    {
+        
+    	$market = null;
+    	if(!empty($this->request->query('mk'))){
+    		$market = $this->request->query('mk');
+    	}else{
+    		if(!empty($this->request->query['mk'])){
+    			$market = $this->request->query['mk'];
+    		}
+        }         
+
+        if($market){
+    		$product = $this->TProduct->find('all', array(
+                    'conditions' => array('TProduct.ID_MARKET' => strtoupper($market),
+                        'TProduct.ACTIVE' => 1,
+                        'TCategoryProd.ACTIVE' => 1
+    				),
+                    'contain' => ['TCategoryProd']
+            ));
+            //debug($product);
+    		$count = $product->count();
+    		if($count > 0){// si existe products    			 
+                $tProduct = $product;
+                $this->set(compact('tProduct'));
+                $this->set('_serialize', ['tProduct']);                
+            }else{
+                $data = "no data";
+                $this->set('tProduct', $data);
+                $this->set('_serialize', ['tProduct']); 
+            }     
+
+        }else{
+            $data = "null params";
+            $this->set('tProduct', $data);
+            $this->set('_serialize', ['tProduct']);
+        }
+    }
+
     
 }

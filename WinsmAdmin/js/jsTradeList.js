@@ -393,6 +393,8 @@ function eventsEditModal(){
 function loadTrade(info){
     blockUISystem();  
     linksWs["tTrade"] = linksWs["tTrades"][info];
+    var DT_FROM = (linksWs["tTrade"].t_request != null) ? String(linksWs["tTrade"].t_request.DT_FROM) : "";
+    var DT_TO = (linksWs["tTrade"].t_request != null) ? String(linksWs["tTrade"].t_request.DT_TO) : "";
     var html = ''+
     '<div class="panel-body">'+
         '<h5 class="text-semibold no-margin-top text-center">'+linksWs["tTrade"].t_product.PRODUCT_NAME+'</h5>'+
@@ -405,7 +407,7 @@ function loadTrade(info){
                     '<li><span class="text-semibold">Cantidad</span></li>'+
                     '<li><span class="status-mark border-success position-left"></span>'+linksWs["tTrade"].QT+'</li>'+
                     '<li><span class="text-semibold">Fecha de Entrega</span></li>'+
-                    '<li><span class="status-mark border-success position-left"></span>'+String(linksWs["tTrade"].t_request.DT_FROM).split(" ")[0]+' a '+String(linksWs["tTrade"].t_request.DT_TO).split(" ")[0]+'</li>'+
+                    '<li><span class="status-mark border-success position-left"></span>'+DT_FROM.split(" ")[0]+' a '+DT_TO.split(" ")[0]+'</li>'+
                 '</ul>'+
             '</div>'+
             '<div class="col-sm-5">'+
@@ -554,6 +556,9 @@ function eachListTrade(){
         var rowNum = 0;
         var htmlCpart = "";
         $.each(linksWs["tTrades"], function (reg, atributo) {
+            var DT_FROM = (atributo.t_request != null) ? String(atributo.t_request.DT_FROM):"";
+            var DT_TO = (atributo.t_request != null) ? String(atributo.t_request.DT_TO):"";
+
             htmlCpart = ''+
             '<div class=\"col-md-15\" style="min-width:100%;">'+
                 '<div class=\"panel panel-flat border-bottom-lg border-bottom-warning border-right-lg border-right-danger\">'+
@@ -586,7 +591,7 @@ function eachListTrade(){
                 '<td><span class="text-regular">'+atributo.t_um.UM_NAME+'</span></td>'+
                 '<td><h6 class="text-regular"><i class="icon-price-tags2 position-left text-muted"></i>&nbsp;'+atributo.PRICE+'</h6></td>'+
                 '<td><span class="text-regular"><i class="icon-coins position-left text-muted"></i>&nbsp;'+atributo.t_currency.CURRENCY_NAME+'</span></td>'+
-                '<td><span class="text-regular"><i class="icon-calendar2 position-left text-muted"></i>&nbsp;'+String(atributo.t_request.DT_FROM).split(" ")[0]+' a '+String(atributo.t_request.DT_TO).split(" ")[0]+'</span></td>'+
+                '<td><span class="text-regular"><i class="icon-calendar2 position-left text-muted"></i>&nbsp;'+DT_FROM.split(" ")[0]+' a '+DT_TO.split(" ")[0]+'</span></td>'+
             '</tr>';
 
             rowNum += 1;

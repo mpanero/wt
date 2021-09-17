@@ -7,16 +7,16 @@
                     <h5 class="panel-title">Actualizar usuario</h5>
                     <div class="heading-elements">
                         <ul class="icons-list">
-                            <li><a data-action="collapse"></a></li>
+                            <!-- <li><a data-action="collapse"></a></li>
                             <li><a data-action="reload"></a></li>
-                            <li><a data-action="close"></a></li>
+                            <li><a data-action="close"></a></li> -->
                         </ul>
                     </div>
                 </div>
     
                 <div class="row">
                     <div class="col-md-12 ">
-                        <div class="panel panel-flat">
+                        <!-- <div class="panel panel-flat"> -->
                             <div class="panel-heading">
                                 <legend class="text-semibold">
                                     <i class="icon-reading position-left"></i>
@@ -27,29 +27,58 @@
                                 </legend> 
                             </div>    
 
-                            <div class="panel-body">
+                            <div class="panel-body"> 
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Nombre:</label>
                                             <input id="NAME" name="NAME" type="text" placeholder="Nombre" class="form-control noVacio only-alfa">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Apellido:</label>
                                             <input id="SURNAME" name="SURNAME" type="text" placeholder="Apellido" class="form-control noVacio only-alfa">
                                         </div>            
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group" >
+                                            <label>CUIT:</label>
+                                            <input id="ID_LEGAL" name="ID_LEGAL" type="text" placeholder="CUIT" class="form-control noVacio cuit">
+                                        </div>
+                                    </div>                                    
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Raz&oacute;n Social:</label>
+                                            <input id="COMPANY" name="COMPANY" type="text" placeholder="Raz&oacute;n Social" class="form-control noVacio">
+                                        </div>            
+                                    </div>                                    
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Fecha Nacimiento:</label>
-                                            <input id="BIRTHDATE" name="BIRTHDATE" type="text" placeholder="Fecha Nacimiento" class="form-control noVacio pickadateLoad ">
+                                    
+                                    <div class="col-md-3">
+                                        <div class="form-group" >
+                                            <label>Email:</label>
+                                            <input id="MAIL" name="MAIL" type="email" readonly placeholder="Email" class="form-control noVacio onlyEmail">
                                         </div>
                                     </div>
-                                    <div class="col-md-6" id="divPrice">
+
+                                    <div class="col-md-3">
+                                        <div class="form-group" >
+                                            <label>Localidad:</label>
+                                            <!-- <select id="ID_PLACE" name="ID_PLACE"  placeholder="Localidad" class="select">
+                                            </select> -->
+                                            <input id="ID_PLACE_NAME" type="text" placeholder="Localidad" readonly class="form-control noVacio">
+                                            <input id="ID_PLACE" name="ID_PLACE" type="hidden">                                             
+                                        </div>
+                                    </div>                                    
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Fecha Nacimiento:</label>
+                                            <input id="BIRTHDATE" name="BIRTHDATE" type="text" placeholder="Fecha Nacimiento" class="form-control noVacio pickadateBirthday ">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" id="divPrice">
                                         <div class="form-group">
                                             <label>Genero:</label>
                                             <select id="ID_GENDER" name="ID_GENDER" placeholder="Genero" class="select">
@@ -63,41 +92,88 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group" >
-                                            <label>Email:</label>
-                                            <input id="MAIL" name="MAIL" type="email" readonly placeholder="Email" class="form-control noVacio onlyEmail">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group" >
-                                            <label>Localidad:</label>
-                                            <select id="ID_PLACE" name="ID_PLACE"  placeholder="Localidad" class="select">
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group" >
-                                            <label>Codigo Area:</label>
-                                            <input id="PHONE_MOBILE_COUNTRY" name="PHONE_MOBILE_COUNTRY" type="text" placeholder="Numero Movil" class="form-control number">
+                                            <label>N&uacute;mero Movil:</label>
+                                            <input id="PHONE_MOBILE_NUM" name="PHONE_MOBILE_NUM" type="text" placeholder="Telefono celular" class="form-control ">
                                         </div> 
                                     </div> 
-                                    <div class="col-md-8">
+                                    <div class="col-md-6">
                                         <div class="form-group" >
-                                            <label>Numero Movil:</label>
-                                            <input id="PHONE_MOBILE_NUM" name="PHONE_MOBILE_NUM" type="text" placeholder="Numero Movil" class="form-control number">
+                                            <label>N&uacute;mero (otro):</label>
+                                            <input id="PHONE_OTHER_NUM" name="PHONE_OTHER_NUM" type="text" placeholder="Telefono (otro)" class="form-control ">
                                         </div> 
                                     </div>        
                                 </div>   
-                            </div>
-                        </div>
+                                
+                                <legend class="text-semibold">
+                                    <i class="icon-reading position-left"></i>
+                                    Informaci&oacute;n de Actividad
+                                    <a class="control-arrow" data-toggle="collapse" data-target="#demo2">
+                                        <i class="icon-circle-down2"></i>
+                                    </a>
+                                </legend> 
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="divActivity" class="form-group"></div>
+                                    </div>       
+                                </div>   
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <legend class="text-semibold">
+                                            <div class="checkbox checkbox-switchery switchery-sm">
+                                                <label>
+                                                    <input id="produc" type="checkbox" class="switchery" >
+                                                    <i class="icon-reading position-left"></i>
+                                                    Eres productor
+                                                </label>
+                                            </div>
+                                        </legend> 
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Cantidad de madres:</label>
+                                                    <input id="Q1" name="Q1" type="text" placeholder="Cantidad de madres" disabled class="form-control number">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Producci&oacute;n mensual:</label>
+                                                    <input id="Q2" name="Q2" type="text" placeholder="Producci&oacute;n mensual" disabled class="form-control number">
+                                                </div>
+                                            </div>                                            
+                                        </div>
+                                    </div> 
+    
+                                    <div class="col-md-6">
+                                        <legend class="text-semibold">
+                                            <div class="checkbox checkbox-switchery switchery-sm">
+                                                    <label>
+                                                        <input id="compra" type="checkbox" class="switchery" >
+                                                        <i class="icon-reading position-left"></i>
+                                                        Eres comprador
+                                                    </label>
+                                                </div>
+                                        </legend> 
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Demanda mensual (Kg):</label>
+                                                    <input id="Q3" name="Q3" type="text" placeholder="Demanda mensual" disabled class="form-control number">
+                                                </div>
+                                            </div>                                           
+                                        </div>                                        
+                                    </div>   
+
+                                </div>                                                                 
+                                
+                            </div> 
+                        <!-- </div> -->
                     </div>
                 </div>
                 <div>
                     &nbsp;
                 </div>
-                <div class="panel-footer panel-footer-condensed"><a class="heading-elements-toggle"><i class="icon-more"></i></a>
+                <div class="panel-footer panel-footer-condensed"><a class="heading-elements-toggle"><i class="icon-more"></i></a><br/>
                     <div class="text-right">
                         <button type="button" class="btn btn-success btnRenew">Actualizar&nbsp;<i class=" icon-pencil sideToSide position-right"></i></button>
                     </div><br/>
@@ -112,6 +188,73 @@
 </div>
 
 <!-- /a legend -->
+
+
+<!-- ****************************************** Modal Localidades ************************************* -->
+<div id="modalLocalidades" class="modal modalLocalidades" data-keyboard="false" data-backdrop="false" >
+    <form id="formLocalidades" action="#" method="post" enctype="multipart/form-data">
+        <div class="modal-dialog modal-dialog-centered modal-sm" >
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                    <h5 class="modal-title"><i class="icon-menu7"></i> Localidades</h5>
+                </div>
+
+                <div class="modal-body">
+                    <div id="divLocalidades" class="panel panel-danger panel-bordered" height="300">
+                        <div class="col-md-12">
+                            <!-- Advanced legend -->
+                            <form id="newUser" action="#" method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="panel panel-flat">
+                                            <div class="row">
+                                                <div class="col-md-12 ">
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>Provincia:</label>
+                                                                    <select id="ID_PROVINCE" placeholder="Provincias" class="select">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>Localidad:</label>
+                                                                    <!-- <input type="text" class="form-control typeahead-basic" placeholder="Localidad"> -->
+                                                                    <select id="ID_LOCALITY" placeholder="Localidades" class="select-search">
+                                                                    </select>
+                                                                </div>            
+                                                            </div>
+                                                        </div>                                                            
+                                                    </div>      
+                                                </div>  
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>                       
+
+                        </div>
+                    </div>			
+                </div>
+
+                <div class="row">
+                    <div class="">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link btnCloseModalLocalidades"><i class="icon-cross"></i> Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+<!-- /modal -->	
 
 <!-- JS page -->
 <script type="text/javascript" src="../js/jsUserEdit.js?x="+Math.random()></script>

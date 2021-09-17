@@ -1,0 +1,544 @@
+<ion-view view-title="Solicitud">
+    <ion-content class="animate-fade-slide-in modal-demo">
+        <!--<div class="list-actions" style="top: 0pt !important;  right: auto !important ; bottom: initial; left: -11pt !important;  position: absolute;  border-color: black; z-index: 99999 !important; display:block;">
+            <!--<button class="button button-clear" ng-click="cancelar()"><i class=" icon-arrow-left16" style="font-size: 18pt; color:#fff;"></i></button>
+        </div>  
+        <div class="list-title" style="position: inherit; top: 1pt !important;  right: auto !important ; bottom: initial; left: auto !important;  position: absolute;  border-color: #072142; z-index: 9999 !important; display:block; width: 100%; min-width: 100%; text-align: -webkit-center; font-size: 14pt; background-color: #072142; color: white; height: 4.5vh; font-weight: bold; line-height: 20pt;">&nbsp;
+            Nueva Solicitud
+        </div>     -->   
+        <section class="section">
+            <!-- <ion-scroll class="myScroll" zooming="false" direction="y" > -->
+                
+            <form name="formWizard.multiStepForm" class="form-validation"  ng-controller="wizardCtrl as formWizard" novalidate >
+                <div class="animate-switch-container" ng-switch on="stage" ng-class="{forward: direction, backward:!direction}">
+                    <!--<div class="animate-switch" ng-switch-default>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>Bienvenido al Asistente de Solicitud</p>
+                                <button type="button" class="btn btn-primary" ng-click="next('stage1')">Iniciar</button>
+                            </div>
+                        </div>
+                    </div>-->
+                    <div class="stage1 animate-switch" ng-switch-default >
+                        <div class="item item-divider" style="background-color: beige;">
+                            Producto
+                        </div>     
+                        <div class="item item-divider">Con que tipo producto desea trabajar ?</div>
+                    
+                        <div ng-repeat="tproduct in tproductos | filter: { ACTIVE: 1 }" >
+                            <div class="cat" >{{tproduct.CATEGORY_PROD_NAME}}</div> 
+<!--                            <div class="row resetROW"> 
+                                <div class="col">
+                                    <div class="list">
+                                        <div layout="row" layout-wrap flex>
+                                            <div flex="50" ng-repeat="prod in prodCategs | filter: { ID_CATEGORY_PROD: tproduct.ID_CATEGORY_PROD }">
+                                                <span ng-value="prod.ID_PRODUCT" class="cat" >{{prod.PRODUCT_NAME}}</span>  
+                                            </div>
+                                        </div>
+                                        
+
+                                    </div>            
+                                </div>                
+                            </div>
+-->
+                            <div class="row resetROW"> 
+                                <div class="col">
+                                    <div class="list">
+                                        <div layout="row" layout-wrap flex>
+                                            <div flex="50" ng-repeat="prod in prodCategs | filter: { ID_CATEGORY_PROD: tproduct.ID_CATEGORY_PROD }">
+                                                <ion-grid class="grid">
+                                                    <ion-row>
+                                                        <ion-col class="col elementCenter">
+                                                            <md-button ng-value="prod.ID_PRODUCT" color="danger" icon-only="" ion-button="" outline="" class="button rootBtn" data-ink-color="#CD3385" data-ink-opacity=".8" ng-click="productSelected(prod.ID_PRODUCT,prod.PRODUCT_NAME,tproduct.ID_CATEGORY_PROD)">
+                                                                <!-- <span class="button-inner icon ion-star"></span> -->
+                                                                <!-- <i class="icon-plus-circle2" style="font-size: 25pt !important; color: #04204a !important;"></i> -->
+                                                                <img ng-show="!isNull(prod.ICON_PATH)" ng-src="img/{{prod.ICON_PATH}}" style="width : 50% ; height : auto;"/>
+                                                                <i ng-show="isNull(prod.ICON_PATH)" class="icon-file-media" style="font-size: 25pt !important; color: #D5D8DC !important;"></i>                                                                
+                                                                <div class="button-effect" ></div>
+                                                            </md-button> 
+                                                            <div style="margin-top: -7pt; color: #04204a; font-size: 10px; font-weight: bold;text-align: center;">{{prod.PRODUCT_NAME}}</div>
+                                                        </ion-col>
+                                                    </ion-row>
+                                                </ion-grid>
+ 
+                                            </div>
+                                        </div>
+                                    </div>            
+                                </div>                
+                            </div>
+                                                        
+                            
+                            <!--
+                            <div class="row resetROW"> 
+                                <div class="col">
+                                    <div class="list">
+                                        <md-radio-group name="ID_PRODUCT" ng-model="formParams.ID_PRODUCT" radio-req>    
+                                        <div layout="row" layout-wrap flex>
+                                            <div flex="50" ng-repeat="prod in prodCategs | filter: { ID_CATEGORY_PROD: tproduct.ID_CATEGORY_PROD }">
+                                            <md-radio-button ng-value="prod.ID_PRODUCT" class="md-primary" >{{prod.PRODUCT_NAME}}</md-radio-button>  
+                                            </div>
+                                        </div>
+                                        </md-radio-group>
+
+                                    </div>            
+                                </div>                
+                            </div>
+-->                            
+<!--
+                            <md-radio-group name="ID_PRODUCT" ng-model="formParams.ID_PRODUCT" radio-req>
+                                <div class="row resetROW">
+                                    <div class="col">
+                                        <div class="list">
+                                            <div layout="row" layout-wrap flex>
+                                                <div flex="50" ng-repeat="prod in prodCategs | filter: { ID_CATEGORY_PROD: tproduct.ID_CATEGORY_PROD}" style="margin-left: 12pt;">             
+                                                    <md-radio-button ng-value="prod.ID_PRODUCT" class="md-primary" >{{prod.PRODUCT_NAME}}</md-radio-button>                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </md-radio-group>                
+                            -->
+                        </div>
+                        
+                        <div class="row resetROW">
+                            <!--<div class="col col-50">            
+                                <div class="button-bar">
+                                    <a class="button button-small button-assertive" ng-click="back('')" >Anterior</a>
+                                </div>  
+                            </div>--> 
+                            <div class="col">            
+                                <div class="button-bar">
+                                    <a class="button button-small button-save-winsm"  ng-click="next('stage2')" ng-disabled="IsDisabled">Siguiente</a>
+                                    
+                                </div>  
+                            </div>         
+                        </div>                    
+                        
+                                   
+                    </div>
+                    <!-------------------------------------------- PASO 2 -------------------------------------------------->
+                    <div class="stage2 animate-switch" ng-switch-when="stage2" >
+                        <div class="item item-divider" style="background-color: beige;">
+                            Operación
+                        </div>     
+                        <div class="item item-divider">Qué operación desea realizar?</div>
+                                            
+                        <div class="form-group">
+                            <div class="resetROW">  
+                                <md-radio-group name="ID_TP_OPERATION" ng-model="formParams.ID_TP_OPERATION" radio-req>
+                                    <div class="row item">
+                                        <div class="col col-50 responsive-md" ng-repeat="op in operaciones" style="margin-left: 12pt;">             
+                                            <md-radio-button ng-value="op.ID_TYPE" class="md-primary" >{{op.INFO}}</md-radio-button>                    
+                                        </div>
+                                    </div>
+                                </md-radio-group>                
+                            </div>
+
+                        </div>
+
+                        <div class="row resetROW">
+                            <div class="col col-50">            
+                                <div class="button-bar">
+                                    <a class="button button-small button-assertive" ng-click="back('stage1')" >Anterior</a>
+                                </div>  
+                            </div> 
+                            <div class="col col-50">            
+                                <div class="button-bar">
+                                    <a class="button button-small button-save-winsm"  ng-click="next('stage3')" ng-disabled="formParams.$invalid">Siguiente</a>
+
+                                </div>  
+                            </div>         
+                        </div>  
+                    </div>
+                    <script type="text/ng-template" id="myModalContent.html">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="modal-title">I'm a modal!</h3>
+                        </div>
+                        <div class="modal-body" id="modal-body">
+                        <div class="form-group">
+                            <!--<div class="col">
+                                <label class="item item-input item-select">
+                                    <span class="input-label">Provincia</span>
+                                    <select name="ID_PROVINCE" ng-model="formDataLocality.ID_PROVINCE" ng-change="getLocalities(modalFormLocalities)" 
+                                        class="ng-valid ng-dirty ng-valid-parse ng-touched" aria-invalid="false" select-req>
+                                        <option ng-repeat="provi in provinces" value="{{provi.ID_PROVINCE}}">{{provi.PROVINCE_NAME}}</option>
+                                    </select>
+                                </label>
+                            </div>-->
+                            <!-- Provincia -->
+                            <div class="row resetROW">
+                                <div class="col" ng-show="formParams.tipoProducto == 1">
+                                     <div class="list">
+                                        <md-input-container style="margin-right: 10px;" class="md-block" flex="100"> 
+                                            <label>Provincia</label>
+                                            <md-select name="ID_PROVINCE" ng-model="formDataLocality.ID_PROVINCE" ng-change="getLocalities(modalFormLocalities)" select-req>
+                                                <md-option ng-repeat="provi in provinces" value="{{provi.ID_PROVINCE}}">{{provi.PROVINCE_NAME}}</md-option>
+                                            </md-select>
+                                        </md-input-container> 
+                                     </div>            
+                                </div>  
+                            </div>
+                            <div class="row resetROW">
+                                <!--<div class="col">
+                                    <label class="item item-input item-select">
+                                        <span class="input-label">Localidades</span>
+                                        <select name="ID_LOCALITY" ng-model="formDataLocality.ID_LOCALITY" class="ng-valid ng-dirty ng-valid-parse ng-touched" aria-invalid="false" select-req>
+                                            <option ng-repeat="local in locals" value="{{local.ID_PLACE}}">{{local.PLACE_NAME}}</option>
+                                        </select>
+                                    </label>
+                                </div>-->
+                                <div class="col" ng-show="formParams.tipoProducto == 1">
+                                     <div class="list">
+                                        <md-input-container style="margin-right: 10px;" class="md-block" flex="100"> 
+                                            <label>Localidades</label>
+                                            <md-select name="ID_LOCALITY" ng-model="formDataLocality.ID_LOCALITY" select-req>
+                                                <md-option ng-repeat="local in locals" value="{{local.ID_PLACE}}">{{local.PLACE_NAME}}</md-option>
+                                            </md-select>
+                                        </md-input-container> 
+                                     </div>            
+                                </div>                              
+                            </div>
+                        </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="button button-small button-save-winsm" type="button" ng-click="ok()">OK</button>
+                            <button class="button button-small button-assertive" type="button" ng-click="cancel()">Cancel</button>
+                        </div>
+                    </script>
+                     <div class="modal-parent"></div>
+                    <!-------------------------------------------- PASO 3 -------------------------------------------------->
+                    <div class="stage3 animate-switch" ng-switch-when="stage3">
+                        <div class="form-group">
+                            <div class="item item-divider" style="background-color: beige;">
+                                Producto seleccionado: {{descripProducto}}
+                            </div>  
+                            <div class="item item-divider" style="background-color: beige;">
+                                Info Producto
+                            </div>                                 
+                            <div class="row resetROW">
+                                <!-- Cosecha -->
+                                <div class="col col-50" ng-show="formParams.tipoProducto == 1">
+                                     <div class="list">
+                                        <md-input-container style="margin-right: 10px;" class="md-block" flex="100"> 
+                                            <label>Cosecha</label>
+                                            <md-select name="ID_CROP" ng-model="formParams.ID_CROP" >
+                                                <md-option ng-repeat="cos in cosecha" value="{{cos.ID_TYPE}}">{{cos.INFO}}</md-option>
+                                            </md-select>
+                                        </md-input-container> 
+                                     </div>            
+                                </div>                
+                            </div>
+   
+                            <div class="row resetROW" ng-show="formParams.tipoProducto == 1 || formParams.tipoProducto == 3">
+                                <!-- Tipo de calidad -->
+                                <div class="col col-50">
+                                     <div class="list">
+                                        <md-input-container style="margin-right: 10px;" class="md-block" flex="100"> 
+                                            <label>Tipo de calidad</label>
+                                            <md-select name="TYPE_QUALITY" ng-model="formParams.TYPE_QUALITY" >
+                                                <md-option ng-repeat="cal in calidad" value="{{cal.ID_TYPE}}">{{cal.INFO}}</md-option>
+                                            </md-select>
+                                        </md-input-container> 
+                                     </div>            
+                                </div>
+                                
+                                <!-- Mas info calidad -->
+                                <div class="col col-50">
+                                     <div class="list">
+                                        <md-input-container class="md-block">
+                                            <label>Info calidad</label>
+                                            <!-- <input type="text" name="QUALITY_INFO" ng-model="formParams.QUALITY_INFO" autocomplete="off" /> -->
+                                            <textarea name="QUALITY_INFO" ng-model="formParams.QUALITY_INFO" autocomplete="off"></textarea>
+                                        </md-input-container>
+                                     </div>         
+                                </div>              
+                            </div>    
+                            <div class="row resetROW" ng-show="formParams.tipoProducto == 1 || formParams.tipoProducto == 3">
+                                <!-- Origen -->
+                                <!--<div class="col col-50">
+                                     <div class="list">
+                                        <md-input-container style="margin-right: 10px;" class="md-block" flex="100"> 
+                                            <label>Origen</label>
+                                            <md-select name="ID_PLACE_ORIGIN" ng-model="formParams.ID_PLACE_ORIGIN" >
+                                                <md-option ng-repeat="l in lugares" value="{{l.ID_PLACE}}">{{l.PLACE_NAME}}</md-option>
+                                            </md-select>
+                                        </md-input-container> 
+                                     </div>            
+                                </div>-->
+                                <div class="col col-50">
+                                    <div class="list">
+                                        <md-input-container class="md-block">
+                                            <label>Origen</label>
+                                            <input type="text" name="t_ORIGIN_NAME" ng-model="formParams.t_ORIGIN_NAME" ng-readonly="all" ng-click="open($event,'sm','.modal-parent')" autocomplete="off" no-vacio />
+                                        </md-input-container>
+                                    </div>            
+                                </div>                                   
+                            </div>                            
+                            <div class="row">            
+                                <div class="col col-50" >
+                                    <div class="list">
+                                        <label class="item item-input item-floating-label">
+                                            <input placeholder="Cantidad Desde" type="text" name="QT_FROM" ng-model="formParams.QT_FROM" only-number>
+                                        </label>
+                                    </div>            
+                                </div>
+                                <div class="col col-50" >
+                                    <div class="list">
+                                        <label class="item item-input item-floating-label">
+                                            <input placeholder="Cantidad Hasta" type="text" name="QT_TO" ng-model="formParams.QT_TO" only-number>
+                                        </label>
+                                    </div>            
+                                </div>             
+                            </div>
+
+                            <div class="row resetROW"> 
+                                <!-- Unidad Medida -->
+                                <div class="col col-50">
+                                     <div class="list">
+                                        <md-input-container style="margin-right: 10px;" class="md-block" flex="100"> 
+                                            <label>Origen UM</label>
+                                            <md-select name="ID_UM" ng-model="formParams.ID_UM" >
+                                                <md-option ng-repeat="u in ums" value="{{u.ID_UM}}">{{u.UM_NAME}}</md-option>
+                                            </md-select>
+                                        </md-input-container> 
+                                     </div>            
+                                </div>                                
+
+                            </div>             
+              
+                        </div>
+
+                        <div class="row resetROW">
+                            <div class="col col-50">            
+                                <div class="button-bar">
+                                    <a class="button button-small button-assertive" ng-click="back('stage2')" >Anterior</a>
+                                </div>  
+                            </div> 
+                            <div class="col col-50">    
+                                <div class="button-bar">
+                                    <a class="button button-small button-save-winsm"  ng-click="next('stage4')" ng-disabled="formParams.$invalid">Siguiente</a>
+
+                                </div>                                   
+                            </div>         
+                        </div>  
+
+                    </div>
+                    
+                    <!-------------------------------------------- PASO 4 -------------------------------------------------->
+                    <div class="stage4 animate-switch" ng-switch-when="stage4" >
+                        <div class="item item-divider" style="background-color: beige;">
+                            Condiciones de negociación
+                        </div>     
+                        <div class="row resetROW">
+                            <!-- Tipo precio -->
+                            <div class="col col-50" ng-show="formParams.tipoProducto == 1 || formParams.tipoProducto == 3">
+                                 <div class="list">
+                                    <md-input-container style="margin-right: 10px;" class="md-block" flex="100"> 
+                                        <label>Tipo precio</label>
+                                        <md-select name="ID_TYPE_PRICE" ng-model="formParams.ID_TYPE_PRICE" disabled="isDisabled" ng-disabled="isDisabled" >
+                                            <md-option ng-repeat="prc in tprecios" value="{{prc.ID_TYPE}}" >{{prc.INFO}}</md-option>
+                                        </md-select>
+                                    </md-input-container> 
+                                 </div>            
+                            </div>
+                            <div class="col col-50" >
+                                <div class="list">
+                                    <md-input-container style="margin-right: 10px;" class="md-block" flex="100">
+                                        <label>Moneda</label>
+                                        <md-select name="ID_TP_CURRENCY" ng-model="formParams.ID_TP_CURRENCY" select-req>
+                                            <md-option ng-repeat="mo in monedas" value="{{mo.ID_CURRENCY}}">{{mo.CURRENCY_NAME}}</md-option>
+                                        </md-select>
+                                    </md-input-container>                        
+
+                                </div>            
+                            </div>                             
+                        </div>
+
+                        <div class="row resetROW">            
+
+                            <div class="col col-50" >
+                                <div class="list">
+                                    <label class="item item-input item-floating-label">
+                                        <input placeholder="Precio Desde" type="text" name="PRICE_FROM" ng-model="formParams.PRICE_FROM" only-number>
+                                    </label>
+                                </div>            
+                            </div>
+                            <div class="col col-50" >
+                                <div class="list">
+                                    <label class="item item-input item-floating-label">
+                                        <input placeholder="Precio Hasta" type="text" name="PRICE_TO" ng-model="formParams.PRICE_TO" only-number>
+                                    </label>
+                                </div>            
+                            </div>            
+                        </div>                        
+
+                        <div class="row resetROW" ng-show="formParams.ID_TYPE_PRICE != 210">
+                            <!--Precio referencia -->
+                            <div class="col col-50" ng-show="formParams.tipoProducto == 1 || formParams.tipoProducto == 3">
+                                 <div class="list">
+                                    <md-input-container style="margin-right: 10px;" class="md-block" flex="100"> 
+                                        <label>Precio referencia</label>
+                                        <md-select name="ID_PRICE_REF" ng-model="formParams.ID_PRICE_REF" ng-change="getPosition(formParams.ID_PRICE_REF)" >
+                                            <md-option ng-repeat="prf in precref" value="{{prf.ID_TYPE_PRICE}}">{{prf.TYPE_PRICE}}</md-option>
+                                        </md-select>
+                                    </md-input-container> 
+                                 </div>            
+                            </div>
+                            <!--Posición -->
+                            <div class="col col-50" ng-show="formParams.tipoProducto == 1 || formParams.tipoProducto == 3">
+                                 <div class="list">
+                                    <md-input-container style="margin-right: 10px;"  class="md-block" flex="100"> 
+                                        <label>Posicion</label>
+                                        <md-select name="ID_POSITION" ng-model="formParams.ID_POSITION" >
+                                            <md-option ng-repeat="pos in posicion" value="{{pos.ID_POSITION}}">{{pos.POSITION}}</md-option>
+                                        </md-select>
+                                    </md-input-container> 
+                                 </div>            
+                            </div>                
+                        </div>   
+                        
+                        <div class="row resetROW" ng-show="formParams.ID_TYPE_PRICE != 210">
+                            <!--Fecha fijación desde -->
+                            <div class="col col-50" ng-show="formParams.tipoProducto == 1">
+                                <div class="list">
+                                    <label class="item item-input item-floating-label">
+                                        <input placeholder="Fecha Fijación Desde" type="text" name="DT_PRICE_FIX_FROM" ng-model="formParams.DT_PRICE_FIX_FROM" date>
+                                    </label>
+                                </div>            
+                            </div>
+                            <!--Fecha fijación hasta -->
+                            <div class="col col-50" ng-show="formParams.tipoProducto == 1">
+                                <div class="list">
+                                    <label class="item item-input item-floating-label">
+                                        <input placeholder="Fecha Fijación Hasta" type="text" name="DT_PRICE_FIX_TO" ng-model="formParams.DT_PRICE_FIX_TO" date>
+                                    </label>
+                                </div>            
+                            </div>                 
+
+                        </div>         
+
+                        <div class="row resetROW" >
+                            <!-- Tipo Pago -->
+                            <div class="col col-50" >
+                                 <div class="list">
+                                    <md-input-container style="margin-right: 10px;" class="md-block" flex="100"> 
+                                        <label>Tipo Pago</label>
+                                        <md-select name="ID_TYPE_PAYMENT" ng-model="formParams.ID_TYPE_PAYMENT" >
+                                            <md-option ng-repeat="tpag in tpago" value="{{tpag.ID_TYPE}}">{{tpag.INFO}}</md-option>
+                                        </md-select>
+                                    </md-input-container> 
+                                 </div>            
+                            </div>                
+                            <!-- Cosecha -->
+                            <div class="col col-50">
+
+                            </div>
+
+                        </div>                         
+                        <div class="row resetROW" >            
+                            <div class="col col-50">
+                                <div class="list">
+                                    <label class="item item-input item-floating-label">
+                                        <input placeholder="Fecha Entrega Desde" type="text" name="DT_FROM" ng-model="formParams.DT_FROM" date >
+                                    </label>
+                                </div>            
+                            </div>
+                            <div class="col col-50">
+                                <div class="list">
+                                    <label class="item item-input item-floating-label">
+                                        <input placeholder="Fecha Entrega Hasta" type="text" name="DT_TO" ng-model="formParams.DT_TO" date >
+                                    </label>
+                                </div>            
+                            </div>             
+                        </div> 
+                        
+                        <div class="resetROW" > 
+                            <div class="item item-divider">Tipo Entrega ?</div>
+                            <!-- Tipo Entrega -->
+                            <md-radio-group name="ID_TYPE_DELIVERY" ng-model="formParams.ID_TYPE_DELIVERY" >
+                                <div class="row item">
+                                    <div class="col col-50 responsive-md" ng-repeat="entrega in tentrega" style="margin-left: 7pt;">               <md-radio-button ng-value="entrega.ID_TYPE" class="md-primary" >{{entrega.INFO}}</md-radio-button>       </div>
+                                </div>
+                            </md-radio-group>                
+                        </div>  
+                        
+                        <div class="row resetROW" > 
+                            <!--<div class="col col-50">
+                                <div class="list">
+                                    <md-input-container style="margin-right: 10px;" class="md-block" flex="100">
+                                        <label>Lugar Entrega</label>
+                                        <md-select name="ID_PLACE_DELIVERY" ng-model="formParams.ID_PLACE_DELIVERY" >
+                                            <md-option ng-repeat="l in lugares" value="{{l.ID_PLACE}}">{{l.PLACE_NAME}}</md-option>
+                                        </md-select>
+                                    </md-input-container>                          
+
+                                </div>            
+                            </div> -->
+                            <div class="col col-50">
+                                <div class="list">
+                                    <md-input-container class="md-block">
+                                        <label>Lugar Entrega</label>
+                                        <input type="text" name="t_DELIVERY_NAME" ng-model="formParams.t_DELIVERY_NAME" ng-readonly="all" ng-click="findDelivery($event)" autocomplete="off" no-vacio />
+                                    </md-input-container>
+                                </div>            
+                            </div>                             
+                            <div class="col col-50" ng-show="formParams.tipoProducto == 3">
+                                <div class="list">
+                                    <md-input-container style="margin-right: 10px;" class="md-block" flex="100">
+                                        <label>Forma Entrega</label>
+                                        <md-select name="DELIVERY_METHOD" ng-model="formParams.DELIVERY_METHOD" >
+                                            <md-option ng-repeat="d in deliveries" value="{{d.ID_TYPE}}" >{{d.INFO}}</md-option>
+                                        </md-select>
+                                    </md-input-container>                          
+
+                                </div>                
+                            </div>              
+                        </div>      
+                        
+                        <div class="row resetROW" ng-show="formParams.DELIVERY_METHOD == 331 || formParams.DELIVERY_METHOD == 332 "> 
+                            <div class="col col-100" >
+                                <div class="list">
+                                   <!-- <label class="item item-input item-floating-label">
+                                        <input placeholder="Cantidad Entrega" type="text" name="DELIVERY_AMOUNT" ng-model="formParams.DELIVERY_AMOUNT" number>
+                                    </label> -->
+                                    <md-input-container class="md-block">
+                                        <label>Cantidad a entregar/recibir</label>
+                                        <input type="text" name="DELIVERY_AMOUNT" ng-model="formParams.DELIVERY_AMOUNT" number autocomplete="off" ng-required='formParams.DELIVERY_METHOD == 331 || formParams.DELIVERY_METHOD == 332 ' />
+                                    </md-input-container>                                 
+                                </div>   
+                              
+                            </div>                         
+                        
+                        </div>
+                        
+                        <div class="row resetROW" style="margin-top: 10px !important;">
+                            <div class="col col-50">            
+                                <div class="button-bar">
+                                    <a class="button button-small button-assertive" ng-click="back('stage3')" >Anterior</a>
+                                </div>  
+                            </div> 
+                            <div class="col col-50">            
+                                <div class="button-bar">
+                                    <a class="button button-small button-save-winsm"  ng-click="submitForm(formWizard.multiStepForm.$valid)" ng-disabled="formWizard.multiStepForm.$invalid">Guardar</a>
+
+                                </div> 
+                            </div>         
+                        </div>  
+                    </div>
+                    
+                </div>
+                <input type="hidden" ng-model="formParams.ID_USER_OWNER" name="ID_USER_OWNER" ng-value="" />
+                <input type="hidden" ng-model="formParams.tipoProducto" name="tipoProducto" ng-value="0" />
+                <input type="hidden" ng-model="formParams.ID_MARKET" name="ID_MARKET" ng-value="1" value="1" />
+                <input type="hidden" ng-model="formParams.ID_PLACE_ORIGIN" name="ID_PLACE_ORIGIN" ng-value="" />
+                <input type="hidden" ng-model="formParams.ID_PLACE_DELIVERY" name="ID_PLACE_DELIVERY" ng-value="" />
+                
+                
+            </form>
+            <!-- </ion-scroll> -->
+             
+        </section>
+        <ion-infinite-scroll ng-if="moreDataCanBeLoaded()" icon="ion-loading-c" on-infinite="loadMore()" distance="50%"></ion-infinite-scroll>  
+    </ion-content>
+</ion-view>

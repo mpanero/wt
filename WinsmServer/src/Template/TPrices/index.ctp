@@ -25,6 +25,7 @@
                 <th scope="col"><?= $this->Paginator->sort('VAR') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('ID_POSITION') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('UPDATED') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('LAST') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -41,6 +42,7 @@
                 <td><?= $this->Number->format($tPrice->VAR) ?></td>
                 <td><?= $this->Number->format($tPrice->ID_POSITION) ?></td>
                 <td><?= h($tPrice->UPDATED) ?></td>
+                <td><?= $this->Number->format($tPrice->LAST) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $tPrice->ID]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $tPrice->ID]) ?>

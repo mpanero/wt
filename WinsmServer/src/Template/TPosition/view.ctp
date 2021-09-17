@@ -24,5 +24,17 @@
             <th scope="row"><?= __('ID POSITION') ?></th>
             <td><?= $this->Number->format($tPosition->ID_POSITION) ?></td>
         </tr>
+        <tr>
+            <th scope="row"><?= __('ID TYPE PRICE INFO') ?></th>
+            <td><?= $this->Number->format($tPosition->ID_TYPE_PRICE_INFO) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('ACTIVE') ?></th>
+            <td><?= $this->Number->format($tPosition->ACTIVE) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('DATE POSITION') ?></th>
+            <td><?= h($tPosition->DATE_POSITION) ?></td>
+        </tr>
     </table>
 </div>

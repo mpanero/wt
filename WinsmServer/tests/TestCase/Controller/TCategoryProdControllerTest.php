@@ -2,13 +2,17 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\TCategoryProdController;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\TCategoryProdController Test Case
+ *
+ * @uses \App\Controller\TCategoryProdController
  */
-class TCategoryProdControllerTest extends IntegrationTestCase
+class TCategoryProdControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
 
     /**
      * Fixtures
@@ -16,7 +20,7 @@ class TCategoryProdControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_category_prod'
+        'app.TCategoryProd'
     ];
 
     /**

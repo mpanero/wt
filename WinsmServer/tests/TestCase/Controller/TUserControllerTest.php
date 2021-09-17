@@ -2,13 +2,17 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\TUserController;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\TUserController Test Case
+ *
+ * @uses \App\Controller\TUserController
  */
-class TUserControllerTest extends IntegrationTestCase
+class TUserControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
 
     /**
      * Fixtures
@@ -16,7 +20,7 @@ class TUserControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_user'
+        'app.TUser'
     ];
 
     /**

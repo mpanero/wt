@@ -10,7 +10,6 @@ use Cake\TestSuite\TestCase;
  */
 class TNotificationsTableTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -24,7 +23,7 @@ class TNotificationsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.t_notifications'
+        'app.TNotifications'
     ];
 
     /**
@@ -35,8 +34,8 @@ class TNotificationsTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('TNotifications') ? [] : ['className' => TNotificationsTable::class];
-        $this->TNotifications = TableRegistry::get('TNotifications', $config);
+        $config = TableRegistry::getTableLocator()->exists('TNotifications') ? [] : ['className' => TNotificationsTable::class];
+        $this->TNotifications = TableRegistry::getTableLocator()->get('TNotifications', $config);
     }
 
     /**

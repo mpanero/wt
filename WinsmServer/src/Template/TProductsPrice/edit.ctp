@@ -24,6 +24,7 @@
             echo $this->Form->control('PRODUCT_NAME');
             echo $this->Form->control('ACTIVE');
             echo $this->Form->control('ID_COUNTRY');
+            echo $this->Form->control('ORDER_INFO');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

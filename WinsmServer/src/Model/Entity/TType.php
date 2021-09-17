@@ -9,14 +9,13 @@ use Cake\ORM\Entity;
  * @property int $ID_TYPE
  * @property string $TYPE
  * @property string $INFO
- * @property string $INFO1
+ * @property string|null $INFO1
+ * @property int $ACTIVE
  * @property string $DATA_1
  * @property int $ORDER_INFO
- * @property int $ACTIVE
  */
 class TType extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -29,9 +28,9 @@ class TType extends Entity
     protected $_accessible = [
         'TYPE' => true,
         'INFO' => true,
-        'INFO1' =>true,        
-        'DATA_1'=> true,
-        'ORDER_INFO' => true,
-        'ACTIVE' => true
+        'INFO1' => true,
+        'ACTIVE' => true,
+        'DATA_1' => true,
+        'ORDER_INFO' => true
     ];
 }

@@ -22,8 +22,10 @@
         <legend><?= __('Edit T Product') ?></legend>
         <?php
             echo $this->Form->control('PRODUCT_NAME');
+            echo $this->Form->control('ACRONYM');
             echo $this->Form->control('ID_MARKET');
             echo $this->Form->control('ID_CATEGORY_PROD');
+            echo $this->Form->control('ICON_PATH');
             echo $this->Form->control('ACTIVE');
         ?>
     </fieldset>

@@ -12,14 +12,14 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\TPlace get($primaryKey, $options = [])
  * @method \App\Model\Entity\TPlace newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\TPlace[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TPlace|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TPlace|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TPlace saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\TPlace patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\TPlace[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\TPlace findOrCreate($search, callable $callback = null, $options = [])
  */
 class TPlaceTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -44,19 +44,25 @@ class TPlaceTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->allowEmpty('ID_PLACE', 'create');
+            ->allowEmptyString('ID_PLACE', null, 'create');
 
         $validator
+            ->scalar('PLACE_NAME')
             ->maxLength('PLACE_NAME', 100)
-            ->allowEmpty('PLACE_NAME');
+            ->allowEmptyString('PLACE_NAME');
+
+        $validator
+            ->integer('ID_PROVINCE')
+            ->requirePresence('ID_PROVINCE', 'create')
+            ->notEmptyString('ID_PROVINCE');
 
         $validator
             ->requirePresence('ID_COUNTRY', 'create')
-            ->notEmpty('ID_COUNTRY');
+            ->notEmptyString('ID_COUNTRY');
 
         $validator
             ->integer('ACTIVE')
-            ->allowEmpty('ACTIVE');
+            ->allowEmptyString('ACTIVE');
 
         return $validator;
     }

@@ -19,6 +19,7 @@
                 <th scope="col"><?= $this->Paginator->sort('PRODUCT_NAME') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('ACTIVE') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('ID_COUNTRY') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('ORDER_INFO') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -29,6 +30,7 @@
                 <td><?= h($tProductsPrice->PRODUCT_NAME) ?></td>
                 <td><?= $this->Number->format($tProductsPrice->ACTIVE) ?></td>
                 <td><?= $this->Number->format($tProductsPrice->ID_COUNTRY) ?></td>
+                <td><?= $this->Number->format($tProductsPrice->ORDER_INFO) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $tProductsPrice->ID_PRODUCT_PRICE]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $tProductsPrice->ID_PRODUCT_PRICE]) ?>

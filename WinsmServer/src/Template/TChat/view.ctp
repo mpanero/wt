@@ -17,6 +17,10 @@
     <h3><?= h($tChat->ID_CHAT) ?></h3>
     <table class="vertical-table">
         <tr>
+            <th scope="row"><?= __('COD REF') ?></th>
+            <td><?= h($tChat->COD_REF) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('SMS') ?></th>
             <td><?= h($tChat->SMS) ?></td>
         </tr>
@@ -29,16 +33,20 @@
             <td><?= $this->Number->format($tChat->ID_TRADE) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('ID USER OWNER') ?></th>
-            <td><?= $this->Number->format($tChat->ID_USER_OWNER) ?></td>
+            <th scope="row"><?= __('ID USER ORIGEN') ?></th>
+            <td><?= $this->Number->format($tChat->ID_USER_ORIGEN) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('ID USER CPART') ?></th>
-            <td><?= $this->Number->format($tChat->ID_USER_CPART) ?></td>
+            <th scope="row"><?= __('ID USER DESTINY') ?></th>
+            <td><?= $this->Number->format($tChat->ID_USER_DESTINY) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('READ CHAT') ?></th>
             <td><?= $this->Number->format($tChat->READ_CHAT) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('VERIFIED') ?></th>
+            <td><?= $this->Number->format($tChat->VERIFIED) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('DT CREATED') ?></th>

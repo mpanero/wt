@@ -12,14 +12,14 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\TTransacType get($primaryKey, $options = [])
  * @method \App\Model\Entity\TTransacType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\TTransacType[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\TTransacType|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TTransacType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\TTransacType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\TTransacType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\TTransacType[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\TTransacType findOrCreate($search, callable $callback = null, $options = [])
  */
 class TTransacTypeTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -44,17 +44,18 @@ class TTransacTypeTable extends Table
         $validator
             ->integer('ID_TRANSAC_TYPE')
             ->requirePresence('ID_TRANSAC_TYPE', 'create')
-            ->notEmpty('ID_TRANSAC_TYPE');
+            ->notEmptyString('ID_TRANSAC_TYPE');
 
         $validator
+            ->scalar('TRANSAC_TYPE_NAME')
             ->maxLength('TRANSAC_TYPE_NAME', 30)
             ->requirePresence('TRANSAC_TYPE_NAME', 'create')
-            ->notEmpty('TRANSAC_TYPE_NAME');
+            ->notEmptyString('TRANSAC_TYPE_NAME');
 
         $validator
             ->integer('SIGN')
             ->requirePresence('SIGN', 'create')
-            ->notEmpty('SIGN');
+            ->notEmptyString('SIGN');
 
         return $validator;
     }

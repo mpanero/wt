@@ -1,5 +1,5 @@
 /* global angular, document, window */
-angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.router.history','ionic-datepicker','angular-notification-icons'])
+angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.router.history','ionic-datepicker','angular-notification-icons','ngAnimate'])
 .config(function($mdThemingProvider) {
   $mdThemingProvider.theme('default')
     .primaryPalette('indigo')
@@ -72,6 +72,15 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         $scope.hasHeader();
     };
 
+    $scope.showHasHeaderHeader = function() {
+        $scope.hasHeader();
+    };
+    
+    $scope.showinDetails = function() {
+        $scope.hideNavBar();
+        $scope.hideHeader();
+    };
+    
     $scope.clearFabs = function() {
         var fabs = document.getElementsByClassName('button-fab');
         if (fabs.length && fabs.length > 1) {
@@ -86,7 +95,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
     $scope.$parent.clearFabs();
     
     $timeout(function() {
-        $scope.$parent.hideHeader();
+        $scope.$parent.showNavBar();
     }, 0);
     
     ionicMaterialInk.displayEffect();
@@ -195,7 +204,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
 .controller('NewPassCtrl', function($scope, $timeout, $rootScope, $state, $stateParams, $location, $ionicHistory, $history, $ionicPopup,  $ionicLoading, $mdDialog, ionicMaterialMotion, ionicMaterialInk, linksWs) {
     
     $timeout(function() {
-        $scope.$parent.hideHeader();
+        $scope.$parent.showNavBar();
     }, 0); 
     
     $scope.cancelar = function() {
@@ -220,14 +229,14 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
                 if(!isBlank(responsePost.data)){
                     if(angular.isString(responsePost.data.tUser)){
                         //console.log("143: "+responsePost.data.tRequest);
-                        var alertPopup = $ionicPopup.alert({
+                        var alertPopupPassSucces = $ionicPopup.alert({
                             title: "Mensaje <i class='icon ion-close-circled error'></i>",
                             content: "Error: "+responsePost.data.tUser,
                             type : 'button-dark',
                         }).then(function(res) {
                         });                         
                     }else{
-                        var alertPopup = $ionicPopup.alert({
+                        var alertPopupPassError = $ionicPopup.alert({
                             title: "Mensaje <i class='icon ion-checkmark-circled success'></i>",
                             content: "Contrase&ntilde;a actualizada con &eacute;xito, Revice correo para activar su usuario nuevamente",
                             type : 'button-dark',
@@ -267,13 +276,20 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
 })
 
 .controller('UserAddCtrl', function($scope, $timeout, $rootScope, $state, $stateParams, $location, $ionicHistory, $history, $ionicPopup,  $ionicLoading, ionicMaterialMotion, ionicMaterialInk, linksWs) {   
-    
+    // grab pointer to original function
+    var oldSoftBack = $rootScope.$ionicGoBack;
+
+    // override default behaviour
+    $rootScope.$ionicGoBack = function() {
+        // do something interesting here
+        $state.go('app.login');
+    };    
     $ionicLoading.show({});
     //$scope.actividades = ["PRODUCTOR AGROPECUARIO", "PRODUCTOR GANADERO", "ACTIVIDAD INDUSTRIAL", "CORREDOR", "COMERCIAL",  "OTRO"];
     var counterBlock = 0;
     
     $timeout(function() {
-        $scope.$parent.hideHeader();
+        $scope.$parent.showNavBar();
     }, 0); 
     
     $scope.cancelar = function() {
@@ -298,7 +314,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         }
     } 
     
-     
+    
     if(!isBlank(linksWs.lu)){
         $scope.lugares = linksWs.lu;
         validateLoadComplete();      
@@ -385,6 +401,91 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         return list.indexOf(item) > -1;
     };
     
+    var modalLocaly = null;
+    $scope.findLocality = function(e) {
+        e.preventDefault();
+        $scope.formDataLocality = $scope.formUser;
+        if(!isBlank(linksWs.provinces)){
+            modalLocaly = $ionicPopup.show({
+                title : '<i class="icon-briefcase" style="font-size: 20px !important;"></i> Localidades',
+                cssClass: 'storagePopup',
+                scope: $scope,
+                templateUrl: "templates/modalLocalidades.html"
+            });                                  
+            $scope.provinces = linksWs.provinces;
+        }else{
+            onWsAction(linksWs.link_root+"/TProvince.json",{},function(responsePost){
+                //alert("calback response: "+JSON.stringify(responsePost.data));
+                if(!isBlank(responsePost.data)){
+                    if(angular.isString(responsePost.data.tProvince)){
+                        //console.log(responsePost.data.tTypeActivity);
+                        //validateLoadComplete();
+                    }else{  
+                        modalLocaly = $ionicPopup.show({
+                            title : '<i class="icon-briefcase" style="font-size: 20px !important;"></i> Localidades',
+                            cssClass: 'storagePopup',
+                            scope: $scope,
+                            templateUrl: "templates/modalLocalidades.html"
+                        });                        
+                        linksWs.provinces = responsePost.data.tProvince;
+                        $scope.provinces = linksWs.provinces;
+                        //console.log("208"+responsePost.data.tTypeActivity);
+                        //validateLoadComplete();
+                    }
+                }else{
+                    //console.log(JSON.stringify(responsePost));    
+                    //validateLoadComplete();
+                }
+            });
+        }  
+            
+    };
+    
+    $scope.getLocalities = function(form){
+        //alert($scope.formDataLocality.ID_PROVINCE);
+        form.$setPristine();
+        form.$setUntouched();
+        //console.log($scope.formDataLocality);
+        $scope.formDataLocality = {ID_PROVINCE:$scope.formDataLocality.ID_PROVINCE};
+        onWsAction(linksWs.link_root+"/TLocality/find.json",{provi:$scope.formDataLocality.ID_PROVINCE},function(responsePost){
+            //alert("calback response: "+JSON.stringify(responsePost.data));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tLocality)){
+                    //console.log(responsePost.data.tTypeActivity);
+                    //validateLoadComplete();
+                }else{  
+                    linksWs.localities = responsePost.data.tLocality;
+                    $scope.locals = linksWs.localities;
+                    //console.log("208"+responsePost.data.tTypeActivity);
+                    //validateLoadComplete();
+                }
+            }else{
+                //console.log(JSON.stringify(responsePost));    
+                //validateLoadComplete();
+            }
+        });         
+    };
+    
+    $scope.addLocality = function(){
+        var fruitName = $.grep(linksWs.localities, function (locali) {
+            return locali.ID_PLACE == $scope.formDataLocality.ID_LOCALITY;
+        })[0].PLACE_NAME;
+        $scope.formUser.ID_PLACE = $scope.formDataLocality.ID_LOCALITY;
+        $scope.formUser.ID_PLACE_NAME = fruitName;
+        console.log($scope.formUser);
+        modalLocaly.close();   
+        angular.element($scroll).css({"height":(window.innerHeight) - 45 +"px"}); 
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    };
+    
+    $scope.closeModalLocalities = function(e) {
+        e.preventDefault();
+        modalLocaly.close();     
+        modalLocaly = null;
+        angular.element($scroll).css({"height":(window.innerHeight) - 45 +"px"}); 
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    };    
+    
     $scope.submitForm = function(valid) {  
         if (valid) {
             $ionicLoading.show({});
@@ -392,7 +493,8 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
             var dataPostUser = [];
             
             angular.forEach(this.formUser, function(data, nombre) { 
-                dataPostUser[nombre] = data;
+                if(nombre.indexOf("_NAME") == -1)
+                    dataPostUser[nombre] = data;
             });
             
             //console.log(dataPostUser);
@@ -402,14 +504,14 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
                 if(!isBlank(responsePost.data)){
                     if(angular.isString(responsePost.data.tUser)){
                         //console.log("143: "+responsePost.data.tRequest);
-                        var alertPopup = $ionicPopup.alert({
+                        var alertPopupUserError = $ionicPopup.alert({
                             title: "Mensaje <i class='icon ion-close-circled error'></i>",
                             content: "Error: "+responsePost.data.tUser,
                             type : 'button-dark',
                         }).then(function(res) {
                         });                         
                     }else{
-                        var alertPopup = $ionicPopup.alert({
+                        var alertPopupUserSuccess = $ionicPopup.alert({
                             title: "Mensaje <i class='icon ion-checkmark-circled success'></i>",
                             content: "Usuario Registrado con &eacute;xito",
                             type : 'button-dark',
@@ -444,17 +546,26 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         $scope.formUser[elem] = val;
     }    
     
+    //var $scroll = document.getElementsByClassName('myScroll');
+    //angular.element($scroll).css({"height":(window.innerHeight) - 45 +"px"});      
+    $scope.loadMore = function() {
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    }, 1000;
+    $scope.moreDataCanBeLoaded = function() {
+        return true;
+    }    
 })
 .controller('HomeCtrl', function($scope, $timeout, $rootScope, $state, $stateParams, $location, $ionicHistory, $history, $ionicPopup,  $ionicLoading, ionicMaterialInk, linksWs) {
     $scope.$parent.clearFabs();
     $timeout(function() {
         $scope.$parent.hideHeader();
+        //$scope.$parent.showHasHeaderHeader();
     }, 0);
     
     ionicMaterialInk.displayEffect();
 
     $scope.newSolicitud = function() {
-        $state.go('app.solicitud');
+        $state.go('app.wizard');
     };
     
     $scope.listSolicitud = function() {
@@ -627,7 +738,8 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
     if(!isVacio(linksWs.pr)){
         $scope.precref = linksWs.pr;
         validateLoadComplete();      
-    }else{    
+    }else{
+        /*old TYPE_PRICE_REF new TYPE_PRICE_INFO */
         onWsAction(linksWs.link_root+"/TTypes/find.json",{type:'TYPE_PRICE_REF'},function(responsePost){
             //alert("calback response: "+JSON.stringify(responsePost.data.tTypes));
             if(!isVacio(responsePost.data)){
@@ -839,12 +951,19 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
                 
     });  
     
+    $scope.loadMore = function() {
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    }, 1000;
+    $scope.moreDataCanBeLoaded = function() {
+        return true;
+    }     
+    
 })
 .controller('SolicitudCtrl', function($scope, $rootScope, $state, $stateParams, $timeout, $filter, $ionicPopup, $ionicLoading, ionicMaterialInk, ionicMaterialMotion, $history,linksWs,ionicDatePicker) {
     $ionicLoading.show({});
     $scope.$parent.clearFabs();
     $timeout(function() {
-        $scope.$parent.hideHeader();
+        $scope.$parent.showNavBar();
     }, 0);    
     $scope.formData = {};
     
@@ -1231,14 +1350,14 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
                 if(!isBlank(responsePost.data)){
                     if(angular.isString(responsePost.data.tRequest)){
                         //console.log("143: "+responsePost.data.tRequest);
-                        var alertPopup = $ionicPopup.alert({
+                        var alertPopupRequestError = $ionicPopup.alert({
                             title: "Mensaje <i class='icon ion-close-circled error'></i>",
                             content: "Error: "+responsePost.data.tRequest,
                             type : 'button-dark',
                         }).then(function(res) {
                         });                         
                     }else{
-                        var alertPopup = $ionicPopup.alert({
+                        var alertPopupRequestSuccess = $ionicPopup.alert({
                             title: "Mensaje <i class='icon ion-checkmark-circled success'></i>",
                             content: "La solicitud se grab&oacute; con &eacute;xito",
                             type : 'button-dark',
@@ -1278,15 +1397,29 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         //alert("entro: "+elem+":"+val);
         $scope.formData[elem] = val;
     }    
-    var $scroll = document.getElementsByClassName('myScroll');
-    angular.element($scroll).css({"height":(window.innerHeight) - 30 +"px"});      
+    //var $scroll = document.getElementsByClassName('myScroll');
+    //angular.element($scroll).css({"height":(window.innerHeight) - 30 +"px"});   
+    $scope.loadMore = function() {
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    }, 1000;
+    $scope.moreDataCanBeLoaded = function() {
+        return true;
+    } 
 })
-.controller('ListaCtrl', function($scope, $http, $state, $stateParams, $timeout, $history, $ionicLoading, $ionicPopup, ionicMaterialInk, ionicMaterialMotion, linksWs) {
+.controller('ListaCtrl', function($rootScope, $scope, $http, $state, $stateParams, $timeout, $history, $ionicLoading, $ionicPopup, ionicMaterialInk, ionicMaterialMotion, linksWs) {
+    // grab pointer to original function
+    var oldSoftBack = $rootScope.$ionicGoBack;
+
+    // override default behaviour
+    $rootScope.$ionicGoBack = function() {
+        // do something interesting here
+        $state.go('app.home');
+    };    
     // Set Header
     $ionicLoading.show({});
     
     $timeout(function() {
-        $scope.$parent.hideHeader();
+        $scope.$parent.showNavBar();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);        
         
@@ -1331,21 +1464,25 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
  
             setTimeout(function() {
                 $section.removeChild($itemFloat);
+                
             }, 600); 
             //$scope.$parent.showHeader();
             //$divBack.style.display = 'block';
+            $scope.$parent.showHeader();
             angular.element($divBack).css({"display": "block"});
             angular.element($divTitl).css({"display": "block"});
-            angular.element($section).attr("style","margin-top: 5% !important");
+            $scope.loadMore();
+            //angular.element($section).attr("style","margin-top: 5% !important");
         });
     }
      
     $scope.showProfile = function(e, i) {
-        e.preventDefault();
+        //e.preventDefault();
+        
         //$divBack.style.display = 'none';
         angular.element($divBack).css({"display": "none"});
         angular.element($divTitl).css({"display": "none"});
-        $scope.$parent.hideHeader();
+        $scope.$parent.showNavBar();
         angular.element($section).attr("style","margin-top: 0% !important");
         var $selectedItem = e.target.closest('a'),
             $floatingItem = document.createElement('div');
@@ -1384,7 +1521,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         setTimeout(function () {
             _animateInfo(true);
         }, 600);
- 
+        $scope.$parent.showinDetails();
     }
      
     function _animateInfo(show) {
@@ -1597,12 +1734,29 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         //$history.back();
         $state.go('app.home');
     }    
+    $scope.loadMore = function() {
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    }, 1000;
+    $scope.moreDataCanBeLoaded = function() {
+        return true;
+    } 
+    
 })
 .controller('SolicitudEditCtrl', function($scope, $rootScope, $state, $stateParams, $timeout, $filter, $ionicPopup, $ionicLoading, ionicMaterialInk, ionicMaterialMotion, $history,linksWs,ionicDatePicker) {
+    
+    // grab pointer to original function
+    var oldSoftBack = $rootScope.$ionicGoBack;
+
+    // override default behaviour
+    $rootScope.$ionicGoBack = function() {
+        // do something interesting here
+        $history.back();
+    };
+    
     $ionicLoading.show({});
     $scope.$parent.clearFabs();
     $timeout(function() {
-        $scope.$parent.hideHeader();
+        $scope.$parent.showNavBar();
     }, 0);      
 
     var counterBlock = 0;
@@ -1622,7 +1776,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
                     if(angular.isString(responsePost.data.tProduct)){
                         $ionicLoading.hide();
                         //$scope.productos = [];
-                        console.log("159: "+responsePost.data.tProduct);
+                        console.log("isString: "+responsePost.data.tProduct);
                     }else{  
                         linksWs.pr = responsePost.data.tProduct;
                         $scope.productos = responsePost.data.tProduct;
@@ -1632,7 +1786,39 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
                     $ionicLoading.hide();
                     console.log("calback token no set 167: "+JSON.stringify(responsePost));    
                 }
-            });            
+            });    
+            
+            onWsAction(linksWs.link_root+"/TLocality/load.json",{loc:linksWs.requests[linksWs.request].ID_PLACE_ORIGIN},function(responsePost){
+                //console.log("calback response: "+JSON.stringify(responsePost.data.tLocality[0].PLACE_NAME));
+                if(!isBlank(responsePost.data)){
+                    if(angular.isString(responsePost.data.tLocality)){
+                        //console.log(responsePost.data.tTypeActivity);
+                        //validateLoadComplete();
+                    }else{  
+                        $scope.formData.t_ORIGIN_NAME = responsePost.data.tLocality[0].PLACE_NAME;
+                        //validateLoadComplete();
+                    }
+                }else{
+                    //console.log(JSON.stringify(responsePost));    
+                    //validateLoadComplete();
+                }
+            }); 
+            
+            onWsAction(linksWs.link_root+"/TLocality/load.json",{loc:linksWs.requests[linksWs.request].ID_PLACE_DELIVERY},function(responsePost){
+                //console.log("calback response: "+JSON.stringify(responsePost.data.tLocality[0].PLACE_NAME));
+                if(!isBlank(responsePost.data)){
+                    if(angular.isString(responsePost.data.tLocality)){
+                        //console.log(responsePost.data.tTypeActivity);
+                        //validateLoadComplete();
+                    }else{  
+                        $scope.formData.t_DELIVERY_NAME = responsePost.data.tLocality[0].PLACE_NAME;
+                        //validateLoadComplete();
+                    }
+                }else{
+                    //console.log(JSON.stringify(responsePost));    
+                    //validateLoadComplete();
+                }
+            });             
          
             counterBlock = 0;
             // Set Motion
@@ -1641,8 +1827,9 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
                     selector: '.animate-fade-slide-in .item'
                 });
                 $scope.formData = linksWs.requests[linksWs.request];
-                $scope.formData.DT_FROM = $scope.formData.DT_FROM.split(' ')[0];
-                $scope.formData.DT_TO = $scope.formData.DT_TO.split(' ')[0];
+                
+                $scope.formData.DT_FROM = ($scope.formData.DT_FROM.indexOf("T") != -1) ? $scope.formData.DT_FROM.split('T')[0] : $scope.formData.DT_FROM.split(' ')[0];
+                $scope.formData.DT_TO = ($scope.formData.DT_TO.indexOf("T") != -1) ? $scope.formData.DT_TO.split('T')[0] : $scope.formData.DT_TO.split(' ')[0];
             }, 200);
             
             // Activate ink for controller
@@ -1661,7 +1848,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
             //alert("calback response: "+JSON.stringify(responsePost.data.tTypes));
             if(!isBlank(responsePost.data)){
                 if(angular.isString(responsePost.data.tTypes)){
-                    console.log("471: "+responsePost.data.tTypes);
+                    console.log("isString: "+responsePost.data.tTypes);
                 }else{  
                     linksWs.ql = responsePost.data.tTypes;
                     validateLoadComplete();
@@ -1681,7 +1868,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
             //alert("calback response: "+JSON.stringify(responsePost.data.tTypes));
             if(!isBlank(responsePost.data)){
                 if(angular.isString(responsePost.data.tTypes)){
-                    console.log("471: "+responsePost.data.tTypes);
+                    console.log("isString: "+responsePost.data.tTypes);
                 }else{  
                     linksWs.en = responsePost.data.tTypes;
                     validateLoadComplete();
@@ -1701,7 +1888,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
             //alert("calback response: "+JSON.stringify(responsePost.data.tTypes));
             if(!isBlank(responsePost.data)){
                 if(angular.isString(responsePost.data.tTypes)){
-                    console.log("471: "+responsePost.data.tTypes);
+                    console.log("isString: "+responsePost.data.tTypes);
                 }else{  
                     linksWs.pa = responsePost.data.tTypes;
                     $scope.tpago = linksWs.pa;
@@ -1722,7 +1909,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
             //alert("calback response: "+JSON.stringify(responsePost.data.tTypes));
             if(!isBlank(responsePost.data)){
                 if(angular.isString(responsePost.data.tTypes)){
-                    console.log("471: "+responsePost.data.tTypes);
+                    console.log("isString: "+responsePost.data.tTypes);
                 }else{  
                     linksWs.co = responsePost.data.tTypes;
                     $scope.cosecha = linksWs.co;
@@ -1743,7 +1930,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
             //alert("calback response: "+JSON.stringify(responsePost.data.tTypes));
             if(!isBlank(responsePost.data)){
                 if(angular.isString(responsePost.data.tPosition)){
-                    console.log("471: "+responsePost.data.tPosition);
+                    console.log("isString: "+responsePost.data.tPosition);
                 }else{  
                     linksWs.po = responsePost.data.tPosition;
                     $scope.posicion = linksWs.po;
@@ -1764,7 +1951,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
             //alert("calback response: "+JSON.stringify(responsePost.data.tTypes));
             if(!isBlank(responsePost.data)){
                 if(angular.isString(responsePost.data.tTypes)){
-                    console.log("471: "+responsePost.data.tTypes);
+                    console.log("isString: "+responsePost.data.tTypes);
                 }else{  
                     linksWs.pr = responsePost.data.tTypes;
                     $scope.precref = linksWs.pr;
@@ -1785,7 +1972,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
             //alert("calback response: "+JSON.stringify(responsePost.data.tTypes));
             if(!isBlank(responsePost.data)){
                 if(angular.isString(responsePost.data.tTypes)){
-                    console.log("491: "+responsePost.data.tTypes);
+                    console.log("isString: "+responsePost.data.tTypes);
                 }else{  
                     linksWs.pc = responsePost.data.tTypes;
                     $scope.tprecios = linksWs.pc;
@@ -1808,7 +1995,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
             //alert("calback response: "+JSON.stringify(responsePost.data));
             if(!isBlank(responsePost.data)){
                 if(angular.isString(responsePost.data.tMarket)){
-                    console.log("127: "+responsePost.data.tMarket);
+                    console.log("isString: "+responsePost.data.tMarket);
                 }else{  
                     linksWs.me = responsePost.data.tMarket;
                     $scope.mercados = responsePost.data.tMarket;
@@ -1829,7 +2016,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
             //alert("calback response: "+JSON.stringify(responsePost.data));
             if(!isBlank(responsePost.data)){
                 if(angular.isString(responsePost.data.tCategoryProd)){
-                    console.log("143: "+responsePost.data.tCategoryProd);
+                    console.log("isString: "+responsePost.data.tCategoryProd);
                 }else{  
                     linksWs.tp = responsePost.data.tCategoryProd;
                     $scope.tproductos = responsePost.data.tCategoryProd;
@@ -1856,7 +2043,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
                     if(angular.isString(responsePost.data.tProduct)){
                         $ionicLoading.hide();
                         $scope.productos = [];
-                        console.log("159: "+responsePost.data.tProduct);
+                        console.log("isString: "+responsePost.data.tProduct);
                     }else{  
                         linksWs.pr = responsePost.data.tProduct;
                         $scope.productos = responsePost.data.tProduct;
@@ -1879,7 +2066,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
             //alert("calback response: "+JSON.stringify(responsePost.data));
             if(!isBlank(responsePost.data)){
                 if(angular.isString(responsePost.data.tCurrency)){
-                    console.log("159: "+responsePost.data.tCurrency);
+                    console.log("isString: "+responsePost.data.tCurrency);
                 }else{  
                     linksWs.mo = responsePost.data.tCurrency;
                     $scope.monedas = responsePost.data.tCurrency;
@@ -1887,7 +2074,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
                 }
             }else{
                 validateLoadComplete();
-                console.log("calback token no set 167: "+JSON.stringify(responsePost));    
+                console.log("calback token no set: "+JSON.stringify(responsePost));    
             }
         });
     }
@@ -1896,11 +2083,11 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         $scope.ums = linksWs.um;
         validateLoadComplete();      
     }else{    
-        onWsAction(linksWs.link_root+"/TUm.json",{},function(responsePost){
+        onWsAction(linksWs.link_root+"/TUm/findUM.json",{category:$scope.formData.tipoProducto},function(responsePost){
             //alert("calback response: "+JSON.stringify(responsePost.data));
             if(!isBlank(responsePost.data)){
                 if(angular.isString(responsePost.data.tUm)){
-                    console.log("243: "+responsePost.data.tUm);
+                    console.log("isString: "+responsePost.data.tUm);
                 }else{  
                     linksWs.um = responsePost.data.tUm;
                     $scope.ums = responsePost.data.tUm;
@@ -1908,7 +2095,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
                 }
             }else{
                 validateLoadComplete();
-                console.log("calback error 251: "+JSON.stringify(responsePost));    
+                console.log("calback error: "+JSON.stringify(responsePost));    
             }
         });
     }
@@ -1975,9 +2162,161 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
             }
         }); 
     }
-    
+      
     
     $scope.formData = {};
+    
+    /********************Modal Localities *******************/
+    var modalLocaly = null;
+    $scope.findOrigen = function(e) {
+        e.preventDefault();
+        $scope.formDataLocality = $scope.formData;
+        if(!isBlank(linksWs.provinces)){
+            modalLocaly = $ionicPopup.show({
+                title : '<i class="icon-briefcase" style="font-size: 20px !important;"></i> Localidades',
+                cssClass: 'storagePopup',
+                scope: $scope,
+                templateUrl: "templates/modalLocalidades.html"
+            });                                  
+            $scope.provinces = linksWs.provinces;
+        }else{
+            onWsAction(linksWs.link_root+"/TProvince.json",{},function(responsePost){
+                //alert("calback response: "+JSON.stringify(responsePost.data));
+                if(!isBlank(responsePost.data)){
+                    if(angular.isString(responsePost.data.tProvince)){
+                        //console.log(responsePost.data.tTypeActivity);
+                        //validateLoadComplete();
+                    }else{  
+                        modalLocaly = $ionicPopup.show({
+                            title : '<i class="icon-briefcase" style="font-size: 20px !important;"></i> Localidades',
+                            cssClass: 'storagePopup',
+                            scope: $scope,
+                            templateUrl: "templates/modalLocalidades.html"
+                        });                        
+                        linksWs.provinces = responsePost.data.tProvince;
+                        $scope.provinces = linksWs.provinces;
+                        //console.log("208"+responsePost.data.tTypeActivity);
+                        //validateLoadComplete();
+                    }
+                }else{
+                    //console.log(JSON.stringify(responsePost));    
+                    //validateLoadComplete();
+                }
+            });
+        }  
+            
+    };
+    
+    $scope.getLocalities = function(form){
+        //alert($scope.formDataLocality.ID_PROVINCE);
+        form.$setPristine();
+        form.$setUntouched();
+        //console.log($scope.formDataLocality);
+        $scope.formDataLocality = {ID_PROVINCE:$scope.formDataLocality.ID_PROVINCE};
+        onWsAction(linksWs.link_root+"/TLocality/find.json",{provi:$scope.formDataLocality.ID_PROVINCE},function(responsePost){
+            //alert("calback response: "+JSON.stringify(responsePost.data));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tLocality)){
+                    //console.log(responsePost.data.tTypeActivity);
+                    //validateLoadComplete();
+                }else{  
+                    linksWs.localities = responsePost.data.tLocality;
+                    $scope.locals = linksWs.localities;
+                    //console.log("208"+responsePost.data.tTypeActivity);
+                    //validateLoadComplete();
+                }
+            }else{
+                //console.log(JSON.stringify(responsePost));    
+                //validateLoadComplete();
+            }
+        });         
+    };
+    
+    $scope.addLocality = function(){
+        var fruitName = $.grep(linksWs.localities, function (locali) {
+            return locali.ID_PLACE == $scope.formDataLocality.ID_LOCALITY;
+        })[0].PLACE_NAME;
+        $scope.formData.ID_PLACE_ORIGIN = $scope.formDataLocality.ID_LOCALITY;
+        $scope.formData.t_ORIGIN_NAME = fruitName;
+        console.log($scope.formData);
+        modalLocaly.close();   
+        angular.element($scroll).css({"height":(window.innerHeight) - 45 +"px"}); 
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    };
+    
+    $scope.closeModalLocalities = function(e) {
+        e.preventDefault();
+        modalLocaly.close();     
+        modalLocaly = null;
+        angular.element($scroll).css({"height":(window.innerHeight) - 45 +"px"}); 
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    };     
+    /********************************************************/
+    
+    
+    /******************************* Modal Localities *****************************/
+    var modalDelivery = null;
+    $scope.findDelivery = function(e) {
+        e.preventDefault();
+        $scope.formDataLocality = $scope.formData;
+        if(!isBlank(linksWs.provinces)){
+            modalDelivery = $ionicPopup.show({
+                title : '<i class="icon-briefcase" style="font-size: 20px !important;"></i> Localidades',
+                cssClass: 'storagePopup',
+                scope: $scope,
+                templateUrl: "templates/modalDeliveryLocalidades.html"
+            });                                  
+            $scope.provinces = linksWs.provinces;
+        }else{
+            onWsAction(linksWs.link_root+"/TProvince.json",{},function(responsePost){
+                //alert("calback response: "+JSON.stringify(responsePost.data));
+                if(!isBlank(responsePost.data)){
+                    if(angular.isString(responsePost.data.tProvince)){
+                        //console.log(responsePost.data.tTypeActivity);
+                        //validateLoadComplete();
+                    }else{  
+                        modalDelivery = $ionicPopup.show({
+                            title : '<i class="icon-briefcase" style="font-size: 20px !important;"></i> Localidades',
+                            cssClass: 'storagePopup',
+                            scope: $scope,
+                            templateUrl: "templates/modalDeliveryLocalidades.html"
+                        });                        
+                        linksWs.provinces = responsePost.data.tProvince;
+                        $scope.provinces = linksWs.provinces;
+                        //console.log("208"+responsePost.data.tTypeActivity);
+                        //validateLoadComplete();
+                    }
+                }else{
+                    //console.log(JSON.stringify(responsePost));    
+                    //validateLoadComplete();
+                }
+            });
+        }  
+            
+    };
+    
+    $scope.addDeliveryLocality = function(){
+        var fruitName = $.grep(linksWs.localities, function (locali) {
+            return locali.ID_PLACE == $scope.formDataLocality.ID_LOCALITY;
+        })[0].PLACE_NAME;
+        $scope.formData.ID_PLACE_DELIVERY = $scope.formDataLocality.ID_LOCALITY;
+        $scope.formData.t_DELIVERY_NAME = fruitName;
+        console.log($scope.formData);
+        modalDelivery.close();   
+        angular.element($scroll).css({"height":(window.innerHeight) - 45 +"px"}); 
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    };
+    
+    $scope.closeModalDeliveryLocalities = function(e) {
+        e.preventDefault();
+        modalDelivery.close();     
+        modalDelivery = null;
+        angular.element($scroll).css({"height":(window.innerHeight) - 45 +"px"}); 
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    }; 
+    
+    /*************************************************************************/
+    
     $scope.submitForm = function(valid) {
         
         if (valid) {
@@ -2054,13 +2393,28 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         //alert("entro: "+elem+":"+val);
         $scope.formData[elem] = val;
     }    
+    $scope.loadMore = function() {
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    }, 1000;
+    $scope.moreDataCanBeLoaded = function() {
+        return true;
+    } 
+    
 })
-.controller('FiltroCtrl', function($scope, $http, $stateParams, $state, $history, $timeout, $ionicLoading, $ionicPopup, $ionicSideMenuDelegate, $filter, ionicMaterialInk, ionicMaterialMotion, ionicDatePicker, linksWs) {
+.controller('FiltroCtrl', function($rootScope, $scope, $http, $stateParams, $state, $history, $timeout, $ionicLoading, $ionicPopup, $ionicSideMenuDelegate, $filter, ionicMaterialInk, ionicMaterialMotion, ionicDatePicker, linksWs) {
+    // grab pointer to original function
+    var oldSoftBack = $rootScope.$ionicGoBack;
+
+    // override default behaviour
+    $rootScope.$ionicGoBack = function() {
+        // do something interesting here
+        $state.go('app.home');
+    };    
     // Set Header
     $ionicLoading.show({});
     $scope.$parent.clearFabs();
     $timeout(function() {
-        $scope.$parent.hideHeader();
+        $scope.$parent.showNavBar();
     }, 0);      
     
     linksWs.requests = "";
@@ -2183,11 +2537,11 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         $scope.ums = linksWs.um;
         validateLoadComplete();      
     }else{    
-        onWsAction(linksWs.link_root+"/TUm.json",{},function(responsePost){
+        onWsAction(linksWs.link_root+"/TUm/findUM.json",{category:$scope.formData.tipoProducto},function(responsePost){
             //alert("calback response: "+JSON.stringify(responsePost.data));
             if(!isBlank(responsePost.data)){
                 if(angular.isString(responsePost.data.tUm)){
-                    console.log("159: "+responsePost.data.tUm);
+                    console.log("isString: "+responsePost.data.tUm);
                 }else{  
                     linksWs.um = responsePost.data.tUm;
                     $scope.ums = responsePost.data.tUm;
@@ -2195,7 +2549,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
                 }
             }else{
                 validateLoadComplete();
-                console.log("calback token no set 167: "+JSON.stringify(responsePost));    
+                console.log("calback error: "+JSON.stringify(responsePost));    
             }
         });
     }
@@ -2263,6 +2617,158 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         }); 
     }
 
+    /********************Modal Localities *******************/
+    var modalLocaly = null;
+    $scope.findOrigen = function(e) {
+        e.preventDefault();
+        $scope.formDataLocality = $scope.formData;
+        if(!isBlank(linksWs.provinces)){
+            modalLocaly = $ionicPopup.show({
+                title : '<i class="icon-briefcase" style="font-size: 20px !important;"></i> Localidades',
+                cssClass: 'storagePopup',
+                scope: $scope,
+                templateUrl: "templates/modalLocalidades.html"
+            });                                  
+            $scope.provinces = linksWs.provinces;
+        }else{
+            onWsAction(linksWs.link_root+"/TProvince.json",{},function(responsePost){
+                //alert("calback response: "+JSON.stringify(responsePost.data));
+                if(!isBlank(responsePost.data)){
+                    if(angular.isString(responsePost.data.tProvince)){
+                        //console.log(responsePost.data.tTypeActivity);
+                        //validateLoadComplete();
+                    }else{  
+                        modalLocaly = $ionicPopup.show({
+                            title : '<i class="icon-briefcase" style="font-size: 20px !important;"></i> Localidades',
+                            cssClass: 'storagePopup',
+                            scope: $scope,
+                            templateUrl: "templates/modalLocalidades.html"
+                        });                        
+                        linksWs.provinces = responsePost.data.tProvince;
+                        $scope.provinces = linksWs.provinces;
+                        //console.log("208"+responsePost.data.tTypeActivity);
+                        //validateLoadComplete();
+                    }
+                }else{
+                    //console.log(JSON.stringify(responsePost));    
+                    //validateLoadComplete();
+                }
+            });
+        }  
+            
+    };
+    
+    $scope.getLocalities = function(form){
+        //alert($scope.formDataLocality.ID_PROVINCE);
+        form.$setPristine();
+        form.$setUntouched();
+        //console.log($scope.formDataLocality);
+        $scope.formDataLocality = {ID_PROVINCE:$scope.formDataLocality.ID_PROVINCE};
+        onWsAction(linksWs.link_root+"/TLocality/find.json",{provi:$scope.formDataLocality.ID_PROVINCE},function(responsePost){
+            //alert("calback response: "+JSON.stringify(responsePost.data));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tLocality)){
+                    //console.log(responsePost.data.tTypeActivity);
+                    //validateLoadComplete();
+                }else{  
+                    linksWs.localities = responsePost.data.tLocality;
+                    $scope.locals = linksWs.localities;
+                    //console.log("208"+responsePost.data.tTypeActivity);
+                    //validateLoadComplete();
+                }
+            }else{
+                //console.log(JSON.stringify(responsePost));    
+                //validateLoadComplete();
+            }
+        });         
+    };
+    
+    $scope.addLocality = function(){
+        var fruitName = $.grep(linksWs.localities, function (locali) {
+            return locali.ID_PLACE == $scope.formDataLocality.ID_LOCALITY;
+        })[0].PLACE_NAME;
+        $scope.formData.ID_PLACE_ORIGIN = $scope.formDataLocality.ID_LOCALITY;
+        $scope.formData.t_ORIGIN_NAME = fruitName;
+        console.log($scope.formData);
+        modalLocaly.close();   
+        angular.element($scroll).css({"height":(window.innerHeight) - 45 +"px"}); 
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    };
+    
+    $scope.closeModalLocalities = function(e) {
+        e.preventDefault();
+        modalLocaly.close();     
+        modalLocaly = null;
+        angular.element($scroll).css({"height":(window.innerHeight) - 45 +"px"}); 
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    };     
+    /********************************************************/
+    
+    
+    /******************************* Modal Localities *****************************/
+    var modalDelivery = null;
+    $scope.findDelivery = function(e) {
+        e.preventDefault();
+        $scope.formDataLocality = $scope.formData;
+        if(!isBlank(linksWs.provinces)){
+            modalDelivery = $ionicPopup.show({
+                title : '<i class="icon-briefcase" style="font-size: 20px !important;"></i> Localidades',
+                cssClass: 'storagePopup',
+                scope: $scope,
+                templateUrl: "templates/modalDeliveryLocalidades.html"
+            });                                  
+            $scope.provinces = linksWs.provinces;
+        }else{
+            onWsAction(linksWs.link_root+"/TProvince.json",{},function(responsePost){
+                //alert("calback response: "+JSON.stringify(responsePost.data));
+                if(!isBlank(responsePost.data)){
+                    if(angular.isString(responsePost.data.tProvince)){
+                        //console.log(responsePost.data.tTypeActivity);
+                        //validateLoadComplete();
+                    }else{  
+                        modalDelivery = $ionicPopup.show({
+                            title : '<i class="icon-briefcase" style="font-size: 20px !important;"></i> Localidades',
+                            cssClass: 'storagePopup',
+                            scope: $scope,
+                            templateUrl: "templates/modalDeliveryLocalidades.html"
+                        });                        
+                        linksWs.provinces = responsePost.data.tProvince;
+                        $scope.provinces = linksWs.provinces;
+                        //console.log("208"+responsePost.data.tTypeActivity);
+                        //validateLoadComplete();
+                    }
+                }else{
+                    //console.log(JSON.stringify(responsePost));    
+                    //validateLoadComplete();
+                }
+            });
+        }  
+            
+    };
+    
+    $scope.addDeliveryLocality = function(){
+        var fruitName = $.grep(linksWs.localities, function (locali) {
+            return locali.ID_PLACE == $scope.formDataLocality.ID_LOCALITY;
+        })[0].PLACE_NAME;
+        $scope.formData.ID_PLACE_DELIVERY = $scope.formDataLocality.ID_LOCALITY;
+        $scope.formData.t_DELIVERY_NAME = fruitName;
+        console.log($scope.formData);
+        modalDelivery.close();   
+        angular.element($scroll).css({"height":(window.innerHeight) - 45 +"px"}); 
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    };
+    
+    $scope.closeModalDeliveryLocalities = function(e) {
+        e.preventDefault();
+        modalDelivery.close();     
+        modalDelivery = null;
+        angular.element($scroll).css({"height":(window.innerHeight) - 45 +"px"}); 
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    }; 
+    
+    /*************************************************************************/
+
+
     $scope.openDateEntregaD = function (val) {    
       var ipObj1 = {
         callback: function (val) {  //Mandatory
@@ -2310,6 +2816,10 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
                         });                         
                     }else{
                         linksWs.requests = responsePost.data.tRequest;
+                        $rootScope.$ionicGoBack = function() {
+                            // do something interesting here
+                            $state.go('app.filtro');
+                        };                         
                         $state.go('app.mercado');
                         
                     }
@@ -2334,14 +2844,29 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
     $scope.cancelar = function() {
         $state.go('app.home');
     };
+
+    $scope.loadMore = function() {
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    }, 1000;
+    $scope.moreDataCanBeLoaded = function() {
+        return true;
+    }     
   
 })
 .controller('MercadoCtrl', function($scope, $http, $rootScope, $state, $stateParams, $timeout, $history, $ionicLoading, $ionicPopup, ionicMaterialInk, ionicMaterialMotion, linksWs) {
+    // grab pointer to original function
+    var oldSoftBack = $rootScope.$ionicGoBack;
+
+    // override default behaviour
+    $rootScope.$ionicGoBack = function() {
+        // do something interesting here
+        $state.go('app.filtro');
+    };    
     // Set Header
     $ionicLoading.show({});
     $scope.$parent.clearFabs();
     $timeout(function() {
-        $scope.$parent.hideHeader();
+        $scope.$parent.showNavBar();
     }, 0);      
 
     $scope.requests = [];
@@ -2366,6 +2891,14 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         //$history.back();
         $state.go('app.filtro');
     }
+    
+    $scope.isNull = function(valor){
+        if(valor !== null ){
+            return false;
+        }else{
+            return true;
+        }
+    };
     
     $scope.closeProfile = function(e) {
         e.preventDefault();
@@ -2394,9 +2927,14 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
                 $section.removeChild($itemFloat);
             }, 600); 
             //$scope.$parent.showHeader();
+            $scope.$parent.showHeader();
             angular.element($divBack).css({"display": "block"});
             angular.element($divTitl).css({"display": "block"});
-            angular.element($section).attr("style","margin-top: 5% !important");
+            $rootScope.$ionicGoBack = function() {
+                // do something interesting here
+                $state.go('app.filtro');
+            };              
+            //angular.element($section).attr("style","margin-top: 5% !important");
         });
     }
      
@@ -2404,7 +2942,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         e.preventDefault();
         angular.element($divBack).css({"display": "none"});
         angular.element($divTitl).css({"display": "none"});
-        $scope.$parent.hideHeader();
+        $scope.$parent.showNavBar();
         angular.element($section).attr("style","margin-top: 0% !important");
         var $selectedItem = e.target.closest('a'),
             $floatingItem = document.createElement('div');
@@ -2440,7 +2978,11 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         setTimeout(function () {
             _animateInfo(true);
         }, 600);
- 
+        $scope.$parent.showinDetails();
+        $rootScope.$ionicGoBack = function() {
+            // do something interesting here
+            $state.go('app.filtro');
+        };         
     }
      
     function _animateInfo(show) {
@@ -2593,14 +3135,28 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
     }
     findRequest();    
 })
-.controller('NegocioCtrl', function($scope, $http, $state, $stateParams, $timeout, $history, $ionicLoading, $ionicPopup, $mdDialog, ionicMaterialInk, ionicMaterialMotion, linksWs) {
+.controller('NegocioCtrl', function($rootScope, $scope, $http, $state, $stateParams, $timeout, $history, $ionicLoading, $ionicPopup, $mdDialog, ionicMaterialInk, ionicMaterialMotion, linksWs) {
+    // grab pointer to original function
+    var oldSoftBack = $rootScope.$ionicGoBack;
+
+    // override default behaviour
+    $rootScope.$ionicGoBack = function() {
+        // do something interesting here
+        $state.go('app.home');
+    };    
     // Set Header
     $ionicLoading.show({});
     $scope.$parent.clearFabs();
     $timeout(function() {
-        $scope.$parent.hideHeader();
+        $scope.$parent.showNavBar();
     }, 0);      
-
+    $scope.isNull = function(valor){
+        if(valor !== null ){
+            return false;
+        }else{
+            return true;
+        }
+    };
     $scope.negocios = [];
     var $itemFloat, 
         $itemSelected, 
@@ -2651,6 +3207,10 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         
         /* view Chat */
         $scope.initChat = function(evento) {
+            $rootScope.$ionicGoBack = function() {
+                // do something interesting here
+                $state.go('app.negocio');
+            };             
             $mdDialog.cancel();
             $state.go('app.chat');
         };
@@ -2699,9 +3259,11 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
             setTimeout(function() {
                 $section.removeChild($itemFloat);
             }, 600); 
+            
+            $scope.$parent.showHeader();
             angular.element($divBack).css({"display": "block"});
             angular.element($divTitl).css({"display": "block"});
-            angular.element($section).attr("style","margin-top: 5% !important");
+            
         });
     }
      
@@ -2710,7 +3272,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         
         angular.element($divBack).css({"display": "none"});
         angular.element($divTitl).css({"display": "none"});
-        $scope.$parent.hideHeader();
+        
         angular.element($section).attr("style","margin-top: 0% !important");
         var $selectedItem = e.target.closest('a'),
             $floatingItem = document.createElement('div');
@@ -2760,7 +3322,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         setTimeout(function () {
             _animateInfo(true);
         }, 600);
- 
+        $scope.$parent.showinDetails();
     }
      
     function _animateInfo(show) {
@@ -3348,14 +3910,25 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
     
     $scope.back = function(e){
         //$history.back();
-        $state.go('app.home');
+        //$state.go('app.home');
     }    
 })
 .controller('AlarmaCtrl', function($scope, $timeout, $rootScope, $state, $stateParams, $location, $ionicHistory, $history, $ionicPopup,  $ionicLoading, $mdDialog, ionicMaterialMotion, ionicMaterialInk, linksWs) {
+    // grab pointer to original function
+    var oldSoftBack = $rootScope.$ionicGoBack;
+
+    // override default behaviour
+    $rootScope.$ionicGoBack = function() {
+        // do something interesting here
+
+        // uncomment below line to call old function when finished
+        // oldSoftBack();
+        $state.go('app.alarmaList');
+    };
     
     $scope.$parent.clearFabs();
     $timeout(function() {
-        $scope.$parent.hideHeader();
+        $scope.$parent.showNavBar();
     }, 0); 
     
     $scope.cancelar = function() {
@@ -3609,13 +4182,29 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         }        
     };
     
+    $scope.loadMore = function() {
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    }, 1000;
+    $scope.moreDataCanBeLoaded = function() {
+        return true;
+    }     
+    
 })
-.controller('AlarmaListCtrl', function($scope, $http, $state, $stateParams, $timeout, $history, $ionicLoading, $ionicPopup, ionicMaterialInk, ionicMaterialMotion, linksWs) {
+.controller('AlarmaListCtrl', function($rootScope, $scope, $http, $state, $stateParams, $timeout, $history, $ionicLoading, $ionicPopup, ionicMaterialInk, ionicMaterialMotion, linksWs) {
+    // override default behaviour
+    $rootScope.$ionicGoBack = function() {
+        // do something interesting here
+
+        // uncomment below line to call old function when finished
+        // oldSoftBack();
+        $state.go('app.home');
+    };
+    
     // Set Header
     $ionicLoading.show({});
     
     $timeout(function() {
-        $scope.$parent.hideHeader();
+        $scope.$parent.showNavBar();
         //$scope.isExpanded = false;
         //$scope.$parent.setExpanded(false);        
         
@@ -3661,11 +4250,10 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
             setTimeout(function() {
                 $section.removeChild($itemFloat);
             }, 600); 
-            //$scope.$parent.showHeader();
-            //$divBack.style.display = 'block';
+            $scope.$parent.showHeader();
             angular.element($divBack).css({"display": "block"});
             angular.element($divTitl).css({"display": "block"});
-            angular.element($section).attr("style","margin-top: 5% !important");
+            
         });
     }
      
@@ -3674,7 +4262,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         //$divBack.style.display = 'none';
         angular.element($divBack).css({"display": "none"});
         angular.element($divTitl).css({"display": "none"});
-        $scope.$parent.hideHeader();
+        $scope.$parent.showNavBar();
         angular.element($section).attr("style","margin-top: 0% !important");
         var $selectedItem = e.target.closest('a'),
             $floatingItem = document.createElement('div');
@@ -3713,7 +4301,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         setTimeout(function () {
             _animateInfo(true);
         }, 600);
- 
+        $scope.$parent.showinDetails();
     }
      
     function _animateInfo(show) {
@@ -3929,12 +4517,33 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
     $scope.newAlarm = function() {
         $state.go('app.alarma');
     };    
+    
+    $scope.loadMore = function() {
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    }, 1000;
+    
+    $scope.moreDataCanBeLoaded = function() {
+        return true;
+    }     
+    
 })
 .controller('AlarmaEditCtrl', function($scope, $rootScope, $state, $stateParams, $timeout, $filter, $ionicPopup, $ionicLoading, ionicMaterialInk, ionicMaterialMotion, $history,linksWs,ionicDatePicker) {
+    // grab pointer to original function
+    var oldSoftBack = $rootScope.$ionicGoBack;
+
+    // override default behaviour
+    $rootScope.$ionicGoBack = function() {
+        // do something interesting here
+
+        // uncomment below line to call old function when finished
+        // oldSoftBack();
+        $history.back();
+    };
+    
     $ionicLoading.show({});
     $scope.$parent.clearFabs();
     $timeout(function() {
-        $scope.$parent.hideHeader();
+        $scope.$parent.showNavBar();
     }, 0);      
 
     var counterBlock = 0;
@@ -4174,13 +4783,29 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         //$state.go('app.home');
     };
     
+    $scope.loadMore = function() {
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    }, 1000;
+    $scope.moreDataCanBeLoaded = function() {
+        return true;
+    }     
+    
 })
-.controller('NotifyListCtrl', function($scope, $http, $state, $stateParams, $timeout, $history, $ionicLoading, $ionicPopup, ionicMaterialInk, ionicMaterialMotion, linksWs) {
+.controller('NotifyListCtrl', function($rootScope, $scope, $http, $state, $stateParams, $timeout, $history, $ionicLoading, $ionicPopup, ionicMaterialInk, ionicMaterialMotion, linksWs) {
+    // grab pointer to original function
+    var oldSoftBack = $rootScope.$ionicGoBack;
+
+    // override default behaviour
+    $rootScope.$ionicGoBack = function() {
+        // do something interesting here
+        $state.go('app.home');
+    };
+    
     // Set Header
     $ionicLoading.show({});
     
     $timeout(function() {
-        $scope.$parent.hideHeader();
+        $scope.$parent.showNavBar();
         //$scope.isExpanded = false;
         //$scope.$parent.setExpanded(false);        
         
@@ -4226,8 +4851,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
             setTimeout(function() {
                 $section.removeChild($itemFloat);
             }, 600); 
-            //$scope.$parent.showHeader();
-            //$divBack.style.display = 'block';
+            $scope.$parent.showHeader();
             angular.element($divBack).css({"display": "block"});
             angular.element($divTitl).css({"display": "block"});
             angular.element($section).attr("style","margin-top: 5% !important");
@@ -4239,7 +4863,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         //$divBack.style.display = 'none';
         angular.element($divBack).css({"display": "none"});
         angular.element($divTitl).css({"display": "none"});
-        $scope.$parent.hideHeader();
+        $scope.$parent.showNavBar();
         angular.element($section).attr("style","margin-top: 0% !important");
         var $selectedItem = e.target.closest('a'),
             $floatingItem = document.createElement('div');
@@ -4279,7 +4903,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
             _animateInfo(true);
             readNotify();
         }, 600);
- 
+        $scope.$parent.showinDetails();
     }
      
     function _animateInfo(show) {
@@ -4527,15 +5151,32 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
     
     $scope.back = function(e){
         //$history.back();
-        $state.go('app.home');
+        //$state.go('app.home');
     }    
+
+    $scope.loadMore = function() {
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    }, 1000;
+    $scope.moreDataCanBeLoaded = function() {
+        return true;
+    } 
+    
 })
-.controller('PriceListCtrl', function($scope, $http, $state, $stateParams, $timeout, $history, $ionicLoading, $ionicPopup, ionicMaterialInk, ionicMaterialMotion, linksWs) {
+.controller('PriceListCtrl', function($rootScope, $scope, $http, $state, $stateParams, $timeout, $history, $ionicLoading, $ionicPopup, ionicMaterialInk, ionicMaterialMotion, linksWs) {
+    // grab pointer to original function
+    var oldSoftBack = $rootScope.$ionicGoBack;
+
+    // override default behaviour
+    $rootScope.$ionicGoBack = function() {
+        // do something interesting here
+        $state.go('app.home');
+    };
+    
     // Set Header
     $ionicLoading.show({});
     
     $timeout(function() {
-        $scope.$parent.hideHeader();
+        $scope.$parent.showNavBar();
         //$scope.isExpanded = false;
         //$scope.$parent.setExpanded(false);        
         
@@ -4543,7 +5184,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
     
     $scope.back = function(e){
         //$history.back();
-        $state.go('app.home');
+        //$state.go('app.home');
     }  
     
     $scope.collapseAll = function(data) {
@@ -4710,12 +5351,21 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
     findPosition();
     
 })
-.controller('ChatCtrl', function($scope, $http, $state, $stateParams, $timeout, $history, $ionicLoading, $ionicPopup, ionicMaterialInk, ionicMaterialMotion, linksWs, $ionicScrollDelegate, $filter, $interval) {
+.controller('ChatCtrl', function($rootScope, $scope, $http, $state, $stateParams, $timeout, $history, $ionicLoading, $ionicPopup, ionicMaterialInk, ionicMaterialMotion, linksWs, $ionicScrollDelegate, $filter, $interval) {
+    // grab pointer to original function
+    var oldSoftBack = $rootScope.$ionicGoBack;
+
+    // override default behaviour
+    $rootScope.$ionicGoBack = function() {
+        // do something interesting here
+       $state.go('app.negocio');
+        //$history.back();
+    };    
     // Set Header
     $ionicLoading.show({});
     
     $timeout(function() {
-        $scope.$parent.hideHeader();
+        $scope.$parent.showNavBar();
         //$scope.isExpanded = false;
         //$scope.$parent.setExpanded(false);        
         
@@ -4887,13 +5537,21 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
     
     
 })
-.controller('ChatListCtrl', function($scope, $http, $state, $stateParams, $timeout, $history, $ionicLoading, $ionicPopup, ionicMaterialInk, ionicMaterialMotion, linksWs, $ionicScrollDelegate, $filter, $interval) {
+.controller('ChatListCtrl', function($rootScope, $scope, $http, $state, $stateParams, $timeout, $history, $ionicLoading, $ionicPopup, ionicMaterialInk, ionicMaterialMotion, linksWs, $ionicScrollDelegate, $filter, $interval) {
+    // grab pointer to original function
+    var oldSoftBack = $rootScope.$ionicGoBack;
+
+    // override default behaviour
+    $rootScope.$ionicGoBack = function() {
+        // do something interesting here
+        $state.go('app.chatList');
+    };
     
     // Set Header
     $ionicLoading.show({});
     
     $timeout(function() {
-        $scope.$parent.hideHeader();
+        $scope.$parent.showNavBar();
         //$scope.isExpanded = false;
         //$scope.$parent.setExpanded(false);        
         
@@ -4905,6 +5563,10 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         e.preventDefault();
         linksWs.chat = i;
         $timeout(function() {
+        $rootScope.$ionicGoBack = function() {
+            // do something interesting here
+            $state.go('app.chatList');
+        };            
           $state.go('app.chatTrade');
         }, 70);
         return;
@@ -4963,12 +5625,20 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
     listChat();    
     
 })
-.controller('ChatTradeCtrl', function($scope, $http, $state, $stateParams, $timeout, $history, $ionicLoading, $ionicPopup, ionicMaterialInk, ionicMaterialMotion, linksWs, $ionicScrollDelegate, $filter, $interval) {
+.controller('ChatTradeCtrl', function($rootScope, $scope, $http, $state, $stateParams, $timeout, $history, $ionicLoading, $ionicPopup, ionicMaterialInk, ionicMaterialMotion, linksWs, $ionicScrollDelegate, $filter, $interval) {
+    // grab pointer to original function
+    var oldSoftBack = $rootScope.$ionicGoBack;
+
+    // override default behaviour
+    $rootScope.$ionicGoBack = function() {
+        // do something interesting here
+         $state.go('app.negocio');
+    };    
     // Set Header
     $ionicLoading.show({});
     
     $timeout(function() {
-        $scope.$parent.hideHeader();
+        $scope.$parent.showNavBar();
         //$scope.isExpanded = false;
         //$scope.$parent.setExpanded(false);        
         
@@ -5138,7 +5808,7 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
         /* later */
         clearInterval(refreshIntervalIdTrade);
         $timeout(function() {
-          $state.go('app.chatList');
+          $state.go('app.negocio');
         }, 7);        
         
     };   
@@ -5147,4 +5817,865 @@ angular.module('starter.controllers', ['ionic', 'ngMaterial', 'ui.router', 'ui.r
     
     
 })
+
+.controller('wizardCtrl', function($scope, $http, $rootScope, $state, $stateParams, $timeout, $filter, $ionicPopup, $ionicLoading, ionicMaterialInk, ionicMaterialMotion, $history,linksWs,ionicDatePicker,$uibModal) {
+    // grab pointer to original function
+    var oldSoftBack = $rootScope.$ionicGoBack;
+
+    // override default behaviour
+    $rootScope.$ionicGoBack = function() {
+        // do something interesting here
+
+        // uncomment below line to call old function when finished
+        // oldSoftBack();
+        $state.go('app.home');
+    };
+    
+    var formWizard = this;
+    
+    $ionicLoading.show({});
+    $scope.$parent.clearFabs();
+    $timeout(function() {
+        $scope.$parent.showNavBar();
+    }, 1);      
+    
+    $scope.formParams = {};
+    $scope.stage = "";
+    $scope.formValidation = false;
+    $scope.toggleJSONView = false;
+    $scope.toggleFormErrorsView = false;    
+    
+    $scope.formParams = {
+        tipoProducto:0
+    };
+    
+
+    $scope.items = ['item1', 'item2', 'item3'];
+
+    $scope.animationsEnabled = true;
+
+    /* ('sm', '.modal-parent') */
+    $scope.open = function (event,size, parentSelector) {
+        /*var parentElem = parentSelector ? 
+        angular.element(document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+        */
+        var modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: 'myModalContent.html',
+            controller: 'ModalInstanceCtrl',
+            backdrop: false,
+            scope: $scope,
+            size: size,
+            appendTo: undefined,
+            resolve: {
+                items: function () {
+                    return $scope.items;
+                }
+            }
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+            $scope.selected = selectedItem;
+        }, function () {
+            console.log('Modal dismissed at: ' + new Date());
+        });
+        
+        modalInstance.rendered.then(function () {
+            $scope.findOrigen(event);
+        }, function () {
+            console.log('Modal rendered at: ' + new Date());
+        });
+    };    
+
+  /*  var counterBlock = 0;
+    function validateLoadComplete() {
+        counterBlock++;
+        if (counterBlock === 13) {
+            counterBlock = 0;
+            // Set Motion
+            $timeout(function() {
+                ionicMaterialMotion.fadeSlideIn({
+                    selector: '.animate-fade-slide-in .item'
+                });
+            }, 200);
+            // Activate ink for controller
+            ionicMaterialInk.displayEffect();            
+            $ionicLoading.hide();
+        }
+    }*/ 
+    
+    /*$scope.formWizard = {};*/
+    var counterBlock = 0;
+    function validateLoadComplete() {
+        counterBlock++;
+        if (counterBlock === 13) {
+            counterBlock = 0;
+            // Set Motion
+            $timeout(function() {
+                ionicMaterialMotion.fadeSlideIn({
+                    selector: '.animate-fade-slide-in .item'
+                });
+            }, 200);
+            $scope.ID_TYPE_PRICE = 210;
+            // Activate ink for controller
+            ionicMaterialInk.displayEffect();            
+            $ionicLoading.hide();
+        }
+    } 
+    
+    if(!isBlank(linksWs.ql)){
+        $scope.calidad = linksWs.ql;
+        validateLoadComplete();      
+    }else{    
+        onWsAction(linksWs.link_root+"/TTypes/find.json",{type:'TYPE_QUALITY'},function(responsePost){
+            //alert("calback response: "+JSON.stringify(responsePost.data.tTypes));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tTypes)){
+                    console.log("isString: "+responsePost.data.tTypes);
+                }else{  
+                    linksWs.ql = responsePost.data.tTypes;
+                    validateLoadComplete();
+                }
+            }else{
+                validateLoadComplete();
+                console.log(JSON.stringify(responsePost));    
+            }
+        }); 
+    }
+    
+    if(!isBlank(linksWs.en)){
+        $scope.tentrega = linksWs.en;
+        validateLoadComplete();      
+    }else{    
+        onWsAction(linksWs.link_root+"/TTypes/find.json",{type:'TYPE_DELIVERY'},function(responsePost){
+            //alert("calback response: "+JSON.stringify(responsePost.data.tTypes));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tTypes)){
+                    console.log("isString: "+responsePost.data.tTypes);
+                }else{  
+                    linksWs.en = responsePost.data.tTypes;
+                    validateLoadComplete();
+                }
+            }else{
+                validateLoadComplete();
+                console.log(JSON.stringify(responsePost));    
+            }
+        }); 
+    } 
+    
+    if(!isBlank(linksWs.pa)){
+        $scope.tpago = linksWs.pa;
+        validateLoadComplete();      
+    }else{    
+        onWsAction(linksWs.link_root+"/TTypes/find.json",{type:'TYPE_PAYMENT'},function(responsePost){
+            //alert("calback response: "+JSON.stringify(responsePost.data.tTypes));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tTypes)){
+                    console.log("isString: "+responsePost.data.tTypes);
+                }else{  
+                    linksWs.pa = responsePost.data.tTypes;
+                    $scope.tpago = linksWs.pa;
+                    validateLoadComplete();
+                }
+            }else{
+                validateLoadComplete();
+                console.log(JSON.stringify(responsePost));    
+            }
+        }); 
+    }     
+
+    if(!isBlank(linksWs.co)){
+        $scope.cosecha = linksWs.co;
+        validateLoadComplete();      
+    }else{    
+        onWsAction(linksWs.link_root+"/TTypes/find.json",{type:'TYPE_CROP'},function(responsePost){
+            //alert("calback response: "+JSON.stringify(responsePost.data.tTypes));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tTypes)){
+                    console.log("isString: "+responsePost.data.tTypes);
+                }else{  
+                    linksWs.co = responsePost.data.tTypes;
+                    $scope.cosecha = linksWs.co;
+                    validateLoadComplete();
+                }
+            }else{
+                validateLoadComplete();
+                console.log(JSON.stringify(responsePost));    
+            }
+        }); 
+    }     
+
+    if(!isBlank(linksWs.deliveries)){
+        $scope.deliveries = linksWs.deliveries;
+        validateLoadComplete();      
+    }else{    
+        onWsAction(linksWs.link_root+"/TTypes/find.json",{type:'TYPE_DELIVERY_1'},function(responsePost){
+            //alert("calback response: "+JSON.stringify(responsePost.data.tTypes));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tTypes)){
+                    console.log("isString: "+responsePost.data.tTypes);
+                }else{  
+                    linksWs.deliveries = responsePost.data.tTypes;
+                    $scope.deliveries = linksWs.deliveries;
+                    validateLoadComplete();
+                }
+            }else{
+                validateLoadComplete();
+                console.log(JSON.stringify(responsePost));    
+            }
+        }); 
+    }
+    
+    
+/*
+    if(!isBlank(linksWs.pr)){
+        $scope.precref = linksWs.pr;
+        validateLoadComplete();      
+    }else{    
+        onWsAction(linksWs.link_root+"/TTypes/findPrecRefe.json",{type:$scope.formParams.tipoProducto},function(responsePost){
+            //alert("calback response: "+JSON.stringify(responsePost.data.tTypes));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tTypes)){
+                    console.log("471: "+responsePost.data.tTypes);
+                }else{  
+                    linksWs.pr = responsePost.data.tTypes;
+                    $scope.precref = linksWs.pr;
+                    validateLoadComplete();
+                }
+            }else{
+                validateLoadComplete();
+                console.log(JSON.stringify(responsePost));    
+            }
+        }); 
+    }    
+  */  
+    if(!isBlank(linksWs.pc)){
+        $scope.tprecios = linksWs.pc;
+        validateLoadComplete();      
+    }else{    
+        onWsAction(linksWs.link_root+"/TTypes/find.json",{type:'TYPE_PRICE'},function(responsePost){
+            //alert("calback response: "+JSON.stringify(responsePost.data.tTypes));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tTypes)){
+                    console.log("isString: "+responsePost.data.tTypes);
+                }else{  
+                    linksWs.pc = responsePost.data.tTypes;
+                    $scope.tprecios = linksWs.pc;
+                    validateLoadComplete();
+                }
+            }else{
+                validateLoadComplete();
+                console.log(JSON.stringify(responsePost));    
+            }
+        }); 
+    }    
+
+    
+    /**********************/
+    if(!isBlank(linksWs.me)){
+        $scope.mercados = linksWs.me;
+        validateLoadComplete();      
+    }else{   
+        onWsAction(linksWs.link_root+"/TMarket.json",{},function(responsePost){
+            //alert("calback response: "+JSON.stringify(responsePost.data));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tMarket)){
+                    console.log("isString: "+responsePost.data.tMarket);
+                }else{  
+                    linksWs.me = responsePost.data.tMarket;
+                    $scope.mercados = responsePost.data.tMarket;
+                    validateLoadComplete();
+                }
+            }else{
+                validateLoadComplete();
+                console.log("calback token no set 135: "+JSON.stringify(responsePost));    
+            }
+        });
+    }
+    if(!isBlank(linksWs.mo)){
+        $scope.monedas = linksWs.mo;
+        validateLoadComplete();      
+    }else{      
+        onWsAction(linksWs.link_root+"/TCurrency/findCurrency.json",{category:tProdSelected},function(responsePost){
+            //alert("calback response: "+JSON.stringify(responsePost.data.tTypes));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tCurrency)){
+                    console.log("isString: "+responsePost.data.tCurrency);
+                }else{  
+                    linksWs.pr = responsePost.data.tCurrency;
+                    $scope.precref = responsePost.data.tCurrency;                    
+                }
+            }else{
+                console.log(JSON.stringify(responsePost));    
+            }
+        }); 
+    }
+    
+/*
+    if(!isBlank(linksWs.mo)){
+        $scope.monedas = linksWs.mo;
+        validateLoadComplete();      
+    }else{     
+        onWsAction(linksWs.link_root+"/TCurrency.json",{},function(responsePost){
+            //alert("calback response: "+JSON.stringify(responsePost.data));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tCurrency)){
+                    console.log("159: "+responsePost.data.tCurrency);
+                }else{  
+                    linksWs.mo = responsePost.data.tCurrency;
+                    $scope.monedas = responsePost.data.tCurrency;
+                    validateLoadComplete();
+                }
+            }else{
+                validateLoadComplete();
+                console.log("calback token no set 167: "+JSON.stringify(responsePost));    
+            }
+        });
+    }
+  */  
+    /*
+    if(!isBlank(linksWs.um)){
+        $scope.ums = linksWs.um;
+        validateLoadComplete();      
+    }else{    
+        onWsAction(linksWs.link_root+"/TUm.json",{},function(responsePost){
+            //alert("calback response: "+JSON.stringify(responsePost.data));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tUm)){
+                    console.log("243: "+responsePost.data.tUm);
+                }else{  
+                    linksWs.um = responsePost.data.tUm;
+                    $scope.ums = responsePost.data.tUm;
+                    validateLoadComplete();
+                }
+            }else{
+                validateLoadComplete();
+                console.log("calback error 251: "+JSON.stringify(responsePost));    
+            }
+        });
+    }*/
+  
+    
+     if(!isBlank(linksWs.lu)){
+        $scope.lugares = linksWs.lu;
+        validateLoadComplete();      
+    }else{
+        onWsAction(linksWs.link_root+"/TPlace.json",{},function(responsePost){
+            console.log("calback response: "+JSON.stringify(responsePost.data));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tPlace)){
+                    console.log("isString: "+responsePost.data.tPlace);
+                }else{  
+                    linksWs.lu = responsePost.data.tPlace;
+                    $scope.lugares = responsePost.data.tPlace;
+                    validateLoadComplete();
+                }
+            }else{
+                validateLoadComplete();
+                console.log("calback token no set 167: "+JSON.stringify(responsePost));    
+            }
+        });
+    }
+    
+    if(!isBlank(linksWs.op)){
+        $scope.operaciones = linksWs.op;
+        validateLoadComplete();      
+    }else{
+        onWsAction(linksWs.link_root+"/TTypes/find.json",{type:'OPERATION'},function(responsePost){
+           // alert("calback response: "+JSON.stringify(responsePost.data.tTypes));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tTypes)){
+                    console.log("isString: "+responsePost.data.tTypes);
+                }else{  
+                    linksWs.op = responsePost.data.tTypes;
+                    $scope.operaciones = responsePost.data.tTypes;
+                    validateLoadComplete();
+                }
+            }else{
+                validateLoadComplete();
+                console.log("calback token no set 167: "+JSON.stringify(responsePost));    
+            }
+        });
+    }
+    
+    if(!isBlank(linksWs.ne)){
+        $scope.negocios = linksWs.ne;
+        validateLoadComplete();      
+    }else{    
+        onWsAction(linksWs.link_root+"/TTypes/find.json",{type:'BUSINESS'},function(responsePost){
+            //alert("calback response: "+JSON.stringify(responsePost.data.tTypes));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tTypes)){
+                    console.log("isString: "+responsePost.data.tTypes);
+                }else{  
+                    linksWs.ne = responsePost.data.tTypes;
+                    $scope.tnegocios = responsePost.data.tTypes;
+                    validateLoadComplete();
+                }
+            }else{
+                validateLoadComplete();
+                console.log("calback token no set 167: "+JSON.stringify(responsePost));    
+            }
+        }); 
+    }
+
+    
+    
+    if(!isBlank(linksWs.tp)){
+        $scope.tproductos = linksWs.tp;
+        validateLoadComplete();      
+    }else{ 
+        onWsAction(linksWs.link_root+"/TCategoryProd.json",{},function(responsePost){
+            //alert("calback response: "+JSON.stringify(responsePost.data));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tCategoryProd)){
+                    console.log("isString: "+responsePost.data.tCategoryProd);
+                }else{  
+                    linksWs.tp = responsePost.data.tCategoryProd;
+                    $scope.tproductos = responsePost.data.tCategoryProd;
+                    validateLoadComplete();
+                }
+            }else{
+                validateLoadComplete();
+                console.log("calback token no set 5257: "+JSON.stringify(responsePost));    
+            }
+        }); 
+    }
+    
+    if(!isBlank(linksWs.prodCategs)){
+        $scope.prodCategs = linksWs.prodCategs;
+        validateLoadComplete();      
+    }else{ 
+        onWsAction(linksWs.link_root+"/TProduct/findAll.json",{mk:1},function(responsePost){
+            //alert("calback response: "+JSON.stringify(responsePost.data));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tProduct)){
+                    console.log("isString: "+responsePost.data.tProduct);
+                }else{  
+                    linksWs.prodCategs = responsePost.data.tProduct;
+                    $scope.prodCategs = responsePost.data.tProduct;
+                    validateLoadComplete();
+                }
+            }else{
+                validateLoadComplete();
+                console.log("calback token no set 5278: "+JSON.stringify(responsePost));    
+            }
+        }); 
+    }
+    
+        if(!isBlank(linksWs.prodCategs)){
+        $scope.prodCategs = linksWs.prodCategs;
+        validateLoadComplete();      
+    }else{ 
+        onWsAction(linksWs.link_root+"/TProduct/findAll.json",{mk:1},function(responsePost){
+            //alert("calback response: "+JSON.stringify(responsePost.data));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tProduct)){
+                    console.log("isString: "+responsePost.data.tProduct);
+                }else{  
+                    linksWs.prodCategs = responsePost.data.tProduct;
+                    $scope.prodCategs = responsePost.data.tProduct;
+                    validateLoadComplete();
+                }
+            }else{
+                validateLoadComplete();
+                console.log("calback token no set 5278: "+JSON.stringify(responsePost));    
+            }
+        }); 
+    }
+    
+    /********************Modal Localities *******************/
+    var modalLocaly = null;
+    $scope.findOrigen = function(e) {
+        e.preventDefault();
+        $scope.formDataLocality = $scope.formParams;
+        if(!isBlank(linksWs.provinces)){
+            /*modalLocaly = $ionicPopup.show({
+                title : '<i class="icon-briefcase" style="font-size: 20px !important;"></i> Localidades',
+                cssClass: 'storagePopup',
+                scope: $scope,
+                templateUrl: "templates/modalLocalidades.html"
+            });*/                 
+            $scope.provinces = linksWs.provinces;
+            
+        }else{
+            onWsAction(linksWs.link_root+"/TProvince.json",{},function(responsePost){
+                //alert("calback response: "+JSON.stringify(responsePost.data));
+                if(!isBlank(responsePost.data)){
+                    if(angular.isString(responsePost.data.tProvince)){
+                        //console.log(responsePost.data.tTypeActivity);
+                        //validateLoadComplete();
+                    }else{  
+                        /*modalLocaly = $ionicPopup.show({
+                            title : '<i class="icon-briefcase" style="font-size: 20px !important;"></i> Localidades',
+                            cssClass: 'storagePopup',
+                            scope: $scope,
+                            templateUrl: "templates/modalLocalidades.html"
+                        });*/    
+                    
+                        linksWs.provinces = responsePost.data.tProvince;
+                        $scope.provinces = linksWs.provinces;                      
+                        
+                        //console.log("208"+responsePost.data.tTypeActivity);
+                        //validateLoadComplete();
+                    }
+                }else{
+                    //console.log(JSON.stringify(responsePost));    
+                    //validateLoadComplete();
+                }
+            });
+        }  
+            
+    };
+    
+    $scope.getLocalities = function(form){
+        //alert($scope.formDataLocality.ID_PROVINCE);
+        //form.$setPristine();
+        //form.$setUntouched();
+        //console.log($scope.formDataLocality);
+        $scope.formDataLocality = {ID_PROVINCE:$scope.formDataLocality.ID_PROVINCE};
+        onWsAction(linksWs.link_root+"/TLocality/find.json",{provi:$scope.formDataLocality.ID_PROVINCE},function(responsePost){
+            //alert("calback response: "+JSON.stringify(responsePost.data));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tLocality)){
+                    //console.log(responsePost.data.tTypeActivity);
+                    //validateLoadComplete();
+                }else{  
+                    linksWs.localities = responsePost.data.tLocality;
+                    $scope.locals = linksWs.localities;
+                    //console.log("208"+responsePost.data.tTypeActivity);
+                    //validateLoadComplete();
+                }
+            }else{
+                //console.log(JSON.stringify(responsePost));    
+                //validateLoadComplete();
+            }
+        });         
+    };
+    
+    $scope.addLocality = function(){
+        var fruitName = $.grep(linksWs.localities, function (locali) {
+            return locali.ID_PLACE == $scope.formDataLocality.ID_LOCALITY;
+        })[0].PLACE_NAME;
+        $scope.formParams.ID_PLACE_ORIGIN = $scope.formDataLocality.ID_LOCALITY;
+        $scope.formParams.t_ORIGIN_NAME = fruitName;
+        console.log($scope.formParams);
+        modalLocaly.close();   
+        angular.element($scroll).css({"height":(window.innerHeight) - 45 +"px"}); 
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    };
+    
+    $scope.closeModalLocalities = function(e) {
+        e.preventDefault();
+        modalLocaly.close();     
+        modalLocaly = null;
+        angular.element($scroll).css({"height":(window.innerHeight) - 45 +"px"}); 
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    };
+     
+    /********************************************************/
+    
+    
+    /******************************* Modal Localities *****************************/
+    var modalDelivery = null;
+    $scope.findDelivery = function(e) {
+        e.preventDefault();
+        $scope.formDataLocality = $scope.formParams;
+        if(!isBlank(linksWs.provinces)){
+            modalDelivery = $ionicPopup.show({
+                title : '<i class="icon-briefcase" style="font-size: 20px !important;"></i> Localidades',
+                cssClass: 'storagePopup',
+                scope: $scope,
+                templateUrl: "templates/modalDeliveryLocalidades.html"
+            });                                  
+            $scope.provinces = linksWs.provinces;
+        }else{
+            onWsAction(linksWs.link_root+"/TProvince.json",{},function(responsePost){
+                //alert("calback response: "+JSON.stringify(responsePost.data));
+                if(!isBlank(responsePost.data)){
+                    if(angular.isString(responsePost.data.tProvince)){
+                        //console.log(responsePost.data.tTypeActivity);
+                        //validateLoadComplete();
+                    }else{  
+                        modalDelivery = $ionicPopup.show({
+                            title : '<i class="icon-briefcase" style="font-size: 20px !important;"></i> Localidades',
+                            cssClass: 'storagePopup',
+                            scope: $scope,
+                            templateUrl: "templates/modalDeliveryLocalidades.html"
+                        });                        
+                        linksWs.provinces = responsePost.data.tProvince;
+                        $scope.provinces = linksWs.provinces;
+                        //console.log("208"+responsePost.data.tTypeActivity);
+                        //validateLoadComplete();
+                    }
+                }else{
+                    //console.log(JSON.stringify(responsePost));    
+                    //validateLoadComplete();
+                }
+            });
+        }  
+            
+    };
+    
+    $scope.addDeliveryLocality = function(){
+        var fruitName = $.grep(linksWs.localities, function (locali) {
+            return locali.ID_PLACE == $scope.formDataLocality.ID_LOCALITY;
+        })[0].PLACE_NAME;
+        $scope.formParams.ID_PLACE_DELIVERY = $scope.formDataLocality.ID_LOCALITY;
+        $scope.formParams.t_DELIVERY_NAME = fruitName;
+        console.log($scope.formParams);
+        modalDelivery.close();   
+        angular.element($scroll).css({"height":(window.innerHeight) - 45 +"px"}); 
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    };
+    
+    $scope.closeModalDeliveryLocalities = function(e) {
+        e.preventDefault();
+        modalDelivery.close();     
+        modalDelivery = null;
+        angular.element($scroll).css({"height":(window.innerHeight) - 45 +"px"}); 
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    }; 
+    
+    /*************************************************************************/
+    // Navigation functions
+    $scope.next = function (stage) {
+        //$scope.direction = 1;
+        //$scope.stage = stage;
+        var isValid = formWizard.multiStepForm.$valid;
+        
+        //$scope.formValidation = true;
+        if (isValid) {
+            $scope.direction = 1;
+            $scope.stage = stage;
+            //$scope.formValidation = false;
+            // Set Motion
+            $timeout(function() {
+                ionicMaterialMotion.fadeSlideIn({
+                    selector: '.animate-fade-slide-in .item'
+                });
+                
+            }, 700);
+            //var $element = document.getElementsByClassName(''+stage); 
+            //angular.element($form).css({"height":(window.innerHeight)+16+"px"});
+            //angular.element($element).focus();
+            //angular.element($element).scrollTop = 1;
+            //angular.element($form).css({"min-height":"100px"}); 
+            /*angular.element($form).css({"min-height":(window.innerHeight) - 16 +"px"});
+            angular.element($form).focus();
+            angular.element($form).triggerHandler('touch');
+            angular.element($form).$dirty=true;
+            angular.element($form).$pristine=true;*/
+            //angular.element($form).$setDirty();
+           //angular.element($scroll).css({"height":(window.innerHeight) -30+"px"});
+            // Activate ink for controller
+            ionicMaterialInk.displayEffect();             
+        }
+        
+    };
+    
+    $scope.productSelected = function(prodSelected,descripcion,tProdSelected){
+        //console.log("productSelected: "+tProdSelected+"/"+prodSelected);
+        $scope.formParams.tipoProducto = tProdSelected;
+        $scope.formParams.ID_PRODUCT = prodSelected;
+        $scope.descripProducto = descripcion;
+        $scope.tipoProducto = tProdSelected;
+        $scope.ID_PRODUCT = prodSelected;
+        $scope.IsDisabled = false;
+        
+        onWsAction(linksWs.link_root+"/TRelProdTypePrice/findPrecRefe.json",{category:tProdSelected},function(responsePost){
+            //console.log("calback response: "+JSON.stringify(responsePost.data.tRelProdTypePrice));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tRelProdTypePrice)){
+                    console.log("isString: "+responsePost.data.tRelProdTypePrice);
+                }else{  
+                    linksWs.pr = responsePost.data.tRelProdTypePrice;
+                    $scope.precref = linksWs.pr;                    
+                }
+            }else{
+                console.log(JSON.stringify(responsePost));    
+            }
+        });  
+        
+        onWsAction(linksWs.link_root+"/TUm/findUM.json",{category:tProdSelected},function(responsePost){
+            //console.log("calback response: "+JSON.stringify(responsePost.data.tRelProdUm));
+            console.log("calback response: "+JSON.stringify(responsePost.data.tUm));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tUm)){
+                    console.log("isString: "+responsePost.data.tUm);
+                }else{  
+                    linksWs.um = responsePost.data.tUm;
+                    $scope.ums = responsePost.data.tUm;                    
+                }
+            }else{
+                console.log(JSON.stringify(responsePost));    
+            }
+        });   
+        
+        $scope.next('stage2');
+        
+    };
+    
+    $scope.getPosition = function(price){
+        /* buscar posicion*/
+        onWsAction(linksWs.link_root+"/TPosition/index.json",{priceType:price },function(responsePost){
+            //alert("calback response: "+JSON.stringify(responsePost.data.tTypes));
+            if(!isBlank(responsePost.data)){
+                if(angular.isString(responsePost.data.tPosition)){
+                    console.log("isString: "+responsePost.data.tPosition);
+                }else{  
+                    linksWs.po = responsePost.data.tPosition;
+                    $scope.posicion = linksWs.po;
+                }
+            }else{
+                console.log(JSON.stringify(responsePost));    
+            }
+        });         
+        
+    }
+    
+    $scope.entregaSelected = function(entregaSelected){
+    
+         $scope.formaEntrega = $("#DELIVERY_METHOD option:selected").html();
+        alert(entregaSelected+"-"+$scope.formaEntrega+"-"+$scope.deliveries[entregaSelected]);
+    };
+    
+    $scope.submitForm = function(valid) {  
+        if (valid) {
+            $ionicLoading.show({});
+            $scope.formParams.ID_USER_OWNER = linksWs.user;
+            $scope.formParams.ID_MARKET = 1;
+            //var dataPost = [];
+            console.log($scope.formParams);
+            var dataPost = [];
+            //console.log(this.formData);
+            var formD = $scope.formParams;
+            angular.forEach(formD, function(data, nombre) { 
+                if(nombre.indexOf("t_") == -1 || nombre.indexOf("tipo") == -1){
+                    var obj = {};
+                    obj[nombre] = data;
+                    dataPost[nombre] = data;
+                }
+            });           
+            console.log(dataPost);
+            onWsAction(linksWs.link_root+"/TRequest/newRequest.json",dataPost,function(responsePost){
+                //alert("calback response: "+JSON.stringify(responsePost));
+                $ionicLoading.hide();
+                if(!isBlank(responsePost.data)){
+                    if(angular.isString(responsePost.data.tRequest)){
+                        //console.log("143: "+responsePost.data.tRequest);
+                        var alertPopup = $ionicPopup.alert({
+                            title: "Mensaje <i class='icon ion-close-circled error'></i>",
+                            content: "Error: "+responsePost.data.tRequest,
+                            type : 'button-dark',
+                        }).then(function(res) {
+                        });                         
+                    }else{
+                        var alertPopup = $ionicPopup.alert({
+                            title: "Mensaje <i class='icon ion-checkmark-circled success'></i>",
+                            content: "La solicitud se grab&oacute; con &eacute;xito",
+                            type : 'button-dark',
+                        }).then(function(res) {
+                            linksWs.request = "";
+                            linksWs.requests = "";
+                            $history.back();
+                        });                      
+                    }
+                }else{
+                    var alertPopup = $ionicPopup.alert({
+                        title: "Mensaje <i class='icon ion-close-circled error'></i>",
+                        content: "Error: "+responsePost.data.tRequest,
+                        type : 'button-dark',
+                    }).then(function(res) {
+                    });                      
+                    //console.log("calback token no set 151: "+JSON.stringify(responsePost));    
+                }
+            });            
+        } else {
+            $ionicPopup.alert({
+                title: "Mensaje <i class='icon ion-close-circled error'></i>",
+                content: "Faltan campos por llenar ",
+                type : 'button-dark',
+            }).then(function(res) {
+            });             
+            //console.log(JSON.stringify($scope.newRequest));
+        }        
+        
+    };
+    
+    
+    $scope.IsDisabled = true;
+    
+    $scope.back = function (stage) {
+        $scope.direction = 0;
+        $scope.stage = stage;
+        $timeout(function() {
+            ionicMaterialMotion.fadeSlideIn({
+                selector: '.animate-fade-slide-in .item'
+            });
+
+        }, 700);
+        //angular.element($scroll).css({"height":(window.innerHeight) -30 +"px"});
+        // Activate ink for controller
+        ionicMaterialInk.displayEffect();             
+//        
+    };    
+    
+
+    $scope.changeDate= function (elem, val) {   
+        //alert("entro: "+elem+":"+val);
+        $scope.formParams[elem] = val;
+    }     
+
+    $scope.cancelar = function() {
+        $state.go('app.home');
+    };
+    
+    //var $scroll = document.getElementsByClassName('myScroll');
+    //var $form = document.getElementsByClassName('animate-switch-container');
+    //angular.element($scroll).css({"height":(window.innerHeight) - 30 +"px"});      
+    
+    /*$scope.$watch("formParams", function(){
+        //console.log("something has changed");
+        angular.element($scroll).css({"height":(window.innerHeight) - 30 +"px"});  
+    }, true);
+    */
+   /* $scope.next('stage1');*/
+         
+    /*$ionicLoading.hide();*/
+    $scope.loadMore = function() {
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    }, 1000;
+    $scope.moreDataCanBeLoaded = function() {
+        return true;
+    } 
+    
+    $scope.isNull = function(valor){
+        if(valor !== null && valor != ""){
+            return false;
+        }else{
+            return true;
+        }
+    };    
+})
+.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
+
+    $scope.items = items;
+    $scope.selected = {
+        item: $scope.items[0]
+    };
+
+    $scope.ok = function () {
+        $uibModalInstance.close($scope.selected.item);
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+})
+
+
+
 ;
